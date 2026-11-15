@@ -226,10 +226,14 @@ const ING = {
   atta:    {en:'Wheat flour (atta)', fa:'آرد گندم (آته)', u:'kg', p:150, c:'grain', n:[3400,120,110]},
   rice:    {en:'Rice (sella)', fa:'برنج', u:'kg', p:380, c:'grain', n:[3600,70,10]},
   daliya:  {en:'Daliya (cracked wheat)', fa:'دلیه', u:'kg', p:220, c:'grain', n:[3400,120,120]},
+  wheat:   {en:'Wheat grain (gandum)', fa:'گندم (دانه)', u:'kg', p:100, c:'grain', n:[3400,120,120]},
+  naan:    {en:'Tandoor naan (bought)', fa:'نان تندوری (خریداری)', u:'pc', p:30, c:'grain', n:[300,9,3]},
+  lobia:   {en:'Kidney beans (lobia)', fa:'لوبیا', u:'kg', p:400, c:'pulse', n:[3330,240,150]},
   masoor:  {en:'Red lentils (masoor)', fa:'دال نسک', u:'kg', p:320, c:'pulse', n:[3500,250,110]},
   moong:   {en:'Mung beans (moong)', fa:'ماش', u:'kg', p:350, c:'pulse', n:[3470,240,160]},
   chana:   {en:'Chickpeas (white chana)', fa:'نخود', u:'kg', p:380, c:'pulse', n:[3640,190,170]},
   chicken: {en:'Chicken (with bone)', fa:'گوشت مرغ', u:'kg', p:650, c:'meat', n:[1500,180,0]},
+  mutton:  {en:'Mutton (with bone)', fa:'گوشت گوسفند', u:'kg', p:2400, c:'meat', n:[2000,180,0]},
   beef:    {en:'Beef mince (qeema)', fa:'قیمهٔ گوشت گاو', u:'kg', p:1500, c:'meat', n:[2200,260,0]},
   egg:     {en:'Eggs', fa:'تخم مرغ', u:'pc', p:25, c:'meat', n:[72,6.3,0]},
   milk:    {en:'Milk', fa:'شیر', u:'L', p:230, c:'dairy', n:[650,33,0]},
@@ -251,6 +255,35 @@ const ING = {
   sugar:   {en:'Sugar', fa:'بوره', u:'kg', p:190, c:'pantry', n:[3870,0,0]},
   tea:     {en:'Tea leaves', fa:'چای خشک', u:'kg', p:2000, c:'pantry', n:[0,0,0]},
   fruit:   {en:'Seasonal fruit (banana, guava…)', fa:'میوهٔ فصل (کیله، امرود…)', u:'kg', p:220, c:'fruit', n:[650,8,30]},
+  // ---- Fresh fruit (s: w = winter, s = summer) ----
+  banana:  {en:'Bananas', fa:'کیله', u:'dz', p:180, c:'fruit', n:[1260,15,37]},
+  kinnow:  {en:'Kinnow / oranges', fa:'مالته / کینو', u:'dz', p:300, c:'fruit', n:[700,10,25], s:'w'},
+  guava:   {en:'Guava', fa:'امرود', u:'kg', p:250, c:'fruit', n:[680,26,54], s:'w'},
+  apple:   {en:'Apples', fa:'سیب', u:'kg', p:350, c:'fruit', n:[520,3,24], s:'w'},
+  anar:    {en:'Pomegranate', fa:'انار', u:'kg', p:400, c:'fruit', n:[455,9,22], s:'w'},
+  amlok:   {en:'Persimmon (amlok)', fa:'املوک / جاپانی', u:'kg', p:300, c:'fruit', n:[700,6,36], s:'w'},
+  pear:    {en:'Pears', fa:'ناک', u:'kg', p:280, c:'fruit', n:[570,4,31]},
+  grapes:  {en:'Grapes', fa:'انگور', u:'kg', p:500, c:'fruit', n:[690,7,9], s:'s'},
+  mango:   {en:'Mango', fa:'آم', u:'kg', p:300, c:'fruit', n:[420,6,11], s:'s'},
+  melon:   {en:'Melon (kharbooza)', fa:'خربوزه', u:'kg', p:150, c:'fruit', n:[190,5,5], s:'s'},
+  tarbuz:  {en:'Watermelon', fa:'تربوز', u:'kg', p:80, c:'fruit', n:[180,4,2], s:'s'},
+  zardalu: {en:'Apricots', fa:'زردآلو', u:'kg', p:450, c:'fruit', n:[480,14,20], s:'s'},
+  peach:   {en:'Peaches', fa:'شفتالو', u:'kg', p:350, c:'fruit', n:[390,9,15], s:'s'},
+  papaya:  {en:'Papaya', fa:'پپیته', u:'kg', p:350, c:'fruit', n:[300,3,12]},
+  khajoor: {en:'Dates (fresh)', fa:'خرما', u:'kg', p:600, c:'fruit', n:[2800,18,70]},
+  // ---- Dry fruits & nuts ----
+  badam:   {en:'Almonds', fa:'بادام', u:'kg', p:3000, c:'nuts', n:[5790,212,125]},
+  walnut:  {en:'Walnut kernels', fa:'مغز چارمغز', u:'kg', p:2500, c:'nuts', n:[6540,152,67]},
+  pista:   {en:'Pistachios (in shell)', fa:'پسته', u:'kg', p:4600, c:'nuts', n:[2800,100,50]},
+  kaju:    {en:'Cashews', fa:'کاجو', u:'kg', p:3700, c:'nuts', n:[5530,182,33]},
+  peanut:  {en:'Peanuts (in shell)', fa:'مونگ‌پلی', u:'kg', p:800, c:'nuts', n:[3970,180,60], s:'w'},
+  chilgoza:{en:'Pine nuts (chilgoza)', fa:'جلغوزه', u:'kg', p:16000, c:'nuts', n:[2350,48,13], s:'w'},
+  kishmish:{en:'Raisins (snack)', fa:'کشمش', u:'kg', p:1200, c:'nuts', n:[3000,30,37]},
+  khubani: {en:'Dried apricots', fa:'زردآلوی خشک', u:'kg', p:1800, c:'nuts', n:[2410,34,73]},
+  anjir:   {en:'Dried figs', fa:'انجیر خشک', u:'kg', p:2400, c:'nuts', n:[2490,33,98]},
+  toot:    {en:'Dried mulberries', fa:'توت خشک', u:'kg', p:1500, c:'nuts', n:[3200,100,140]},
+  chohara: {en:'Dry dates (chohara)', fa:'خرمای خشک', u:'kg', p:900, c:'nuts', n:[2900,25,80]},
+  nakhodb: {en:'Roasted chickpeas', fa:'نخود بریان', u:'kg', p:700, c:'nuts', n:[3700,220,170]},
   spice:   {en:'Spices & salt', fa:'ادویه و نمک', u:'meal', p:25, c:'spice', n:[0,0,0]},
 };
 const CATS = [
@@ -259,8 +292,10 @@ const CATS = [
   ['meat','Meat & eggs','گوشت و تخم'],
   ['dairy','Dairy','لبنیات'],
   ['veg','Vegetables','سبزیجات'],
-  ['fruit','Fruit','میوه'],
+  ['fruit','Fresh fruit','میوهٔ تازه'],
+  ['nuts','Dry fruits & nuts','میوهٔ خشک و مغزیجات'],
   ['pantry','Oil, tea & sugar','روغن، چای و بوره'],
+  ['ready','Ready-made (from shop)','غذای آماده (از دکان)'],
 ];
 
 // Recipes – quantities are for ONE meal for a family of 5 (scaled automatically).
@@ -415,7 +450,9 @@ function weekTotals(state){
     if(!r.left) T.counts[r.id]=(T.counts[r.id]||0)+1; else T.left=(T.left||0)+1;
   }
   for (const [id,q] of basicsList(state)){ const g=ING[id]; T.basics+=7*q*priceOf(state,id); T.k+=7*q*g.n[0]; T.p+=7*q*g.n[1]; T.f+=7*q*g.n[2]; }
-  T.week = T.meals+T.basics;
+  T.fruit=0;
+  for (const b of (state.basket||[])){ const g=ING[b.id]; if(!g) continue; const q=+b.q||0; T.fruit+=q*priceOf(state,b.id); T.k+=q*g.n[0]; T.p+=q*g.n[1]; T.f+=q*g.n[2]; }
+  T.week = T.meals+T.basics+T.fruit;
   T.month = T.week*52/12 + (+state.other||0);
   T.day = {k:T.k/7,p:T.p/7,f:T.f/7};
   return T;
@@ -424,6 +461,7 @@ function dayTotals(state,d){
   const sc=scaleFactor(state.members); const T={cost:0,k:0,p:0,f:0};
   for (const [s] of SLOTS){ const r=resolveSlot(state,d,s); if(!r) continue; const t=recipeTotals(state,r,sc); T.cost+=t.cost;T.k+=t.k;T.p+=t.p;T.f+=t.f; }
   for (const [id,q] of basicsList(state)){ const g=ING[id]; T.cost+=q*priceOf(state,id); T.k+=q*g.n[0]; T.p+=q*g.n[1]; T.f+=q*g.n[2]; }
+  for (const b of (state.basket||[])){ const g=ING[b.id]; if(!g) continue; const q=(+b.q||0)/7; T.cost+=q*priceOf(state,b.id); T.k+=q*g.n[0]; T.p+=q*g.n[1]; T.f+=q*g.n[2]; }
   return T;
 }
 // Shopping list aggregated for the week
@@ -434,10 +472,13 @@ function shoppingList(state){
     for (const [ing,q] of r.i){ if(ing==='spice') continue; need[ing]=(need[ing]||0)+q*sc; }
   }
   for (const [id,q] of basicsList(state)) if(q>0) need[id]=(need[id]||0)+q*7;
+  for (const b of (state.basket||[])) if(ING[b.id]&&+b.q>0) need[b.id]=(need[b.id]||0)+(+b.q);
   const out=[];
   for (const [id,q] of Object.entries(need)){
     const g=ING[id]; let qq;
-    if (g.u==='pc') qq=Math.ceil(q/6)*6;            // eggs in half-dozens
+    if (g.u==='meal') qq=Math.max(1,Math.round(q));  // ready-made meals: count
+    else if (g.u==='dz') qq=Math.ceil(q*2)/2;          // dozens to half-dozen
+    else if (g.u==='pc') qq=id==='egg'?Math.ceil(q/6)*6:Math.ceil(q); // eggs in half-dozens
     else if (q<0.25) qq=Math.ceil(q/0.05)*0.05;      // small items to 50 g
     else if (q<2) qq=Math.ceil(q/0.25)*0.25;         // to 250 g
     else qq=Math.ceil(q/0.5)*0.5;                    // to 500 g
@@ -479,6 +520,12 @@ function autoPlan(state, seed){
   }
   return best;
 }
+// Weekly fruit & nuts suggestions for a family of 5, by season
+const BASKET_PRESET={
+  winter:[['kinnow',1],['guava',1],['banana',1],['peanut',0.25]],
+  summer:[['banana',1],['mango',1],['melon',2],['tarbuz',3]],
+  mild:[['banana',1],['apple',1],['guava',1]],
+};
 const DEFAULT_STATE = () => ({
   v:1, lang:'en', budget:35000, other:0,
   basics:{milk:0.75, fruit:0.4, tea:0.015, sugar:0.08},
@@ -501,7 +548,7 @@ const STR = {
   gm:['Good morning','صبح بخیر'], ga:['Good afternoon','چاشت بخیر'], ge:['Good evening','شب بخیر'],
   todayMenu:["Today's menu",'مینوی امروز'], add:['Add','افزودن'], addMeal:['Add a meal','غذا انتخاب کنید'],
   budget:['Food budget','بودجهٔ غذا'], thisMonth:['Estimated this month','تخمین این ماه'], of:['of','از'],
-  left:['left','باقی'], over:['over','بیشتر'], meals:['Meals','غذاها'], basics:['Milk, fruit, tea','شیر، میوه، چای'], other:['Other','دیگر'],
+  left:['left','باقی'], over:['over','بیشتر'], meals:['Meals','غذاها'], basics:['Milk, tea, sugar','شیر، چای، بوره'], other:['Other','دیگر'],
   nutrition:['Nutrition · daily average','تغذیه · اوسط روزانه'], energy:['Energy','انرژی'], protein:['Protein','پروتین'], fibre:['Fibre','فایبر'],
   kcal:['kcal','کالوری'], g:['g','گرام'], target:['target','هدف'],
   insights:['Smart tips','پیشنهادها'], prep:['Prep tonight','آمادگی برای فردا'],
@@ -509,7 +556,7 @@ const STR = {
   fit:['Fit to budget','مطابق بودجه بساز'], clear:['Clear week','پاک کردن هفته'], leftovers:['Leftovers + fresh roti','باقی‌ماندهٔ شب + نان تازه'],
   leftoversOf:['from last night','از شب گذشته'], remove:['Remove','حذف'], choose:['Choose','انتخاب'],
   shopList:['Shopping list','لست سودا'], forWeek:['For the whole week','برای تمام هفته'], bought:['bought','خریده شد'],
-  copy:['Copy for WhatsApp','کاپی برای واتس‌اپ'], resetTicks:['Untick all','برداشتن نشانه‌ها'], extra:['Extra items','چیزهای اضافه'],
+  copy:['Copy for WhatsApp','کاپی برای واتس‌اپ'], resetTicks:['New week: clear ticks','هفتهٔ نو: پاک کردن نشانه‌ها'], extra:['Extra items','چیزهای اضافه'],
   addItem:['Add an item…','چیز دیگر بنویسید…'], spiceNote:['Spices & salt are counted in meal costs – keep them stocked.','ادویه و نمک در قیمت غذاها حساب شده؛ همیشه در خانه داشته باشید.'],
   search:['Search recipes','جستجوی غذا'], all:['All','همه'], breakfast:['Breakfast','صبحانه'], mains:['Lunch & dinner','چاشت و شب'],
   cheap:['Budget','ارزان'], highP:['High protein','پروتین زیاد'], afghan:['Afghan','افغانی'], pakistani:['Pakistani','پاکستانی'],
@@ -534,6 +581,19 @@ const STR = {
   imported:['Backup loaded','پشتیبان باز شد'], badFile:['This is not a Dastarkhan backup file','این فایل پشتیبان دسترخوان نیست'],
   install:['Install on this phone','نصب روی همین تلفون'], iosHint:['iPhone: tap Share, then “Add to Home Screen”.','آیفون: Share را بزنید، بعد «Add to Home Screen».'], installed:['Installed ✓','نصب شد ✓'],
   phone:['Saved on this phone','در همین تلفون ذخیره شد'],
+  amount:['Amount','مقدار'], unitPrice:['Price per','قیمت هر'], planned:['Planned','پلان شده'], priceAll:['Changes this item’s price everywhere in the app.','قیمت این ماده در تمام اپ تغییر می‌کند.'],
+  resetPlan:['Back to plan','برگشت به پلان'], edited:['edited','تغییر داده شده'], totalPrice:['Total price','قیمت مجموعی'], itemName:['Item','چیز'],
+  editTap:['Tap an item to change its amount or price.','برای تغییر مقدار یا قیمت روی هر قلم بزنید.'],
+  basketT:['Fruit & nuts this week','میوه و خشکه برای این هفته'], basketHint:['Choose what the family eats this week – it goes on the shopping list and counts in budget and nutrition.','انتخاب کنید خانواده این هفته چه بخورد؛ در لست سودا، بودجه و تغذیه حساب می‌شود.'],
+  addFruit:['Add fruit or nuts','افزودن میوه یا خشکه'], suggest:['Suggest for this season','پیشنهاد برای این فصل'], fruitNuts:['Fruit & nuts','میوه و خشکه'],
+  freshF:['Fresh fruit','میوهٔ تازه'], dryF:['Dry fruits & nuts','میوهٔ خشک و مغزیجات'], perWeekS:['/ week','/ هفته'], suggested:['Seasonal basket added','سبد فصل اضافه شد'], dozen:['dozen','درجن'],
+  extraFruit:['Extra fruit per day (generic)','میوهٔ اضافه در روز (عمومی)'], extraFruitH:['Better: pick exact fruits in Shopping › Fruit & nuts.','بهتر: میوه‌ها را در سودا › میوه و خشکه انتخاب کنید.'],
+  howL:['How do you get it?','چطور تهیه می‌شود؟'], cookHome:['Cook at home','در خانه پخته می‌شود'], buyReady:['Buy ready-made','آماده خریده می‌شود'],
+  readyPrice:['Price for the whole family, one meal','قیمت برای تمام خانواده، یک وعده'], readyKcal:['Energy per person (kcal)','انرژی هر نفر (کالوری)'], readyProt:['Protein per person (g)','پروتین هر نفر (گرام)'],
+  readyHint:['Optional. Rough guide: a plate of kocha or haleem ≈ 400 kcal and 15 g protein.','اختیاری. تخمین: یک بشقاب کوچه یا حلیم حدود ۴۰۰ کالوری و ۱۵ گرام پروتین.'],
+  whereBuy:['Where to buy (optional)','از کجا بخریم (اختیاری)'], boughtFrom:['Bought ready-made','آماده خریده می‌شود'], meals:['meals','وعده'],
+  missingIng:['Ingredient not in the list?','ماده در لست نیست؟'], newIngQuick:['Add new item','افزودن مادهٔ نو'], addUse:['Add & use','افزودن و استفاده'],
+  needPrice:['Please enter the price','لطفاً قیمت را بنویسید'],
   winter:['Winter','زمستان'], summer:['Summer','تابستان'], mild:['Spring / autumn','بهار / خزان'], allYear:['All year','همه فصل'], auto:['Automatic','خودکار'],
   seasonL:['Season','فصل'], inSeasonC:['In season','غذاهای فصل'], hiddenC:['Hidden','پنهان'], hideDish:['Hide from my list','از لست من پنهان کن'], showDish:['Show in my list again','دوباره در لست نشان بده'],
   onlyMine:['Plan with my dishes only','پلان فقط با غذاهای خودم'], onlyMineHint:['Built-in dishes are used only where you have none of your own (e.g. breakfast).','غذاهای آماده فقط جایی استفاده می‌شوند که غذای خودتان نباشد (مثلاً صبحانه).'],
@@ -563,6 +623,8 @@ function qty(id,q){
   if(u==='kg') return q<1 ? `${n0(q*1000)} ${fa?'گرام':'g'}` : `${n1(q)} ${fa?'کیلو':'kg'}`;
   if(u==='L') return q<1 ? `${n0(q*1000)} ${fa?'ملی‌لیتر':'ml'}` : `${n1(q)} ${fa?'لیتر':'L'}`;
   if(u==='pc') return `${n0(q)} ${fa?'دانه':'pcs'}`;
+  if(u==='dz') return `${n1(q)} ${fa?'درجن':'dozen'}`;
+  if(u==='meal'&&ING[id].ready) return `${n0(q)} ${S('meals')}`;
   return '';
 }
 const ICONS = {
@@ -595,12 +657,19 @@ function applyCustom(){
   for(const k of Object.keys(ING)) if(!BASE_ING.has(k)) delete ING[k];
   RECIPES.length=BASE_R; for(const k of Object.keys(RMAP)) if(k.startsWith('c_')) delete RMAP[k];
   for(const g of state.customIng||[]) ING[g.id]={en:g.en,fa:g.fa,u:g.u,p:+g.p||0,c:g.c,n:[+g.k||0,+g.pr||0,+g.f||0],custom:true};
+  const NM=(state.members||[]).length||5;
   for(const r of state.customRecipes||[]){
+    if(r.ready){
+      const iid='rd_'+r.id;
+      ING[iid]={en:r.en, fa:r.fa, u:'meal', p:+r.rp||0, c:'ready', n:[(+r.rk||0)*NM,(+r.rpr||0)*NM,(+r.rfi||0)*NM], custom:true, ready:true};
+      const rr={id:r.id,en:r.en,fa:r.fa,m:r.m,min:0,t:['mine','ready'],s:r.s||'',tip:[r.tip||'',r.tip||''],i:[[iid,1]],custom:true,ready:true};
+      RECIPES.push(rr); RMAP[r.id]=rr; RICON[r.id]=r.ic||'bag'; continue;
+    }
     const rr={id:r.id,en:r.en,fa:r.fa,m:r.m,min:+r.min||30,t:['mine'],s:r.s||'',tip:[r.tip||'',r.tip||''],i:(r.i||[]).filter(([id,q])=>ING[id]&&q>0),custom:true};
     RECIPES.push(rr); RMAP[r.id]=rr; RICON[r.id]=r.ic||'pot';
   }
 }
-const UNIT_IN = u => ({kg:['g','گرام',1000],L:['ml','ملی‌لیتر',1000],pc:['pcs','دانه',1],meal:['×','×',1]})[u]||['','',1];
+const UNIT_IN = u => ({dz:['dozen','درجن',1],kg:['g','گرام',1000],L:['ml','ملی‌لیتر',1000],pc:['pcs','دانه',1],meal:['×','×',1]})[u]||['','',1];
 /* ---------- state & persistence ---------- */
 const LS_KEY='dastarkhan.v1', LS_LANG='dastarkhan.lang';
 function defaultPlan(){return {mon:{b:'b_chai',l:'left',d:'m_daal'},tue:{b:'b_nakhud',l:'left',d:'m_palak'},wed:{b:'b_egg',l:'left',d:'m_mashpalaw'},thu:{b:'b_paratha',l:'left',d:'m_aloogobi'},fri:{b:'b_egg',l:'m_shorwa',d:'m_kichri'},sat:{b:'b_daliya',l:'left',d:'m_borani'},sun:{b:'b_nakhud',l:'left',d:'m_chana'}};}
@@ -612,6 +681,8 @@ function normalize(s){
   for(const [k] of DAYS) s.plan[k]=Object.assign({b:'',l:'',d:''},s.plan[k]||{});
   if(!Array.isArray(s.members)||!s.members.length) s.members=fresh().members;
   s.prices=s.prices||{}; s.checked=s.checked||{}; s.extra=Array.isArray(s.extra)?s.extra:[];
+  if(!Array.isArray(s.basket)){ s.basket=(BASKET_PRESET[currentSeason(s)]||BASKET_PRESET.mild).map(([id,q])=>({id,q})); if(s.basics) s.basics.fruit=0; }
+  s.shopEdits=s.shopEdits&&typeof s.shopEdits==='object'?s.shopEdits:{};
   s.hiddenR=Array.isArray(s.hiddenR)?s.hiddenR:[]; s.seasonMode=s.seasonMode||'auto'; if(s.winterBoost==null) s.winterBoost=10;
   s.customIng=Array.isArray(s.customIng)?s.customIng:[]; s.customRecipes=Array.isArray(s.customRecipes)?s.customRecipes:[];
   return s;
@@ -699,7 +770,7 @@ function vToday(){
   const cls=pct<=1?'':pct<=1.1?'warn':'bad';
   html+=`<h2>${S('budget')}</h2><div class="card"><div class="row between"><div><div class="tiny muted">${S('thisMonth')}</div><div class="big num">${money(T.month)}</div></div><span class="pill ${diff>=0?'ok':pct<=1.1?'warn':'bad'} num">${money(Math.abs(diff))} ${diff>=0?S('left'):S('over')}</span></div>
   <div class="bar ${cls}"><i style="width:${Math.min(100,pct*100)}%"></i>${pct>1?`<span class="mark" style="inset-inline-start:${100/pct}%"></span>`:''}</div>
-  <div class="legend"><span>${S('meals')} <b class="num">${money(T.meals*52/12)}</b></span><span>${S('basics')} <b class="num">${money(T.basics*52/12)}</b></span>${+state.other?`<span>${S('other')} <b class="num">${money(+state.other)}</b></span>`:''}<span>${S('of')} <b class="num">${money(B)}</b></span></div></div>`;
+  <div class="legend"><span>${S('meals')} <b class="num">${money(T.meals*52/12)}</b></span><span>${S('basics')} <b class="num">${money(T.basics*52/12)}</b></span>${T.fruit?`<span>${S('fruitNuts')} <b class="num">${money(T.fruit*52/12)}</b></span>`:''}${+state.other?`<span>${S('other')} <b class="num">${money(+state.other)}</b></span>`:''}<span>${S('of')} <b class="num">${money(B)}</b></span></div></div>`;
   // nutrition
   const pk=T.day.k/tgt.k, pp=T.day.p/tgt.p, pf=T.day.f/tgt.f;
   html+=`<h2>${S('nutrition')}</h2><div class="card"><div class="rings">
@@ -735,7 +806,7 @@ function insights(T,tgt){
   if(meat>3) out.push({c:'acc',i:'Rs',t:fa?`${n0(meat)} وعده گوشت – گران‌ترین بخش پلان.`:`${n0(meat)} meat meals – the most expensive part of the plan.`,s:fa?'یکی را با قورمهٔ تخم عوض کنید.':'Swap one for egg curry to save around Rs 400.'});
   if(currentSeason(state)==='winter') out.push({c:'brand',i:'❄',t:fa?'زمستان: پلان غذاهای گرم و پرانرژی مثل شوربا، قابلی و بولانی را ترجیح می‌دهد.':'Winter: the planner now favours warming, higher-energy dishes like shorwa, palaw and bolani.',s:fa?'میوهٔ فصل مثل مالته و امرود برای ویتامین C فراموش نشود.':'Keep seasonal oranges and guava for vitamin C against colds.'});
   if((+state.basics.milk||0)<0.5) out.push({c:'warn',i:'•',t:fa?'شیر کم است؛ برای استخوان سه کودک کلسیم لازم است.':'Milk is low – three growing children need calcium.'});
-  if((+state.basics.fruit||0)<0.3) out.push({c:'warn',i:'•',t:fa?'روزانه میوهٔ فصل بیشتر بگیرید.':'Add more seasonal fruit each day.'});
+  if((+state.basics.fruit||0)<0.3 && !(state.basket||[]).some(b=>ING[b.id]&&ING[b.id].c==='fruit'&&+b.q>0)) out.push({c:'warn',i:'•',t:fa?'روزانه میوهٔ فصل بیشتر بگیرید.':'Add more seasonal fruit each day.'});
   if(T.day.k < tgt.k*0.9) out.push({c:'warn',i:'•',t:fa?'انرژی کمتر از نیاز است؛ نان یا برنج بیشتر کنید.':'Energy is below the family\'s need – add more roti or rice.'});
   return out;
 }
@@ -757,29 +828,58 @@ function vWeek(){
   }
   return html+'</div>';
 }
+const EXU={kg:['kg','کیلو'],g:['g','گرام'],L:['L','لیتر'],pc:['pcs','دانه'],dz:['dozen','درجن'],pack:['pack','بسته']};
+const exUnit=u=>(EXU[u]||['',''])[L()==='fa'?1:0];
+function shopList(){
+  return shoppingList(state).map(x=>{ const e=state.shopEdits[x.id]; if(e&&e.q!=null&&!isNaN(+e.q)){ x.planned=x.q; x.q=+e.q; x.cost=x.q*priceOf(state,x.id); x.edited=true; } return x; });
+}
+const exCost=x=>+x.p||0;
 function vShop(){
-  const list=shoppingList(state), total=list.reduce((a,x)=>a+x.cost,0);
+  const list=shopList(), total=list.reduce((a,x)=>a+x.cost,0)+state.extra.reduce((a,x)=>a+exCost(x),0);
   const done=list.filter(x=>state.checked[x.id]).length + state.extra.filter(x=>x.done).length, all=list.length+state.extra.length;
   let html=`<div class="fade"><h1>${S('shopList')}</h1><div class="sub">${S('forWeek')}</div>
   <div class="card" style="margin-top:14px"><div class="row between"><div><div class="big num">${money(total)}</div><div class="tiny muted num" style="margin-top:6px">${n0(done)} / ${n0(all)} ${S('bought')}</div></div>${tile('bag','lg')}</div>
   <div class="bar"><i style="width:${all?done/all*100:0}%"></i></div>
-  <div class="btns"><button class="btn pri" data-act="copy">${svg('<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>',18)} ${S('copy')}</button><button class="btn ghost" data-act="untick">${S('resetTicks')}</button></div></div>`;
+  <p class="tiny muted" style="margin:0 0 10px">✎ ${S('editTap')}</p><div class="btns"><button class="btn pri" data-act="copy">${svg('<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>',18)} ${S('copy')}</button><button class="btn ghost" data-act="untick">${S('resetTicks')}</button></div></div>`;
+  { const se=currentSeason(state), fa=L()==='fa';
+    html+=`<h2>${S('basketT')}</h2><div class="card"><p class="tiny muted" style="margin:0 0 6px">${S('basketHint')}</p>`;
+    for(const b of state.basket){ const g=ING[b.id]; if(!g) continue;
+      html+=`<div class="field"><label><b>${esc(nm(g))}</b> ${g.s?`<span class="tiny">${g.s==='w'?'❄':'☀'}</span>`:''}<small class="num">${money((+b.q||0)*priceOf(state,b.id))} ${S('perWeekS')}</small></label><div class="row" style="gap:4px"><button class="icon-btn" data-act="bq" data-id="${b.id}" data-v="-1" aria-label="less">${svg('<path d="M6 12h12"/>',18)}</button><span class="num strong small" style="min-width:74px;text-align:center">${qty(b.id,+b.q||0)}</span><button class="icon-btn" data-act="bq" data-id="${b.id}" data-v="1" aria-label="more">${svg('<path d="M12 6v12M6 12h12"/>',18)}</button></div></div>`; }
+    html+=`<div class="btns" style="margin-top:10px"><button class="btn pri" data-act="fruitpick">+ ${S('addFruit')}</button><button class="btn ghost" data-act="suggest">${{winter:'❄ ',summer:'☀ ',mild:'🌤 '}[se]}${S('suggest')}</button></div></div>`; }
   for(const [c,en,fa] of CATS){
     const items=list.filter(x=>x.cat===c); if(!items.length) continue;
     items.sort((a,b)=>(!!state.checked[a.id])-(!!state.checked[b.id]));
     const sub=items.reduce((a,x)=>a+x.cost,0);
     html+=`<h2 class="cat-h"><span>${L()==='fa'?fa:en}</span><span class="num" style="text-transform:none;letter-spacing:0">${money(sub)}</span></h2><div class="card" style="padding:4px 14px">`;
     for(const x of items){
-      html+=`<button class="shop-item ${state.checked[x.id]?'done':''}" data-act="tick" data-id="${x.id}"><span class="chk">${svg(CHECK,14)}</span><span class="nm grow">${esc(nm(ING[x.id]))}</span><span class="q num">${qty(x.id,x.q)}</span><span class="c num">${money(x.cost)}</span></button>`;
+      html+=`<div class="shop-item ${state.checked[x.id]?'done':''}"><button class="chk" data-act="tick" data-id="${x.id}" aria-label="tick">${svg(CHECK,14)}</button><button class="row grow" style="gap:10px;text-align:start;min-width:0" data-act="shopedit" data-id="${x.id}"><span class="nm grow">${esc(nm(ING[x.id]))}${x.edited?` <span class="pill acc" style="padding:1px 7px;font-size:11px">${S('edited')}</span>`:''}</span><span class="q num">${qty(x.id,x.q)}</span><span class="c num">${money(x.cost)}</span></button></div>`;
     }
     html+=`</div>`;
   }
-  html+=`<h2>${S('extra')}</h2><div class="card" style="padding:12px 14px"><form class="row" data-form="extra"><input class="inp w" name="t" placeholder="${S('addItem')}" autocomplete="off"><button class="btn pri" type="submit">${S('add')}</button></form>`;
+  const exTotal=state.extra.reduce((a,x)=>a+exCost(x),0);
+  html+=`<h2 class="cat-h"><span>${S('extra')}</span>${exTotal?`<span class="num" style="text-transform:none;letter-spacing:0">${money(exTotal)}</span>`:''}</h2><div class="card" style="padding:12px 14px">${extraForm()}`;
   for(const x of state.extra){
-    html+=`<div class="shop-item ${x.done?'done':''}" style="cursor:default"><button class="chk" data-act="xtick" data-id="${x.id}" aria-label="tick">${svg(CHECK,14)}</button><span class="nm grow">${esc(x.t)}</span><button class="icon-btn" data-act="xdel" data-id="${x.id}" aria-label="${S('remove')}">${svg('<path d="M6 6l12 12M18 6L6 18"/>',18)}</button></div>`;
+    html+=`<div class="shop-item ${x.done?'done':''}"><button class="chk" data-act="xtick" data-id="${x.id}" aria-label="tick">${svg(CHECK,14)}</button><button class="row grow" style="gap:10px;text-align:start;min-width:0" data-act="xedit" data-id="${x.id}"><span class="nm grow">${esc(x.t)}</span><span class="q num">${x.q?n1(+x.q)+' '+exUnit(x.u):''}</span><span class="c num">${x.p?money(+x.p):''}</span></button><button class="icon-btn" data-act="xdel" data-id="${x.id}" aria-label="${S('remove')}">${svg('<path d="M6 6l12 12M18 6L6 18"/>',18)}</button></div>`;
   }
   html+=`</div><p class="tiny muted" style="margin:12px 4px">${S('spiceNote')}</p></div>`;
   return html;
+}
+function extraForm(x){
+  x=x||{t:'',q:'',u:'kg',p:''}; const fa=L()==='fa';
+  return `<form data-form="extra" data-id="${x.id||''}"><input class="inp w" name="t" placeholder="${S('addItem')}" autocomplete="off" value="${esc(x.t)}">
+   <div class="row" style="gap:6px;margin-top:8px"><input class="inp num" style="width:72px" type="number" inputmode="decimal" min="0" step="any" name="q" placeholder="${L()==='fa'?'مقدار':'Qty'}" value="${x.q??''}">
+   <select class="inp" name="u" style="width:86px;text-align:start">${Object.keys(EXU).map(u=>`<option value="${u}" ${x.u===u?'selected':''}>${exUnit(u)}</option>`).join('')}</select>
+   <input class="inp num grow" style="width:auto;min-width:0" type="number" inputmode="decimal" min="0" step="any" name="p" placeholder="${fa?'قیمت (کلدار)':'Price Rs'}" value="${x.p??''}">
+   <button class="btn pri" type="submit">${x.id?S('save'):S('add')}</button></div></form>`;
+}
+function sheetShopEdit(id){
+  const x=shopList().find(y=>y.id===id); if(!x) return; const g=ING[id], fa=L()==='fa';
+  const un={kg:fa?'کیلو':'kg',L:fa?'لیتر':'L',pc:fa?'دانه':'pcs',dz:fa?'درجن':'dozen',meal:S('meals')}[g.u]||'';
+  const html=`<h3>${esc(nm(g))}</h3><form data-form="shopedit" data-id="${id}" style="margin-top:12px">
+   <div class="field"><label>${S('amount')}<small>${S('planned')}: ${qty(id,x.edited?x.planned:x.q)}</small></label><div class="row" style="gap:6px"><input class="inp num" type="number" inputmode="decimal" min="0" step="any" name="q" value="${+x.q}"><span class="tiny muted" style="width:44px">${un}</span></div></div>
+   <div class="field"><label>${S('unitPrice')} ${un}<small>${S('priceAll')}</small></label><div class="row" style="gap:6px"><input class="inp num" type="number" inputmode="decimal" min="0" step="any" name="p" value="${priceOf(state,id)}"><span class="tiny muted" style="width:44px">${fa?'کلدار':'Rs'}</span></div></div>
+   <div class="btns" style="margin-top:16px">${x.edited?`<button type="button" class="btn ghost" data-act="shopreset" data-id="${id}">${S('resetPlan')}</button>`:''}<span class="grow"></span><button type="button" class="btn ghost" data-act="close">${S('cancel')}</button><button class="btn pri" type="submit">${S('save')}</button></div></form>`;
+  openSheet(html);
 }
 function vRecipes(){
   const sc=scaleFactor(state.members), q=rQuery.trim().toLowerCase(), N=state.members.length, hid=new Set(state.hiddenR||[]);
@@ -791,7 +891,7 @@ function vRecipes(){
   <div class="chips">${[['all','all'],['season','inSeasonC'],['mine','myDishes'],['b','breakfast'],['m','mains'],['cheap','cheap'],['protein','highP'],['afghan','afghan'],['pakistani','pakistani'],...(hid.size?[['hidden','hiddenC']]:[])].map(([k,l])=>`<button class="chip ${rFilter===k?'on':''}" data-act="rf" data-v="${k}">${S(l)}</button>`).join('')}</div><div class="rgrid">`;
   for(const r of list){
     const t=recipeTotals(state,r,sc);
-    html+=`<button class="rcard" data-act="recipe" data-id="${r.id}"><div class="row">${tile(RICON[r.id])}<div class="grow"><div class="nm">${esc(nm(r))}</div><div class="tiny muted num">${n0(r.min)} ${S('minutes')} · ${money(t.cost/N)} ${S('perPerson')}</div></div></div><div class="tags"><span class="pill num">${n0(t.k/N)} ${S('kcal')}</span><span class="pill brand num">${n0(t.p/N)}${S('g')} ${S('protein')}</span>${t.cost/N<=90?`<span class="pill ok">${S('cheap')}</span>`:''}${seasonPill(r)}${r.custom?`<span class="pill acc">${S('mineTag')}</span>`:''}</div></button>`;
+    html+=`<button class="rcard" data-act="recipe" data-id="${r.id}"><div class="row">${tile(RICON[r.id])}<div class="grow"><div class="nm">${esc(nm(r))}</div><div class="tiny muted num">${r.ready?'🛍 '+S('buyReady'):n0(r.min)+' '+S('minutes')} · ${money(t.cost/N)} ${S('perPerson')}</div></div></div><div class="tags"><span class="pill num">${n0(t.k/N)} ${S('kcal')}</span><span class="pill brand num">${n0(t.p/N)}${S('g')} ${S('protein')}</span>${t.cost/N<=90?`<span class="pill ok">${S('cheap')}</span>`:''}${seasonPill(r)}${r.custom?`<span class="pill acc">${S('mineTag')}</span>`:''}</div></button>`;
   }
   if(!list.length) html+=`<div class="empty-state">—</div>`;
   return html+'</div></div>';
@@ -813,11 +913,11 @@ function vFamily(){
    ${f('budget',S('monthlyBudget'),state.budget,500,fa?'کلدار':'Rs')}
    ${f('other',S('otherMonthly'),state.other,100,fa?'کلدار':'Rs',S('otherHint'))}
    ${f('basics.milk',S('milkDay'),state.basics.milk,0.25,fa?'لیتر':'L')}
-   ${f('basics.fruit',S('fruitDay'),state.basics.fruit,0.1,fa?'کیلو':'kg')}
+   ${f('basics.fruit',S('extraFruit'),state.basics.fruit,0.1,fa?'کیلو':'kg',S('extraFruitH'))}
    ${f('basics.tea',S('teaDay'),state.basics.tea,0.005,fa?'کیلو':'kg')}
    ${f('basics.sugar',S('sugarDay'),state.basics.sugar,0.01,fa?'کیلو':'kg')}
   </div>`;
-  const uName=u=>({kg:fa?'کیلو':'kg',L:fa?'لیتر':'L',pc:fa?'دانه':'pc',meal:fa?'وعده':'meal'})[u];
+  const uName=u=>({dz:fa?'درجن':'dz',kg:fa?'کیلو':'kg',L:fa?'لیتر':'L',pc:fa?'دانه':'pc',meal:fa?'وعده':'meal'})[u];
   html+=`<h2>${S('foodItems')}</h2><div class="card"><p class="tiny muted" style="margin:0 0 10px">${S('customHint')}</p>`;
   for(const g of state.customIng){
     html+=`<button class="mem" data-act="food" data-id="${g.id}"><span class="avatar" style="background:var(--accent-soft);color:var(--accent)">${esc((nm(g)||'?').charAt(0))}</span><span class="grow"><b>${esc(nm(g))}</b><span class="tiny muted" style="display:block">${esc((CATS.find(c=>c[0]===g.c)||['','',''])[fa?2:1])}</span></span><span class="small num"><b>${money(+g.p||0)}</b> <span class="muted">/${uName(g.u)}</span></span></button>`;
@@ -858,8 +958,9 @@ function sheetRecipe(id){
   let html=`<div class="row">${tile(RICON[id],'lg')}<div class="grow"><h3>${esc(nm(r))}</h3><div class="small muted">${esc(fa?r.en:r.fa)}</div></div></div>
   <div class="stats"><div><b class="num">${money(t.cost)}</b><span>${S('family5')}</span></div><div><b class="num">${money(t.cost/N)}</b><span>${S('perPerson')}</span></div><div><b class="num">${n0(t.k/N)}</b><span>${S('kcal')}</span></div><div><b class="num">${n0(t.p/N)}${S('g')}</b><span>${S('protein')}</span></div></div>
   ${r.tip[fa?1:0]?`<div class="tip"><span>💡</span><span>${esc(r.tip[fa?1:0])}</span></div>`:''}
-  <div class="strong small" style="margin:6px 0 2px">${S('ingredients')}</div>`;
-  for(const [ing,q] of r.i){ if(ing==='spice'){ html+=`<div class="ing"><span>${esc(nm(ING.spice))}</span><span class="muted num">${money(q*sc*priceOf(state,'spice'))}</span></div>`; continue; }
+  ${r.ready?'':`<div class="strong small" style="margin:6px 0 2px">${S('ingredients')}</div>`}`;
+  if(r.ready) html+=`<div class="ing"><span>🛍 ${S('boughtFrom')}</span><span class="num"><b>${money(t.cost)}</b></span></div>`;
+  else for(const [ing,q] of r.i){ if(ing==='spice'){ html+=`<div class="ing"><span>${esc(nm(ING.spice))}</span><span class="muted num">${money(q*sc*priceOf(state,'spice'))}</span></div>`; continue; }
     html+=`<div class="ing"><span>${esc(nm(ING[ing]))}</span><span class="num"><b>${qty(ing,q*sc)}</b> <span class="muted">· ${money(q*sc*priceOf(state,ing))}</span></span></div>`; }
   if(r.s) html+=`<div style="margin:-4px 0 10px">${seasonPill(r)}</div>`;
   if(!r.custom){ const isH=(state.hiddenR||[]).includes(id); html+=`<button class="btn ghost block" style="margin-top:10px" data-act="hide" data-id="${id}">${isH?S('showDish'):S('hideDish')}</button>`; }
@@ -883,15 +984,15 @@ function sheetMember(id){
 }
 function sheetFood(id){
   const g=state.customIng.find(x=>x.id===id)||{id:'',en:'',fa:'',u:'kg',p:'',c:'veg',k:0,pr:0,f:0}, fa=L()==='fa';
-  const per=g.u==='pc'?1:10; // stored per unit; shown per 100 g/ml or per piece
+  const per=g.u==='pc'?1:g.u==='dz'?12:10; // stored per unit; shown per 100 g/ml or per piece
   const v=x=>x?+(x/per).toFixed(1):'';
   const html=`<h3>${id?S('editFood'):S('addFood')}</h3><form data-form="food" data-id="${id}" style="margin-top:14px">
    <div class="field"><label>${S('name')} (EN)</label><input class="inp" style="width:180px;text-align:start" name="en" value="${esc(g.en)}" placeholder="e.g. Lobia"></div>
    <div class="field"><label>${S('name')} (دری)</label><input class="inp" style="width:180px;text-align:start" dir="rtl" name="fa" value="${esc(g.fa)}" placeholder="مثلاً لوبیا"></div>
    <div class="field"><label>${S('section')}</label><select class="inp" style="width:180px;text-align:start" name="c">${CATS.map(c=>`<option value="${c[0]}" ${g.c===c[0]?'selected':''}>${fa?c[2]:c[1]}</option>`).join('')}</select></div>
-   <div class="field"><label>${S('unit')}</label><div class="seg" data-seg="u">${['kg','L','pc'].map(u=>`<button type="button" class="${g.u===u?'on':''}" data-v="${u}">${({kg:fa?'کیلو':'kg',L:fa?'لیتر':'L',pc:fa?'دانه':'pcs'})[u]}</button>`).join('')}</div></div>
+   <div class="field"><label>${S('unit')}</label><div class="seg" data-seg="u">${['kg','L','pc','dz'].map(u=>`<button type="button" class="${g.u===u?'on':''}" data-v="${u}">${({kg:fa?'کیلو':'kg',L:fa?'لیتر':'L',pc:fa?'دانه':'pcs',dz:fa?'درجن':'dozen'})[u]}</button>`).join('')}</div></div>
    <div class="field"><label>${S('price')} <small>${fa?'برای یک واحد':'for one unit'}</small></label><input class="inp num" type="number" inputmode="decimal" min="0" step="any" name="p" value="${g.p}" required></div>
-   <div class="strong small" style="margin:16px 0 2px">${S('nutriOpt')}</div><div class="tiny muted" id="perlbl">${g.u==='pc'?S('perPc'):S('per100')}</div>
+   <div class="strong small" style="margin:16px 0 2px">${S('nutriOpt')}</div><div class="tiny muted" id="perlbl">${g.u==='pc'||g.u==='dz'?S('perPc'):S('per100')}</div>
    <div class="field"><label>${S('energy')} (${S('kcal')})</label><input class="inp num" type="number" min="0" step="any" name="k" value="${v(g.k)}"></div>
    <div class="field"><label>${S('protein')} (${S('g')})</label><input class="inp num" type="number" min="0" step="any" name="pr" value="${v(g.pr)}"></div>
    <div class="field"><label>${S('fibre')} (${S('g')})</label><input class="inp num" type="number" min="0" step="any" name="f" value="${v(g.f)}"></div>
@@ -901,7 +1002,7 @@ function sheetFood(id){
 function ingOptions(sel){
   const fa=L()==='fa'; let o='';
   for(const [c,en,f] of [...CATS,['spice','Spices','ادویه']]){
-    const ids=Object.keys(ING).filter(k=>ING[k].c===c); if(!ids.length) continue;
+    if(c==='ready') continue; const ids=Object.keys(ING).filter(k=>ING[k].c===c); if(!ids.length) continue;
     o+=`<optgroup label="${fa?f:en}">`+ids.map(k=>`<option value="${k}" ${k===sel?'selected':''}>${esc(nm(ING[k]))}${ING[k].custom?' ★':''}</option>`).join('')+'</optgroup>';
   }
   return o;
@@ -911,19 +1012,48 @@ function ingRow(id='onion',q=''){
   return `<div class="row ingrow" style="gap:6px;padding:6px 0;border-top:1px solid var(--line-2)"><select class="inp" style="flex:1;min-width:0;text-align:start" name="ing">${ingOptions(id)}</select><input class="inp num" style="width:84px" type="number" inputmode="decimal" min="0" step="any" name="q" value="${shown}"><span class="tiny muted ul" style="width:44px">${L()==='fa'?uf:ue}</span><button type="button" class="icon-btn" data-act="rowdel" aria-label="${S('remove')}">${svg('<path d="M6 6l12 12M18 6L6 18"/>',16)}</button></div>`;
 }
 function sheetDish(id){
-  const r=state.customRecipes.find(x=>x.id===id)||{id:'',en:'',fa:'',m:'m',min:30,ic:'pot',tip:'',i:[['onion',0.2],['oil',0.05],['spice',1]]}, fa=L()==='fa';
+  const r=state.customRecipes.find(x=>x.id===id)||{id:'',en:'',fa:'',m:'m',min:30,ic:'pot',tip:'',i:[['onion',0.2],['oil',0.05],['spice',1]]}, fa=L()==='fa', rd=!!r.ready;
   const html=`<h3>${id?S('editDish'):S('newDish')}</h3><form data-form="dish" data-id="${id}" style="margin-top:14px">
    <div class="field"><label>${S('name')} (EN)</label><input class="inp" style="width:190px;text-align:start" name="en" value="${esc(r.en)}" placeholder="e.g. Lobia curry"></div>
    <div class="field"><label>${S('name')} (دری)</label><input class="inp" style="width:190px;text-align:start" dir="rtl" name="fa" value="${esc(r.fa)}" placeholder="مثلاً قورمهٔ لوبیا"></div>
    <div class="field"><label>${S('mealType')}</label><div class="seg" data-seg="m"><button type="button" class="${r.m==='b'?'on':''}" data-v="b">${S('breakfast')}</button><button type="button" class="${r.m!=='b'?'on':''}" data-v="m">${S('mains')}</button></div></div>
    <div class="field"><label>${S('seasonL')}</label><div class="seg" data-seg="s">${[['','allYear'],['w','winter'],['s','summer']].map(([v,l])=>`<button type="button" class="${(r.s||'')===v?'on':''}" data-v="${v}">${S(l)}</button>`).join('')}</div></div>
-   <div class="field"><label>${S('minutesL')}</label><input class="inp num" type="number" min="1" name="min" value="${r.min}"></div>
-   <div class="field"><label>${S('icon')}</label><div class="seg" data-seg="ic">${['pot','bowl','rice','leaf','bread','egg','cup'].map(k=>`<button type="button" class="${r.ic===k?'on':''}" data-v="${k}" style="padding:4px;display:grid;place-items:center">${tile(k,'xs')}</button>`).join('')}</div></div>
+   <div class="field"><label>${S('howL')}</label><div class="seg" data-seg="how"><button type="button" class="${rd?'':'on'}" data-v="cook">${S('cookHome')}</button><button type="button" class="${rd?'on':''}" data-v="buy">${S('buyReady')}</button></div></div>
+   <div id="buySec" style="display:${rd?'block':'none'}">
+    <div class="field"><label>${S('readyPrice')}</label><input class="inp num" type="number" inputmode="decimal" min="0" step="any" name="rp" value="${r.rp??''}"></div>
+    <div class="field"><label>${S('readyKcal')}</label><input class="inp num" type="number" min="0" step="any" name="rk" value="${r.rk??''}"></div>
+    <div class="field"><label>${S('readyProt')}</label><input class="inp num" type="number" min="0" step="any" name="rpr" value="${r.rpr??''}"></div>
+    <p class="tiny muted" style="margin:4px 0 0">${S('readyHint')}</p>
+   </div>
+   <div id="cookSec" style="display:${rd?'none':'block'}">
+   <div class="field"><label>${S('minutesL')}</label><input class="inp num" type="number" min="1" name="min" value="${r.min||30}"></div>
+   <div class="field"><label>${S('icon')}</label><div class="seg" data-seg="ic">${['pot','bowl','rice','leaf','bread','egg','cup','bag'].map(k=>`<button type="button" class="${r.ic===k?'on':''}" data-v="${k}" style="padding:4px;display:grid;place-items:center">${tile(k,'xs')}</button>`).join('')}</div></div>
    <div class="strong small" style="margin:16px 0 2px">${S('ingredients')}</div><div class="tiny muted" style="margin-bottom:4px">${S('qtyFor')}</div>
    <div id="rows">${r.i.map(([k,q])=>ING[k]?ingRow(k,q):'').join('')}</div>
    <button type="button" class="btn ghost" data-act="rowadd" style="margin-top:6px">+ ${S('addIng')}</button>
+   <details style="margin-top:8px;background:var(--line-2);border-radius:12px;padding:10px 12px"><summary class="small strong" style="cursor:pointer">${S('missingIng')} ${S('newIngQuick')}</summary>
+    <div class="field" style="border:0"><label>${S('name')}</label><input class="inp" style="width:170px;text-align:start" id="qiName" placeholder="${fa?'مثلاً گندم پوست‌کنده':'e.g. Hulled wheat'}"></div>
+    <div class="field"><label>${S('unit')}</label><select class="inp" id="qiUnit" style="width:110px"><option value="kg">${fa?'کیلو':'kg'}</option><option value="L">${fa?'لیتر':'L'}</option><option value="pc">${fa?'دانه':'pcs'}</option><option value="dz">${fa?'درجن':'dozen'}</option></select></div>
+    <div class="field"><label>${S('price')}</label><input class="inp num" type="number" inputmode="decimal" min="0" step="any" id="qiPrice"></div>
+    <div class="field"><label>${S('section')}</label><select class="inp" id="qiCat" style="width:150px;text-align:start">${CATS.filter(c=>c[0]!=='ready').map(c=>`<option value="${c[0]}">${fa?c[2]:c[1]}</option>`).join('')}</select></div>
+    <button type="button" class="btn pri block" data-act="quickIng">${S('addUse')}</button>
+   </details>
+   </div>
    <div class="field" style="margin-top:8px"><label>${S('noteOpt')}</label><input class="inp" style="width:190px;text-align:start" name="tip" value="${esc(r.tip||'')}"></div>
    <div class="btns" style="margin-top:16px"><span class="grow"></span><button type="button" class="btn ghost" data-act="close">${S('cancel')}</button><button class="btn pri" type="submit">${S('save')}</button></div></form>`;
+  openSheet(html);
+}
+function stepOf(id){ const g=ING[id]; return g.u==='dz'?0.5 : g.c==='nuts'?0.125 : g.u==='kg'?0.5 : 1; }
+function sheetFruit(){
+  const se=currentSeason(state), have=new Set(state.basket.map(b=>b.id));
+  const ok=g=>!g.s||se==='mild'||g.s===se[0];
+  let html=`<h3>${S('addFruit')}</h3>`;
+  for(const [c,lab] of [['fruit','freshF'],['nuts','dryF']]){
+    const ids=Object.keys(ING).filter(k=>ING[k].c===c&&k!=='fruit').sort((a,b)=>ok(ING[b])-ok(ING[a]));
+    html+=`<div class="strong small" style="margin:16px 0 4px">${S(lab)}</div>`;
+    for(const id of ids){ const g=ING[id];
+      html+=`<button class="opt ${have.has(id)?'cur':''}" data-act="fruitadd" data-id="${id}"><span class="avatar" style="width:34px;height:34px;font-size:15px;background:${c==='fruit'?'var(--ok-soft)':'var(--accent-soft)'};color:${c==='fruit'?'var(--ok)':'var(--accent)'}">${g.s==='w'?'❄':g.s==='s'?'☀':'•'}</span><span class="grow"><b class="small">${esc(nm(g))}</b><span class="tiny muted" style="display:block">${g.s?S(g.s==='w'?'winter':'summer'):S('allYear')}${ok(g)?'':' · '+(L()==='fa'?'فصلش نیست':'out of season')}</span></span><span class="small num muted">${money(priceOf(state,id))} / ${({dz:S('dozen'),kg:L()==='fa'?'کیلو':'kg',pc:L()==='fa'?'دانه':'pc'})[g.u]||''}</span>${have.has(id)?svg(CHECK,16):''}</button>`; }
+  }
   openSheet(html);
 }
 function toast(t){const el=document.getElementById('toast');el.textContent=t;el.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove('on'),2200);}
@@ -957,7 +1087,10 @@ document.addEventListener('click',e=>{
     case 'fit': { const y=window.scrollY; state.plan=autoPlan(Object.assign({},state,{leftovers:0.8})); commit(); window.scrollTo({top:y}); toast(L()==='fa'?'پلان تازه ساخته شد':'New plan made'); } break;
     case 'clear': for(const [k] of DAYS) state.plan[k]={b:'',l:'',d:''}; commit(); break;
     case 'tick': state.checked[id]=!state.checked[id]; { const y=window.scrollY; commit(); window.scrollTo({top:y}); } break;
-    case 'untick': state.checked={}; state.extra.forEach(x=>x.done=false); commit(); break;
+    case 'untick': state.checked={}; state.shopEdits={}; state.extra=state.extra.filter(x=>!x.done); commit(); break;
+    case 'shopedit': sheetShopEdit(id); break;
+    case 'shopreset': delete state.shopEdits[id]; closeSheet(); { const y=window.scrollY; commit(); window.scrollTo({top:y}); } break;
+    case 'xedit': { const x=state.extra.find(x=>x.id===id); if(x) openSheet(`<h3>${S('edit')}</h3><div style="margin-top:12px">${extraForm(x)}</div>`); } break;
     case 'xtick': { const x=state.extra.find(x=>x.id===id); if(x) x.done=!x.done; const y=window.scrollY; commit(); window.scrollTo({top:y}); } break;
     case 'xdel': state.extra=state.extra.filter(x=>x.id!==id); commit(); break;
     case 'copy': copyList(); break;
@@ -966,6 +1099,10 @@ document.addEventListener('click',e=>{
     case 'ps': pickSlot=v; document.querySelectorAll('#ps button').forEach(b=>b.classList.toggle('on',b.dataset.v===v)); break;
     case 'addplan': { const r=RMAP[id]; const slot = r.m==='b'?'b':(pickSlot&&pickSlot!=='b'?pickSlot:'d'); const day=(document.querySelector('#pd .chip.on')||{}).dataset?.v||todayKey(); state.plan[day][slot]=id; closeSheet(); commit(); toast(S('added')+' · '+dayName(day)+' · '+slotName(slot)); pickSlot=null; } break;
     case 'mem': sheetMember(id); break;
+    case 'fruitpick': sheetFruit(); break;
+    case 'fruitadd': { const b=state.basket.find(x=>x.id===id); if(b) b.q=(+b.q||0)+stepOf(id); else state.basket.push({id,q:ING[id].c==='nuts'?0.25:1}); closeSheet(); { const y=window.scrollY; commit(); window.scrollTo({top:y}); } toast('+ '+nm(ING[id])); } break;
+    case 'bq': { const b=state.basket.find(x=>x.id===id); if(b){ b.q=Math.max(0,Math.round(((+b.q||0)+(+v)*stepOf(id))*1000)/1000); if(b.q===0) state.basket=state.basket.filter(x=>x!==b); } const y=window.scrollY; commit(); window.scrollTo({top:y}); } break;
+    case 'suggest': { const pre=BASKET_PRESET[currentSeason(state)]||BASKET_PRESET.mild; state.basket=pre.map(([id,q])=>({id,q})); commit(); toast(S('suggested')); } break;
     case 'season': state.seasonMode=v; commit(); break;
     case 'onlymine': state.onlyMine=!state.onlyMine; commit(); break;
     case 'hide': { const h=new Set(state.hiddenR||[]); const was=h.has(id); was?h.delete(id):h.add(id); state.hiddenR=[...h]; closeSheet(); commit(); toast(S(was?'shownToast':'hiddenToast')); } break;
@@ -973,6 +1110,13 @@ document.addEventListener('click',e=>{
     case 'fooddel': state.customIng=state.customIng.filter(x=>x.id!==id); state.customRecipes.forEach(r=>r.i=r.i.filter(([k])=>k!==id)); delete state.prices[id]; delete state.checked[id]; closeSheet(); commit(); toast(S('deleted')); break;
     case 'dish': sheetDish(id); break;
     case 'dishdel': state.customRecipes=state.customRecipes.filter(x=>x.id!==id); for(const [k] of DAYS) for(const [sl] of SLOTS) if(state.plan[k][sl]===id) state.plan[k][sl]=''; closeSheet(); commit(); toast(S('deleted')); break;
+    case 'quickIng': {
+      const n=document.getElementById('qiName').value.trim(), u=document.getElementById('qiUnit').value, p=parseFloat(document.getElementById('qiPrice').value), c=document.getElementById('qiCat').value;
+      if(!n){ toast(S('needName')); break; } if(!(p>=0)||isNaN(p)){ toast(S('needPrice')); break; }
+      const g={id:'ci_'+Date.now().toString(36), en:n, fa:n, u, c, p, k:0, pr:0, f:0}; state.customIng.push(g); applyCustom(); commit(false);
+      document.querySelectorAll('.ingrow select').forEach(sel=>{ const v=sel.value; sel.innerHTML=ingOptions(v); });
+      document.getElementById('rows').insertAdjacentHTML('beforeend',ingRow(g.id,'')); document.getElementById('qiName').value=''; document.getElementById('qiPrice').value='';
+      el.closest('details').open=false; toast(S('savedOk')); } break;
     case 'rowadd': document.getElementById('rows').insertAdjacentHTML('beforeend',ingRow('onion','')); break;
     case 'rowdel': el.closest('.ingrow').remove(); break;
     case 'memdel': state.members=state.members.filter(m=>m.id!==id); closeSheet(); commit(); break;
@@ -987,12 +1131,25 @@ document.addEventListener('click',e=>{ const b=e.target.closest('[data-seg] butt
 document.addEventListener('change',e=>{
   const sel=e.target; if(sel.tagName==='SELECT'&&sel.name==='ing'){ const [ue,uf]=UNIT_IN(ING[sel.value].u); sel.closest('.ingrow').querySelector('.ul').textContent=L()==='fa'?uf:ue; }
 });
-document.addEventListener('click',e=>{ const b=e.target.closest('[data-seg=u] button'); if(b){ const l=document.getElementById('perlbl'); if(l) l.textContent=b.dataset.v==='pc'?S('perPc'):S('per100'); }});
+document.addEventListener('click',e=>{ const b=e.target.closest('[data-seg=how] button'); if(b){ const buy=b.dataset.v==='buy'; document.getElementById('buySec').style.display=buy?'block':'none'; document.getElementById('cookSec').style.display=buy?'none':'block'; }});
+document.addEventListener('click',e=>{ const b=e.target.closest('[data-seg=u] button'); if(b){ const l=document.getElementById('perlbl'); if(l) l.textContent=(b.dataset.v==='pc'||b.dataset.v==='dz')?S('perPc'):S('per100'); }});
 document.addEventListener('submit',e=>{
   const f=e.target; e.preventDefault();
-  if(f.dataset.form==='extra'){ const t=f.t.value.trim(); if(!t) return; state.extra.push({id:'x'+Date.now(),t,done:false}); commit(); setTimeout(()=>{const i=document.querySelector('[data-form=extra] input'); i&&i.focus();},0); }
+  if(f.dataset.form==='extra'){
+    const t=f.t.value.trim(); if(!t){ toast(S('needName')); return; }
+    const item={t, q:f.q.value===''?'':+f.q.value, u:f.u.value, p:f.p.value===''?'':+f.p.value};
+    const id=f.dataset.id;
+    if(id){ const x=state.extra.find(x=>x.id===id); if(x) Object.assign(x,item); closeSheet(); const y=window.scrollY; commit(); window.scrollTo({top:y}); }
+    else { state.extra.push({id:'x'+Date.now(),...item,done:false}); const y=window.scrollY; commit(); window.scrollTo({top:y}); setTimeout(()=>{const i=document.querySelector('[data-form=extra] input'); i&&i.focus();},0); }
+  }
+  if(f.dataset.form==='shopedit'){
+    const id=f.dataset.id, q=parseFloat(f.q.value), p=parseFloat(f.p.value);
+    if(!isNaN(q)&&q>=0) state.shopEdits[id]={q}; 
+    if(!isNaN(p)&&p>=0){ if(p===ING[id].p) delete state.prices[id]; else state.prices[id]=p; }
+    closeSheet(); const y=window.scrollY; commit(); window.scrollTo({top:y}); toast(S('savedOk'));
+  }
   if(f.dataset.form==='food'){
-    const id=f.dataset.id, u=(f.querySelector('[data-seg=u] .on')||{}).dataset?.v||'kg', per=u==='pc'?1:10;
+    const id=f.dataset.id, u=(f.querySelector('[data-seg=u] .on')||{}).dataset?.v||'kg', per=u==='pc'?1:u==='dz'?12:10;
     const en=f.en.value.trim(), fan=f.fa.value.trim(); if(!en&&!fan){ toast(S('needName')); return; }
     const g={id:id||('ci_'+Date.now().toString(36)), en:en||fan, fa:fan||en, u, c:f.c.value, p:Math.max(0,+f.p.value||0), k:(+f.k.value||0)*per, pr:(+f.pr.value||0)*per, f:(+f.f.value||0)*per};
     if(id) state.customIng=state.customIng.map(x=>x.id===id?g:x); else state.customIng.push(g);
@@ -1001,6 +1158,12 @@ document.addEventListener('submit',e=>{
   if(f.dataset.form==='dish'){
     const id=f.dataset.id, seg=k=>(f.querySelector(`[data-seg=${k}] .on`)||{}).dataset?.v;
     const en=f.en.value.trim(), fan=f.fa.value.trim(); if(!en&&!fan){ toast(S('needName')); return; }
+    if(seg('how')==='buy'){
+      const rp=parseFloat(f.rp.value); if(!(rp>=0)||f.rp.value===''){ toast(S('needPrice')); return; }
+      const r={id:id||('c_'+Date.now().toString(36)), en:en||fan, fa:fan||en, m:seg('m')||'b', ic:seg('ic')||'bag', s:seg('s')||'', tip:f.tip.value.trim(), ready:true, rp, rk:+f.rk.value||0, rpr:+f.rpr.value||0, i:[]};
+      if(id) state.customRecipes=state.customRecipes.map(x=>x.id===id?r:x); else state.customRecipes.push(r);
+      closeSheet(); commit(); toast(S('savedOk')); return;
+    }
     const i=[...f.querySelectorAll('.ingrow')].map(row=>{ const k=row.querySelector('select').value, q=parseFloat(row.querySelector('input').value); return [k, (q>0? q/UNIT_IN(ING[k].u)[2] : 0)]; }).filter(([k,q])=>q>0);
     if(!i.length){ toast(S('needIng')); return; }
     const r={id:id||('c_'+Date.now().toString(36)), en:en||fan, fa:fan||en, m:seg('m')||'m', min:Math.max(1,+f.min.value||30), ic:seg('ic')||'pot', s:seg('s')||'', tip:f.tip.value.trim(), i};
@@ -1042,10 +1205,10 @@ document.addEventListener('change',e=>{
   r.readAsText(e.target.files[0]);
 });
 function copyList(){
-  const fa=L()==='fa', list=shoppingList(state); let txt=(fa?'🛒 لست سودای هفته':'🛒 Shopping list – this week')+'\n';
-  for(const [c,en,f] of CATS){ const it=list.filter(x=>x.cat===c&&!state.checked[x.id]); if(!it.length) continue; txt+=`\n*${fa?f:en}*\n`+it.map(x=>`• ${nm(ING[x.id])} – ${qty(x.id,x.q)}`).join('\n')+'\n'; }
-  const ex=state.extra.filter(x=>!x.done); if(ex.length) txt+=`\n*${S('extra')}*\n`+ex.map(x=>'• '+x.t).join('\n')+'\n';
-  txt+=`\n${fa?'تخمین':'Est.'}: ${money(list.filter(x=>!state.checked[x.id]).reduce((a,x)=>a+x.cost,0))}`;
+  const fa=L()==='fa', list=shopList(); let txt=(fa?'🛒 لست سودای هفته':'🛒 Shopping list – this week')+'\n';
+  for(const [c,en,f] of CATS){ const it=list.filter(x=>x.cat===c&&!state.checked[x.id]); if(!it.length) continue; txt+=`\n*${fa?f:en}*\n`+it.map(x=>`• ${nm(ING[x.id])} – ${qty(x.id,x.q)} (${money(x.cost)})`).join('\n')+'\n'; }
+  const ex=state.extra.filter(x=>!x.done); if(ex.length) txt+=`\n*${S('extra')}*\n`+ex.map(x=>'• '+x.t+(x.q?` – ${n1(+x.q)} ${exUnit(x.u)}`:'')+(x.p?` (${money(+x.p)})`:'')).join('\n')+'\n';
+  txt+=`\n${fa?'تخمین':'Est.'}: ${money(list.filter(x=>!state.checked[x.id]).reduce((a,x)=>a+x.cost,0)+ex.reduce((a,x)=>a+exCost(x),0))}`;
   const fallback=()=>openSheet(`<h3>${S('copy')}</h3><p class="small muted">${S('copyManual')}</p><textarea class="copy" readonly>${esc(txt)}</textarea>`);
   try{ navigator.clipboard.writeText(txt).then(()=>toast(S('copied')),fallback); }catch(e){ fallback(); }
 }
