@@ -112,6 +112,7 @@ html[lang^="fa"] .big{font-size:28px}
 .btns{display:flex;gap:8px;flex-wrap:wrap}
 .icon-btn{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;color:var(--muted)}
 .icon-btn:hover{background:var(--line-2)}
+#gearBtn.on{background:var(--brand-soft);color:var(--brand)}
 /* week */
 .day{padding:6px 6px 6px 14px}
 html[dir=rtl] .day{padding:6px 14px 6px 6px}
@@ -175,8 +176,8 @@ details.card summary::-webkit-details-marker{display:none}
 details.card[open] summary{margin-bottom:10px}
 /* nav */
 .nav{position:fixed;inset-inline:0;bottom:0;z-index:20;padding:0 12px calc(10px + env(safe-area-inset-bottom));pointer-events:none}
-.nav-in{max-width:520px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);background:color-mix(in srgb,var(--card) 88%,transparent);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--line);border-radius:22px;box-shadow:0 10px 30px rgba(0,0,0,.12);padding:6px;pointer-events:auto}
-.nav button{display:flex;flex-direction:column;align-items:center;gap:3px;padding:7px 2px;border-radius:16px;font-size:11px;font-weight:600;color:var(--muted)}
+.nav-in{max-width:520px;margin:0 auto;display:grid;grid-template-columns:repeat(6,1fr);background:color-mix(in srgb,var(--card) 88%,transparent);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--line);border-radius:22px;box-shadow:0 10px 30px rgba(0,0,0,.12);padding:6px;pointer-events:auto}
+.nav button{display:flex;flex-direction:column;align-items:center;gap:3px;padding:7px 1px;border-radius:16px;font-size:10.5px;white-space:nowrap;overflow:hidden;font-weight:600;color:var(--muted)}
 .nav button svg{width:22px;height:22px}
 .nav button.on{color:var(--brand);background:var(--brand-soft)}
 /* sheet */
@@ -200,6 +201,17 @@ details.card[open] summary{margin-bottom:10px}
 .toast.on{opacity:1;transform:translate(-50%,0)}
 .empty-state{text-align:center;padding:30px 10px;color:var(--muted)}
 textarea.copy{width:100%;height:220px;border:1px solid var(--line);border-radius:12px;padding:10px;background:var(--bg);font:13px/1.5 var(--font)}
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}.kpis .card+.card{margin-top:0}
+.kpi{padding:14px}.kpi span{display:block;font-size:12px;color:var(--muted)}.kpi b{display:block;font-size:20px;font-weight:700;margin:4px 0 2px}.kpi small{font-size:11.5px;color:var(--muted)}
+.chart{width:100%;height:auto;display:block}.chart .cv{font-size:13px;font-weight:600;fill:var(--ink)}.chart .cl{font-size:12px;fill:var(--muted)}.bar-g{cursor:pointer}
+.sw{display:inline-block;width:10px;height:10px;border-radius:3px;margin-inline-end:5px;vertical-align:-1px}
+.ctip{position:fixed;z-index:30;background:var(--ink);color:var(--bg);font-size:12.5px;padding:7px 10px;border-radius:9px;pointer-events:none;opacity:0;transition:opacity .12s;max-width:260px}
+table.t{width:100%;border-collapse:collapse;font-size:13.5px}table.t td,table.t th{padding:8px 4px;border-top:1px solid var(--line-2);text-align:start}table.t tr:first-child td,table.t tr:first-child th{border-top:0}table.t th{font-size:12px;color:var(--muted);font-weight:600}table.t td.num{white-space:nowrap}
+.hbar{height:8px;background:var(--line-2);border-radius:99px;overflow:hidden}.hbar i{display:block;height:100%;background:var(--brand);border-radius:0 4px 4px 0}
+html[dir=rtl] .hbar i{border-radius:4px 0 0 4px}
+.nrow{padding:10px 0;border-top:1px solid var(--line-2)}.nrow:first-child{border-top:0;padding-top:0}
+.bullet{position:relative;height:10px;background:var(--line-2);border-radius:99px;margin:8px 0 5px}.bullet i{position:absolute;inset-block:0;inset-inline-start:0;background:var(--brand);border-radius:99px}.bullet .tgt{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--ink)}
+details.tbl summary{cursor:pointer;margin-top:8px}
 .fade{animation:fade .25s ease}
 @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 </style>
@@ -209,6 +221,7 @@ textarea.copy{width:100%;height:220px;border:1px solid var(--line);border-radius
   <header class="top">
     <div class="logo" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12h18a9 9 0 0 1-18 0z"/><path d="M8 8c0-1.5 1-1.5 1-3M12 8c0-1.5 1-1.5 1-3M16 8c0-1.5 1-1.5 1-3"/></svg></div>
     <div class="brand"><b id="appName">Dastarkhan</b><span id="sync" class="sync"><i class="dot"></i><em id="syncT" style="font-style:normal"></em></span></div>
+    <button class="icon-btn" data-act="tab" data-v="settings" id="gearBtn" aria-label="Settings"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
     <div class="lang" role="group" aria-label="Language"><button data-act="lang" data-v="en">EN</button><button data-act="lang" data-v="fa">دری</button></div>
   </header>
   <main id="view"></main>
@@ -228,13 +241,13 @@ const ING = {
   daliya:  {en:'Daliya (cracked wheat)', fa:'دلیه', u:'kg', p:220, c:'grain', n:[3400,120,120]},
   wheat:   {en:'Wheat grain (gandum)', fa:'گندم (دانه)', u:'kg', p:100, c:'grain', n:[3400,120,120]},
   naan:    {en:'Tandoor naan (bought)', fa:'نان تندوری (خریداری)', u:'pc', p:30, c:'grain', n:[300,9,3]},
-  lobia:   {en:'Kidney beans (lobia)', fa:'لوبیا', u:'kg', p:400, c:'pulse', n:[3330,240,150]},
+  lobia:   {en:'Kidney beans (lobia)', fa:'لوبیا', u:'kg', p:400, c:'pulse', n:[3330,236,249]},
   masoor:  {en:'Red lentils (masoor)', fa:'دال نسک', u:'kg', p:320, c:'pulse', n:[3500,250,110]},
   moong:   {en:'Mung beans (moong)', fa:'ماش', u:'kg', p:350, c:'pulse', n:[3470,240,160]},
   chana:   {en:'Chickpeas (white chana)', fa:'نخود', u:'kg', p:380, c:'pulse', n:[3640,190,170]},
-  chicken: {en:'Chicken (with bone)', fa:'گوشت مرغ', u:'kg', p:650, c:'meat', n:[1500,180,0]},
-  mutton:  {en:'Mutton (with bone)', fa:'گوشت گوسفند', u:'kg', p:2400, c:'meat', n:[2000,180,0]},
-  beef:    {en:'Beef mince (qeema)', fa:'قیمهٔ گوشت گاو', u:'kg', p:1500, c:'meat', n:[2200,260,0]},
+  chicken: {en:'Chicken (with bone)', fa:'گوشت مرغ', u:'kg', p:650, c:'meat', n:[1400,125,0]},
+  mutton:  {en:'Mutton (with bone)', fa:'گوشت گوسفند', u:'kg', p:2400, c:'meat', n:[1800,110,0]},
+  beef:    {en:'Beef mince (qeema)', fa:'قیمهٔ گوشت گاو', u:'kg', p:1500, c:'meat', n:[2500,175,0]},
   egg:     {en:'Eggs', fa:'تخم مرغ', u:'pc', p:25, c:'meat', n:[72,6.3,0]},
   milk:    {en:'Milk', fa:'شیر', u:'L', p:230, c:'dairy', n:[650,33,0]},
   yogurt:  {en:'Yogurt', fa:'ماست', u:'kg', p:250, c:'dairy', n:[600,35,0]},
@@ -248,9 +261,14 @@ const ING = {
   carrot:  {en:'Carrots', fa:'زردک', u:'kg', p:150, c:'veg', n:[410,9,28]},
   peas:    {en:'Green peas', fa:'متر (نخود سبز)', u:'kg', p:400, c:'veg', n:[810,54,57]},
   pumpkin: {en:'Pumpkin (kaddu)', fa:'کدو', u:'kg', p:220, c:'veg', n:[260,10,5]},
+  capsicum:{en:'Capsicum (bell pepper)', fa:'مرچ شیرین', u:'kg', p:280, c:'veg', n:[200,9,17]},
+  eggplant:{en:'Eggplant (baingan)', fa:'بادنجان سیاه', u:'kg', p:150, c:'veg', n:[250,10,30]},
+  cabbage: {en:'Cabbage', fa:'کرم', u:'kg', p:150, c:'veg', n:[250,13,25]},
   garlic:  {en:'Garlic', fa:'سیر', u:'kg', p:320, c:'veg', n:[1490,64,21]},
   ginger:  {en:'Ginger', fa:'زنجبیل', u:'kg', p:450, c:'veg', n:[800,18,20]},
   chili:   {en:'Green chillies', fa:'مرچ سبز', u:'kg', p:200, c:'veg', n:[400,20,15]},
+  ghee:    {en:'Ghee / butter', fa:'روغن زرد / مسکه', u:'kg', p:2400, c:'pantry', n:[9000,0,0]},
+  pasta:   {en:'Noodles / pasta', fa:'اوگره / ماکارونی', u:'kg', p:400, c:'grain', n:[3700,130,30]},
   raisins: {en:'Raisins', fa:'کشمش', u:'kg', p:1200, c:'pantry', n:[3000,30,37]},
   sugar:   {en:'Sugar', fa:'بوره', u:'kg', p:190, c:'pantry', n:[3870,0,0]},
   tea:     {en:'Tea leaves', fa:'چای خشک', u:'kg', p:2000, c:'pantry', n:[0,0,0]},
@@ -364,9 +382,53 @@ const RECIPES = [
   {id:'m_mashpalaw', m:'m', en:'Mash palaw (mung & rice)', fa:'ماش پلو', min:50, t:['afghan','budget','fibre'],
    i:[['rice',0.6],['moong',0.3],['onion',0.2],['carrot',0.2],['oil',0.07],['spice',1]],
    tip:['A filling Afghan budget classic.','غذای ارزان و سیرکنندهٔ افغانی.']},
+  // ---------- Turkish ----------
+  {id:'t_menemen', m:'b', en:'Menemen (Turkish eggs) with bread', fa:'منمن (تخم ترکی) با نان', min:20, t:['turkish','protein','quick'],
+   i:[['egg',8],['tomato',0.5],['capsicum',0.25],['oil',0.05],['naan',5],['spice',1]],
+   tip:['Soft-scrambled eggs cooked in tomato and pepper – mop up with bread.','تخمِ نرم در بادنجان رومی و مرچ شیرین؛ با نان بخورید.']},
+  {id:'t_gozleme', m:'b', en:'Gözleme (potato flatbread)', fa:'گوزلمه (نان کچالویی ترکی)', min:40, t:['turkish'],
+   i:[['atta',0.6],['potato',0.5],['onion',0.1],['oil',0.06],['yogurt',0.4],['spice',1]],
+   tip:['Like a thin bolani – cook on a dry tawa with a brush of oil.','مثل بولانی نازک؛ روی تابه با کمی روغن.']},
+  {id:'t_mercimek', m:'m', en:'Mercimek çorbası (lentil soup) with bread', fa:'شوربای دال ترکی با نان', min:35, t:['turkish','budget','fibre'],
+   i:[['masoor',0.35],['onion',0.15],['carrot',0.15],['potato',0.2],['oil',0.05],['naan',5],['spice',1]],
+   tip:['Blend smooth and finish with lemon and dried mint.','نرم بسازید و لیمو و نعناع خشک بزنید.']},
+  {id:'t_fasulye', m:'m', en:'Kuru fasulye (bean stew) with rice', fa:'لوبیای ترکی با پلو', min:60, t:['turkish','fibre','budget'],
+   i:[['lobia',0.4],['onion',0.2],['tomato',0.25],['oil',0.06],['rice',0.5],['spice',1]],
+   tip:['Turkey’s national comfort food – soak beans overnight.','غذای محبوب ترکیه؛ لوبیا را از شب تر کنید.']},
+  {id:'t_kofte', m:'m', en:'Köfte with bulgur pilav', fa:'کوفتهٔ ترکی با پلوی دلیه', min:45, t:['turkish','protein'],
+   i:[['beef',0.6],['onion',0.15],['egg',1],['daliya',0.45],['tomato',0.2],['capsicum',0.15],['oil',0.06],['spice',1]],
+   tip:['Grill or pan-fry; bulgur (daliya) is cheaper and higher in fibre than rice.','کباب یا سرخ کنید؛ دلیه از برنج ارزان‌تر و پرفایبرتر است.']},
+  {id:'t_imam', m:'m', en:'İmam bayıldı (stuffed eggplant) with bread', fa:'امام بایلدی (بادنجان ترکی) با نان', min:60, t:['turkish','fibre'],
+   i:[['eggplant',1],['onion',0.3],['tomato',0.3],['capsicum',0.15],['oil',0.12],['naan',5],['spice',1]],
+   tip:['Best in summer when eggplant is cheap.','در تابستان که بادنجان ارزان است بهتر است.']},
+  {id:'t_tavuk', m:'m', en:'Tavuk sote (chicken & peppers) with rice', fa:'مرغ ساته ترکی با برنج', min:40, t:['turkish','protein'],
+   i:[['chicken',0.8],['capsicum',0.25],['tomato',0.3],['onion',0.2],['oil',0.06],['rice',0.5],['spice',1]],
+   tip:['Quick stir-fry – peppers add vitamin C.','زود پخته می‌شود؛ مرچ شیرین ویتامین C دارد.']},
+  // ---------- Central Asian ----------
+  {id:'c_plov', m:'m', en:'Uzbek plov', fa:'پلوی ازبکی', min:90, t:['centralasian','protein'],
+   i:[['rice',0.8],['mutton',0.6],['carrot',0.6],['onion',0.3],['chana',0.1],['oil',0.15],['spice',1]],
+   tip:['Cousin of qabuli palaw – yellow carrots and cumin are the secret.','خویشاوند قابلی پلو؛ زردک و زیره راز آن است.']},
+  {id:'c_lagman', m:'m', en:'Lagman (noodles with beef & vegetables)', fa:'لغمان', min:60, t:['centralasian','protein'],
+   i:[['pasta',0.6],['beef',0.4],['capsicum',0.2],['tomato',0.3],['carrot',0.15],['potato',0.2],['onion',0.2],['oil',0.06],['spice',1]],
+   tip:['Use hand-pulled noodles or thick spaghetti.','اوگرهٔ دستی یا ماکارونی ضخیم استفاده کنید.']},
+  {id:'c_manti', m:'m', en:'Manti / mantu (steamed dumplings)', fa:'منتو', min:90, t:['centralasian','afghan','protein'],
+   i:[['atta',0.6],['beef',0.5],['onion',0.4],['yogurt',0.4],['garlic',0.02],['oil',0.03],['spice',1]],
+   tip:['Make a big batch and freeze – steam straight from frozen.','زیاد بسازید و یخ کنید؛ از یخچال مستقیم بخار دهید.']},
+  {id:'c_shurpa', m:'m', en:'Shurpa (mutton & vegetable soup) with naan', fa:'شوربای ازبکی با نان', min:90, t:['centralasian','protein'],
+   i:[['mutton',0.6],['potato',0.6],['carrot',0.3],['onion',0.2],['tomato',0.2],['capsicum',0.1],['naan',5],['spice',1]],
+   tip:['Slow-simmered winter soup – very warming.','شوربای زمستانی؛ آهسته پخته می‌شود و گرم می‌کند.']},
+  {id:'c_samsa', m:'m', en:'Samsa (baked meat pastries)', fa:'سمسه (سمبوسهٔ ازبکی)', min:75, t:['centralasian','protein'],
+   i:[['atta',0.6],['beef',0.4],['onion',0.4],['ghee',0.08],['yogurt',0.3],['spice',1]],
+   tip:['Bake instead of fry; serve with yogurt.','بپزید نه سرخ؛ با ماست بخورید.']},
+  {id:'c_dimlama', m:'m', en:'Dimlama (layered meat & vegetable stew)', fa:'دیملمه', min:90, t:['centralasian','fibre'],
+   i:[['beef',0.5],['potato',0.6],['carrot',0.3],['cabbage',0.5],['onion',0.2],['tomato',0.2],['capsicum',0.2],['oil',0.04],['naan',5],['spice',1]],
+   tip:['One pot, little oil – vegetables steam in their own juice.','یک دیگ و روغن کم؛ سبزی در آب خودش پخته می‌شود.']},
+  {id:'c_mastava', m:'m', en:'Mastava (rice & beef soup)', fa:'ماستاوه', min:60, t:['centralasian','budget'],
+   i:[['beef',0.3],['rice',0.3],['potato',0.4],['carrot',0.2],['onion',0.15],['tomato',0.2],['oil',0.04],['yogurt',0.3],['spice',1]],
+   tip:['A little meat goes a long way in this soup.','با کمی گوشت برای همه کافی می‌شود.']},
 ];
 // Seasons: 'w' = winter dish, 's' = summer dish, '' = all year
-const SEASON_OF={b_nakhud:'w',b_daliya:'w',b_paratha:'w',m_shorwa:'w',m_palaw:'w',m_bolani:'w',m_qeema:'w',m_aloogobi:'w',m_palak:'w',m_mashpalaw:'w',m_karahi:'w',m_bamia:'s',m_kichri:'s'};
+const SEASON_OF={t_fasulye:'w',t_mercimek:'w',t_imam:'s',c_plov:'w',c_lagman:'w',c_manti:'w',c_shurpa:'w',c_samsa:'w',c_dimlama:'w',b_nakhud:'w',b_daliya:'w',b_paratha:'w',m_shorwa:'w',m_palaw:'w',m_bolani:'w',m_qeema:'w',m_aloogobi:'w',m_palak:'w',m_mashpalaw:'w',m_karahi:'w',m_bamia:'s',m_kichri:'s'};
 RECIPES.forEach(r=>{ r.s=SEASON_OF[r.id]||''; });
 const RMAP = Object.fromEntries(RECIPES.map(r=>[r.id,r]));
 // Pakistan / Afghanistan: winter Nov–Feb, summer May–Sep, mild in between
@@ -488,35 +550,51 @@ function shoppingList(state){
   return out;
 }
 // Smart auto-planner: random search for the best week within budget & nutrition targets
-function autoPlan(state, seed){
+function autoPlan(state, seed, mode){
+  mode = mode || 'budget';
+  // Budget first: any plan within budget beats every plan over it. Within budget, pick the best
+  // nutrition, variety and season fit. If nothing fits, return the cheapest plan that still feeds the family.
   let s = seed || (Date.now() % 2147483647);
   const rnd=()=> (s = s*16807 % 2147483647) / 2147483647;
   const season=currentSeason(state);
-  // in-season dishes are twice as likely to be drawn
+  const Bp=pool(state,'b'), Mp=pool(state,'m');
   const weight=a=>a.flatMap(r=>inSeason(r,season)?[r,r]:[r]);
-  const B=weight(pool(state,'b')), M=weight(pool(state,'m'));
+  const B=weight(Bp), M=weight(Mp);
   const pick=a=>a[Math.floor(rnd()*a.length)].id;
-  const tgt=familyTarget(state.members, energyBoost(state));
+  const base=familyTarget(state.members), tgt=familyTarget(state.members, energyBoost(state));
   const budgetWeek = ((+state.budget||0) - (+state.other||0)) * 12/52;
-  let best=null, bestScore=Infinity;
-  for (let it=0; it<3000; it++){
-    const plan={};
-    for (const [d] of DAYS){
-      const useLeft = rnd() < (state.leftovers??0.6);
-      const l= useLeft ? LEFT_ID : pick(M); let dn=pick(M); let g=0; while(dn===l && g++<10) dn=pick(M);
-      plan[d]={b:pick(B),l,d:dn};
+  const leftP = state.leftovers??0.6;
+  function quality(plan,T){
+    let q=0;
+    q += Math.max(0, base.k*0.97 - T.day.k)/15;            // below the family's real need – serious
+    q += Math.max(0, tgt.k - T.day.k)/120;                 // below the winter target – mild
+    q += Math.max(0, tgt.p - T.day.p)*0.8;
+    q += Math.max(0, tgt.f - T.day.f)*0.3;
+    for (const d in plan) for (const k of ['b','l','d']){ const r=RMAP[plan[d][k]]; if(r && !inSeason(r,season)) q+=3; }
+    const c=T.counts; for (const k in c) if (c[k]>2) q += (c[k]-2)*6;
+    const distinct=Object.keys(c).length; q += Math.max(0,10-distinct)*2;   // variety across the week
+    return q;
+  }
+  function score(plan){
+    const T=weekTotals({...state,plan}); const q=quality(plan,T);
+    const feeds = T.day.k >= base.k*0.95 && T.day.p >= tgt.p;
+    if (mode==='variety'){
+      // every dish at most twice a week, at least 9 different dishes; then the cheapest such week
+      let v=0; const c=T.counts; for (const k in c) if (c[k]>2) v+=c[k]-2; v+=Math.max(0,9-Object.keys(c).length);
+      return v*1e6 + (feeds?0:5e5) + T.week + q*20;
     }
-    const T=weekTotals({...state,plan});
-    let sc=0;
-    sc += Math.max(0,T.week-budgetWeek*0.97)/50;               // over budget – heavy
-    sc += Math.max(0, tgt.p - T.day.p)*0.6;                       // protein shortfall
-    sc += Math.max(0, tgt.k*0.97 - T.day.k)/(season==='winter'?30:60); // energy shortfall (stricter in winter)
-    for (const d in plan) for (const k of ['b','l','d']){ const r=RMAP[plan[d][k]]; if(r && !inSeason(r,season)) sc+=4; } // out of season
-    sc += Math.max(0, tgt.f - T.day.f)*0.3;
-    const c=T.counts; for (const k in c) if (c[k]>2) sc += (c[k]-2)*8;   // variety
-    let ch=0; for (const k of ['m_karahi','m_shorwa','m_palaw']) ch+=(c[k]||0);
-    if (ch>3) sc+=(ch-3)*6;
-    if (sc<bestScore){bestScore=sc;best=plan;}
+    const over=Math.max(0,T.week-budgetWeek);
+    return over>0 ? 1e6 + over*5 + q + (feeds?0:5e5) : q + (feeds?0:5e5);
+  }
+  const randomPlan=()=>{ const plan={}; for (const [d] of DAYS){ const l= rnd()<leftP ? LEFT_ID : pick(M); let dn=pick(M), g=0; while(dn===l && g++<10) dn=pick(M); plan[d]={b:pick(B),l,d:dn}; } return plan; };
+  let best=null, bestScore=Infinity;
+  for (let it=0; it<1500; it++){ const p=randomPlan(), sc=score(p); if(sc<bestScore){bestScore=sc;best=p;} }
+  // hill-climb: change one meal at a time and keep improvements
+  for (let it=0; it<2500; it++){
+    const p=JSON.parse(JSON.stringify(best)), d=DAYS[Math.floor(rnd()*7)][0], k=['b','l','d'][Math.floor(rnd()*3)];
+    p[d][k] = k==='b' ? pick(B) : (k==='l' && rnd()<0.5 ? LEFT_ID : pick(M));
+    if (p[d].l===p[d].d) continue;
+    const sc=score(p); if(sc<=bestScore){ bestScore=sc; best=p; }
   }
   return best;
 }
@@ -556,7 +634,7 @@ const STR = {
   fit:['Fit to budget','مطابق بودجه بساز'], clear:['Clear week','پاک کردن هفته'], leftovers:['Leftovers + fresh roti','باقی‌ماندهٔ شب + نان تازه'],
   leftoversOf:['from last night','از شب گذشته'], remove:['Remove','حذف'], choose:['Choose','انتخاب'],
   shopList:['Shopping list','لست سودا'], forWeek:['For the whole week','برای تمام هفته'], bought:['bought','خریده شد'],
-  copy:['Copy for WhatsApp','کاپی برای واتس‌اپ'], resetTicks:['New week: clear ticks','هفتهٔ نو: پاک کردن نشانه‌ها'], extra:['Extra items','چیزهای اضافه'],
+  copy:['Copy for WhatsApp','کاپی برای واتس‌اپ'], resetTicks:['Finish this week','ختم این هفته'], extra:['Extra items','چیزهای اضافه'],
   addItem:['Add an item…','چیز دیگر بنویسید…'], spiceNote:['Spices & salt are counted in meal costs – keep them stocked.','ادویه و نمک در قیمت غذاها حساب شده؛ همیشه در خانه داشته باشید.'],
   search:['Search recipes','جستجوی غذا'], all:['All','همه'], breakfast:['Breakfast','صبحانه'], mains:['Lunch & dinner','چاشت و شب'],
   cheap:['Budget','ارزان'], highP:['High protein','پروتین زیاد'], afghan:['Afghan','افغانی'], pakistani:['Pakistani','پاکستانی'],
@@ -581,6 +659,68 @@ const STR = {
   imported:['Backup loaded','پشتیبان باز شد'], badFile:['This is not a Dastarkhan backup file','این فایل پشتیبان دسترخوان نیست'],
   install:['Install on this phone','نصب روی همین تلفون'], iosHint:['iPhone: tap Share, then “Add to Home Screen”.','آیفون: Share را بزنید، بعد «Add to Home Screen».'], installed:['Installed ✓','نصب شد ✓'],
   phone:['Saved on this phone','در همین تلفون ذخیره شد'],
+  backupHintSync:['Your data is synced to your Google Sheet. A backup file is still useful as an extra copy.','معلومات شما در Google Sheet همگام است. فایل پشتیبان به حیث یک نسخهٔ اضافه هنوز مفید است.'],
+  syncT:['Family sync (Google Sheets)','همگام‌سازی خانواده (Google Sheets)'], syncIntro:['Share one copy of everything with your wife, kept in a Google Sheet in your personal account. Paste the Web app link and secret key from your Google Sheet set-up.','همه چیز را با همسرتان در یک Google Sheet در حساب شخصی خود شریک کنید. لینک Web app و کلید مخفی را اینجا وارد کنید.'],
+  syncKeyPh:['Secret key','کلید مخفی'], syncNamePh:['Your name (e.g. Hadi)','نام شما (مثلاً هادی)'], syncConnect:['Connect','وصل شو'], syncHow:['How to set up','طرز راه‌اندازی'],
+  syncStatus:['Status','وضعیت'], syncLastT:['last sync','آخرین همگام‌سازی'], syncNow:['Sync now','همین حالا همگام کن'], syncDisconnect:['Disconnect','قطع اتصال'],
+  syncOn:['Synced with family','با خانواده همگام شد'], syncWait:['Syncing…','در حال همگام‌سازی…'], syncOff:['Offline – will sync later','آفلاین – بعداً همگام می‌شود'], syncErr:['Sync problem','مشکل همگام‌سازی'],
+  syncConflict:['{n} changed the data at the same time – the latest shared copy is shown. Please check your last change.','{n} همزمان تغییر داد – آخرین نسخهٔ مشترک نشان داده شد. لطفاً آخرین تغییر خود را بررسی کنید.'],
+  syncBadUrl:['That is not a Google Apps Script web-app link','این لینک Web app گوگل نیست'], syncNeedKey:['Enter the secret key','کلید مخفی را وارد کنید'], syncNoReach:['Could not reach the link – check it and your internet','به لینک وصل نشد – لینک و انترنت را بررسی کنید'],
+  syncWrongKey:['Wrong secret key','کلید مخفی اشتباه است'], syncKeyNotSet:['Set SECRET_KEY in the script and deploy a new version first','اول SECRET_KEY را در کود بنویسید و نسخهٔ نو Deploy کنید'],
+  syncFirst:['Connected – this phone’s data is now in your Google Sheet','وصل شد – معلومات این تلفون در Google Sheet شما ذخیره شد'],
+  syncFound:['The Google Sheet already has family data (last saved by {n}). Which copy should this phone use?','در Google Sheet معلومات خانواده موجود است (آخرین ذخیره توسط {n}). این تلفون کدام نسخه را استفاده کند؟'],
+  syncUseShared:['Use the shared data (recommended)','استفاده از معلومات مشترک (پیشنهادی)'], syncReplace:['Replace shared data with this phone’s','جایگزینی معلومات مشترک با معلومات این تلفون'],
+  syncSafety:['Keep the link and key private – anyone with both can open your family data. To change the key: edit it in the script, then Deploy → Manage deployments → Edit → New version.','لینک و کلید را مخفی نگه دارید – هر کس هر دو را داشته باشد معلومات شما را می‌بیند. برای تغییر کلید: در کود عوض کنید، بعد Deploy ← Manage deployments ← Edit ← New version.'],
+  syncOffDone:['Disconnected – data stays on this phone','قطع شد – معلومات در همین تلفون می‌ماند'],
+  stepsL:['Cooking steps','طرز پخت'], stepsHint:['One step per line','هر مرحله در یک سطر'], watchVideo:['Watch video','دیدن ویدیو'], videoSaved:['video link saved','لینک ویدیو ذخیره شد'],
+  stepsFound:['steps','مرحله'], pasteVideo:['From a YouTube video: copy the description (… more) or the transcript (… more → Show transcript) and paste it here. Paste the video link too – anywhere in the text is fine.','از ویدیوی یوتیوب: توضیحات (… more) یا متن گفتار (… more ← Show transcript) را کاپی و اینجا بچسبانید. لینک ویدیو را هم در هر جای متن بچسبانید.'],
+  settingsT:['Settings','تنظیمات'], settingsLink:['Budget, prices, season, sync and backup','بودجه، قیمت‌ها، فصل، همگام‌سازی و پشتیبان'],
+  minMet:['✓ met ({p}% of minimum)','✓ کافی ({p}٪ حداقل)'], planMade:['New plan made','پلان تازه ساخته شد'],
+  fitWorking:['Comparing hundreds of weekly plans…','صدها پلان هفته مقایسه می‌شود…'], fitIntro:['Both options give everyone enough energy and protein. Choose what matters more this week:','هر دو گزینه انرژی و پروتین کافی می‌دهد. انتخاب کنید این هفته کدام مهم‌تر است:'],
+  fitCheap:['Cheapest that fits the budget','ارزان‌ترین در حد بودجه'], fitCheapD:['Stays within budget – dishes repeat more often.','در حد بودجه – غذاها بیشتر تکرار می‌شوند.'],
+  fitVar:['Balanced variety','تنوع متوازن'], fitVarD:['No dish more than twice a week, at the lowest cost possible.','هیچ غذا بیشتر از دو بار در هفته نیست، با کمترین قیمت ممکن.'],
+  fitNote:['To make room: lower the fruit & nuts basket or milk, or enter your real bazaar prices in Settings.','برای جا باز کردن: سبد میوه یا شیر را کم کنید، یا قیمت‌های واقعی بازار را در تنظیمات بنویسید.'],
+  dishesL:['dishes','غذا'], maxRepeat:['max repeat','بیشترین تکرار'],
+  purchasesT:['Purchases this month','خریدهای این ماه'], noPurch:['No purchases recorded yet. Tick items in Shopping as you buy them, or paste a receipt.','هنوز خریدی ثبت نشده. در سودا اقلام را هنگام خرید نشانه بزنید یا رسید را بچسبانید.'],
+  purchCount:['purchases','خرید'], inclThisWeek:['includes this week','شامل این هفته'], avgPrice:['Avg price','قیمت اوسط'], fullLog:['Show every purchase (date, shop)','نمایش همه خریدها (تاریخ، دکان)'],
+  copySheets:['Copy for Google Sheets','کاپی برای Google Sheets'], copiedSheets:['Copied – paste into Google Sheets','کاپی شد – در Google Sheets بچسبانید'], shopL:['Shop','دکان'], actualL:['actual purchases','خرید واقعی'],
+  pasteRc:['Paste receipt','چسباندن رسید'], rcHow:['In Google Lens or Google Camera, point at the bill, tap Text → Select all → Copy, then paste here. Or in Lens tap Share → Dastarkhan.','در گوگل لنز یا کمرهٔ گوگل روی بل بگیرید، Text ← Select all ← Copy را بزنید و اینجا بچسبانید. یا در لنز Share ← Dastarkhan را بزنید.'],
+  rcPlaceholder:['Atta 10kg 1450\nChicken 1.5kg 975\nMilk 2 L 460','آرد ۱۰ کیلو ۱۴۵۰\nمرغ ۱٫۵ کیلو ۹۷۵'], readRc:['Read receipt','خواندن رسید'], rcNone:['No items with prices found – check the pasted text.','قلمی با قیمت پیدا نشد – متن را بررسی کنید.'],
+  rcReview:['Check the receipt','بررسی رسید'], rcMatched:['lines matched to your items. Fix any wrong match, amount or price.','سطر با اقلام شما جور شد. هر اشتباه در قلم، مقدار یا قیمت را درست کنید.'],
+  rcTotal:['Total on receipt','جمع رسید'], rcSum:['Sum of lines','جمع سطرها'], ignoreL:['Ignore','نادیده'], asExtra:['Add as extra item','افزودن به حیث چیز اضافه'], onList:['On your list','در لست شما'],
+  rcUpdPrices:['Also update prices in the app (price ÷ amount)','قیمت‌ها را در اپ هم تازه کن (قیمت ÷ مقدار)'], rcLearn:['The app remembers your choices for next time.','اپ انتخاب‌های شما را برای دفعهٔ بعد یاد می‌گیرد.'], rcSaved:['Receipt saved','رسید ذخیره شد'],
+  sectionL:['Section','بخش'], autoL:['Auto','خودکار'], otherG:['Other','دیگر'], addExtraT:['Add an extra item','افزودن چیز اضافه'], paidL:['paid','پرداخت شد'],
+  report:['Report','گزارش'], spentMonth:['Spent this month','خرچ این ماه'], weeksL:['weeks','هفته'], estimated:['estimated','تخمینی'], projected:['Projected month','پیش‌بینی ماه'],
+  perPersonDay:['Per person / day','هر نفر در روز'], per1000:['Per 1,000 kcal','در هر ۱۰۰۰ کالوری'], valueHint:['value for money','ارزش پول'], weeklySpend:['Weekly spending','خرچ هفته‌وار'],
+  showTable:['Show as table','نمایش جدول'], weekL:['Week','هفته'], plannedL:['Planned','پلان'], spentL:['Spent','خرچ شده'], thisWeek:['This week','این هفته'],
+  byCategory:['Spending by section','خرچ به تفکیک بخش'], nutriVsTarget:['Nutrition vs family need','تغذیه در برابر نیاز خانواده'], onTarget:['on target','مطابق هدف'], lowL:['low','کم'], highL:['high','زیاد'],
+  perDayFamily:['per day, family','در روز، خانواده'], foodGroups:['Food groups – weekly','گروه‌های غذایی – هفته‌وار'], perWeekAvg:['Per week','در هفته'], guide:['Guide','رهنما'],
+  guideNote:['Guides are general healthy-eating targets for your family size.','رهنماها اهداف عمومی تغذیهٔ سالم برای اندازهٔ خانوادهٔ شما است.'],
+  gPulse:['Pulse / bean meals','غذای دال و لوبیا'], gMeat:['Meat meals','غذای گوشت‌دار'], gEgg:['Egg meals','غذای تخم'], gVeg:['Vegetable dishes','غذای سبزی'], gFruit:['Fresh fruit','میوهٔ تازه'],
+  gMilk:['Milk','شیر'], gOil:['Oil & ghee','روغن'], gSugar:['Sugar','بوره'], gNuts:['Dry fruit & nuts','خشکه'], topItems:['Top 5 costs','۵ قلم پرخرچ'], remarks:['Remarks','یادداشت‌ها'],
+  budgetLine:['Weekly budget','بودجهٔ هفته'], withinBudget:['Within budget','در بودجه'], overBudget:['Over budget','بیشتر از بودجه'],
+  healthNut:['Health & nutrition','صحت و تغذیه'], perDayEst:['/ day (est.)','/ روز (تخمینی)'], update:['Update','تازه کردن'], addHealth:['Health record','ریکارد صحی'], lastCheck:['Last check','آخرین معاینه'],
+  bUnder:['underweight','وزن کم'], bHealthy:['healthy range','در حد سالم'], bOver:['overweight','وزن زیاد'], bObese:['obese range','چاقی'], weightChange:['Weight change','تغییر وزن'], growingNote:['normal while growing – ask the doctor to check growth charts','در دوران رشد طبیعی است – از داکتر بخواهید چارت رشد را ببیند'],
+  ironMeals:['iron-rich meals / week','غذای آهن‌دار در هفته'], ironTip:['aim for 5+; eat fruit with them and keep tea away from meals','۵ یا بیشتر؛ با میوه بخورید و چای را با غذا ننوشید'],
+  sugarWk:['sugar','بوره'], riceMeals:['white-rice meals','غذای برنج سفید'], diabTip:['less sugar in chai, more daal, vegetables and daliya','بوره کمتر در چای؛ دال، سبزی و دلیه بیشتر'],
+  readyMeals:['ready-made meals / week','غذای آماده در هفته'], bpTip:['keep salt, pickles and ready-made food low','نمک، اچار و غذای آماده را کم کنید'],
+  oilWk:['oil','روغن'], meatMeals:['meat meals','غذای گوشت‌دار'], cholTip:['less ghee and fried food; more pulses, fish and nuts in small amounts','روغن زرد و سرخ‌کردنی کمتر؛ دال و مغزیجات به اندازه'],
+  underTip:['add nuts, milk, an extra roti or paratha','مغزیجات، شیر یا یک نان اضافه'], overTip:['smaller rice/roti portions, less oil and sugar, more vegetables','برنج و نان کمتر، روغن و بوره کمتر، سبزی بیشتر'],
+  constipTip:['more vegetables, fruit, daliya and water','سبزی، میوه، دلیه و آب بیشتر'], allergyL:['Allergies / avoid','حساسیت / پرهیز'], allergyHint:['e.g. peanut, egg','مثلاً مونگ‌پلی، تخم'],
+  allergyHit:['found in this week’s plan:','در پلان این هفته است:'], allergyNone:['not in this week’s plan','در پلان این هفته نیست'],
+  healthDisc:['Health remarks are general guidance from your food plan, not medical advice. Follow your doctor’s advice.','یادداشت‌های صحی رهنمای عمومی از پلان غذایی است، نه مشورهٔ طبی. به مشورهٔ داکتر عمل کنید.'],
+  healthPrivacy:['Kept in this app’s data – anyone you share the app or a backup with can see it.','در معلومات همین اپ ذخیره می‌شود – هر کسی که اپ یا پشتیبان را با او شریک کنید می‌بیند.'],
+  newCheck:['New measurement','اندازه‌گیری نو'], conditions:['Health conditions','مشکلات صحی'], notesL:['Notes','یادداشت'], history:['History','سابقه'],
+  finishWeek:['Finish this week','ختم این هفته'], finishHow:['Saves this week’s spending and nutrition to your monthly report, then clears the ticks for a new week.','خرچ و تغذیهٔ این هفته در گزارش ماهانه ذخیره می‌شود و نشانه‌ها برای هفتهٔ نو پاک می‌شوند.'],
+  noTicks:['Nothing is ticked as bought – the planned amount will be used as an estimate.','هیچ قلمی خریده‌شده نشانه نشده؛ مبلغ پلان به حیث تخمین ثبت می‌شود.'],
+  saveStart:['Save to report & start new week','ذخیره در گزارش و شروع هفتهٔ نو'], justClear:['Just clear, don’t save','فقط پاک کن، ذخیره نکن'], weekSaved:['Week saved to report','هفته در گزارش ذخیره شد'],
+  emptyRep:['Your report fills up as you finish each week (Shopping → Finish this week).','گزارش با ختم هر هفته پر می‌شود (سودا ← ختم این هفته).'],
+  dishName:['Dish name','نام غذا'],
+  turkish:['Turkish','ترکی'], centralasian:['Central Asian','آسیای میانه'],
+  pasteT:['Paste a recipe (website or YouTube)','چسباندن دستور غذا (ویبسایت یا یوتیوب)'], pasteHow:['Open the recipe website, copy the ingredients list, and paste it below. The app reads the amounts and turns them into a dish you can check and save.','ویبسایت دستور غذا را باز کنید، لست مواد را کاپی و اینجا بچسبانید. اپ مقدارها را می‌خواند و یک غذا می‌سازد که می‌توانید بررسی و ذخیره کنید.'],
+  serves:['The recipe serves','دستور برای چند نفر است'], people:['people','نفر'], pasteHere:['Paste ingredients here…','مواد را اینجا بچسبانید…'], readIt:['Read ingredients','خواندن مواد'],
+  linkOpt:['Recipe link (optional)','لینک دستور (اختیاری)'], recog:['Recognised','شناخته شد'], notRecog:['Not recognised – add with “Ingredient not in the list?” below, or ignore:','شناخته نشد – با «ماده در لست نیست؟» اضافه کنید یا نادیده بگیرید:'],
+  checkAmts:['Amounts were converted for your family – please check them before saving.','مقدارها برای خانوادهٔ شما تبدیل شد – پیش از ذخیره بررسی کنید.'], nothingFound:['No ingredients recognised – check the pasted text.','هیچ ماده‌ای شناخته نشد – متن را بررسی کنید.'], openRecipe:['Open the recipe','باز کردن دستور'],
   amount:['Amount','مقدار'], unitPrice:['Price per','قیمت هر'], planned:['Planned','پلان شده'], priceAll:['Changes this item’s price everywhere in the app.','قیمت این ماده در تمام اپ تغییر می‌کند.'],
   resetPlan:['Back to plan','برگشت به پلان'], edited:['edited','تغییر داده شده'], totalPrice:['Total price','قیمت مجموعی'], itemName:['Item','چیز'],
   editTap:['Tap an item to change its amount or price.','برای تغییر مقدار یا قیمت روی هر قلم بزنید.'],
@@ -639,9 +779,11 @@ const ICONS = {
   bag:'<path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/>',
 };
 const TONE = {egg:['#F6E7C1','#B07A0E'],cup:['#EADFD3','#8A5A3C'],bread:['#F3E3CF','#A86A2E'],bowl:['#F8E0CF','#C0602A'],rice:['#ECEFE0','#6F7B30'],pot:['#F6DAD4','#AD4436'],leaf:['#DDEBDD','#3B7A4B'],left:['#E7E3F3','#5F5596'],bag:['#E5EEE9','#2D5B4C']};
-const RICON = {b_egg:'egg',b_chai:'cup',b_paratha:'bread',b_daliya:'bowl',b_nakhud:'bowl',m_daal:'bowl',m_daalchawal:'rice',m_karahi:'pot',m_shorwa:'pot',m_palaw:'rice',m_palak:'leaf',m_aloogobi:'leaf',m_bamia:'leaf',m_chana:'bowl',m_kichri:'rice',m_qeema:'pot',m_bolani:'bread',m_eggcurry:'egg',m_borani:'leaf',m_mashpalaw:'rice'};
+const RICON = {t_menemen:'egg',t_gozleme:'bread',t_mercimek:'bowl',t_fasulye:'bowl',t_kofte:'pot',t_imam:'leaf',t_tavuk:'pot',c_plov:'rice',c_lagman:'bowl',c_manti:'pot',c_shurpa:'bowl',c_samsa:'bread',c_dimlama:'pot',c_mastava:'bowl',b_egg:'egg',b_chai:'cup',b_paratha:'bread',b_daliya:'bowl',b_nakhud:'bowl',m_daal:'bowl',m_daalchawal:'rice',m_karahi:'pot',m_shorwa:'pot',m_palaw:'rice',m_palak:'leaf',m_aloogobi:'leaf',m_bamia:'leaf',m_chana:'bowl',m_kichri:'rice',m_qeema:'pot',m_bolani:'bread',m_eggcurry:'egg',m_borani:'leaf',m_mashpalaw:'rice'};
 function tile(key,size=''){const [bg,fg]=TONE[key]||TONE.bowl;return `<div class="tile ${size}" style="background:${bg};color:${fg}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICONS[key]||ICONS.bowl}</svg></div>`;}
+const GEAR='<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/>';
 const NAVI = {
+  report:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
   today:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
   week:'<rect x="3" y="4.5" width="18" height="16" rx="3"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/>',
   shop:'<path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/>',
@@ -672,19 +814,19 @@ function applyCustom(){
 const UNIT_IN = u => ({dz:['dozen','درجن',1],kg:['g','گرام',1000],L:['ml','ملی‌لیتر',1000],pc:['pcs','دانه',1],meal:['×','×',1]})[u]||['','',1];
 /* ---------- state & persistence ---------- */
 const LS_KEY='dastarkhan.v1', LS_LANG='dastarkhan.lang';
-function defaultPlan(){return {mon:{b:'b_chai',l:'left',d:'m_daal'},tue:{b:'b_nakhud',l:'left',d:'m_palak'},wed:{b:'b_egg',l:'left',d:'m_mashpalaw'},thu:{b:'b_paratha',l:'left',d:'m_aloogobi'},fri:{b:'b_egg',l:'m_shorwa',d:'m_kichri'},sat:{b:'b_daliya',l:'left',d:'m_borani'},sun:{b:'b_nakhud',l:'left',d:'m_chana'}};}
-function fresh(){const s=DEFAULT_STATE(); s.plan=defaultPlan(); return s;}
+function fresh(){const s=DEFAULT_STATE(); s.plan=null; return s;}
 function normalize(s){
   const d=fresh(); s=Object.assign(d,s||{});
   s.basics=Object.assign(fresh().basics,s.basics||{});
-  if(!s.plan) s.plan=defaultPlan();
-  for(const [k] of DAYS) s.plan[k]=Object.assign({b:'',l:'',d:''},s.plan[k]||{});
   if(!Array.isArray(s.members)||!s.members.length) s.members=fresh().members;
   s.prices=s.prices||{}; s.checked=s.checked||{}; s.extra=Array.isArray(s.extra)?s.extra:[];
   if(!Array.isArray(s.basket)){ s.basket=(BASKET_PRESET[currentSeason(s)]||BASKET_PRESET.mild).map(([id,q])=>({id,q})); if(s.basics) s.basics.fruit=0; }
   s.shopEdits=s.shopEdits&&typeof s.shopEdits==='object'?s.shopEdits:{};
+  s.history=Array.isArray(s.history)?s.history:[]; s.purchases=Array.isArray(s.purchases)?s.purchases:[]; s.checkedAt=s.checkedAt||{}; s.shopOf=s.shopOf||{}; s.health=s.health&&typeof s.health==='object'?s.health:{};
   s.hiddenR=Array.isArray(s.hiddenR)?s.hiddenR:[]; s.seasonMode=s.seasonMode||'auto'; if(s.winterBoost==null) s.winterBoost=10;
   s.customIng=Array.isArray(s.customIng)?s.customIng:[]; s.customRecipes=Array.isArray(s.customRecipes)?s.customRecipes:[];
+  if(!s.plan) s.plan=autoPlan({...s,leftovers:0.8},12345,'variety');
+  for(const [k] of DAYS) s.plan[k]=Object.assign({b:'',l:'',d:''},s.plan[k]||{});
   return s;
 }
 function loadLocal(){try{const j=localStorage.getItem(LS_KEY);return j?JSON.parse(j):null;}catch(e){return null;}}
@@ -705,7 +847,7 @@ async function push(){
 function setSync(m){
   syncMode=m; const dot=document.querySelector('#sync .dot'), t=document.getElementById('syncT');
   dot.className='dot on';
-  t.textContent = S('phone');
+  if(typeof sync!=='undefined'&&sync){ setSyncMsg(lastSyncMsg); return; } t.textContent = S('phone');
 }
 async function initDb(){
   if(!(window.claude&&typeof window.claude.use==='function')){setSync('local');return;}
@@ -738,9 +880,9 @@ function slotLabel(d,s){
   if(id===LEFT_ID){ const src=state.plan[prevDay(d)].d; return {name:S('leftovers'), sub: src&&RMAP[src]? nm(RMAP[src]) : '', icon:'left', left:true}; }
   const r=RMAP[id]; return r?{name:nm(r),icon:RICON[id]||'bowl',r}:null;
 }
-function ring(pct,color,label,val,sub){
-  const R=36,C=2*Math.PI*R, p=Math.max(0,Math.min(1,pct));
-  return `<div><div class="ring"><svg width="84" height="84"><circle cx="42" cy="42" r="${R}" fill="none" stroke="var(--line-2)" stroke-width="8"/><circle cx="42" cy="42" r="${R}" fill="none" stroke="${color}" stroke-width="8" stroke-linecap="round" stroke-dasharray="${C*p} ${C}"/></svg><div class="v num">${n0(pct*100)}%</div></div><div class="ring-l">${label}</div><div class="ring-s num">${val}</div><div class="ring-s">${sub}</div></div>`;
+function ring(pct,color,label,val,sub,isMin){
+  const R=36,C=2*Math.PI*R, p=Math.max(0,Math.min(1,pct)), met=isMin&&pct>=1;
+  return `<div><div class="ring"><svg width="84" height="84"><circle cx="42" cy="42" r="${R}" fill="none" stroke="var(--line-2)" stroke-width="8"/><circle cx="42" cy="42" r="${R}" fill="none" stroke="${color}" stroke-width="8" stroke-linecap="round" stroke-dasharray="${C*p} ${C}"/></svg><div class="v num">${met?'<span style="font-size:22px;color:var(--ok)">✓</span>':n0(pct*100)+'%'}</div></div><div class="ring-l">${label}</div><div class="ring-s num">${val}</div><div class="ring-s">${met?S('minMet').replace('{p}',n0(pct*100)):sub}</div></div>`;
 }
 const SEAS_ICON={w:'❄',s:'☀'};
 function seasonPill(r){ return r.s?`<span class="pill ${r.s==='w'?'brand':'acc'}">${SEAS_ICON[r.s]} ${S(r.s==='w'?'winter':'summer')}</span>`:''; }
@@ -775,8 +917,8 @@ function vToday(){
   const pk=T.day.k/tgt.k, pp=T.day.p/tgt.p, pf=T.day.f/tgt.f;
   html+=`<h2>${S('nutrition')}</h2><div class="card"><div class="rings">
    ${ring(pk,statusColor(pk>1.12?0.85:pk),S('energy'),`${n0(T.day.k)} / ${n0(tgt.k)}`,S('kcal'))}
-   ${ring(pp,statusColor(pp),S('protein'),`${n0(T.day.p)} / ${n0(tgt.p)}`,S('g'))}
-   ${ring(pf,statusColor(pf),S('fibre'),`${n0(T.day.f)} / ${n0(tgt.f)}`,S('g'))}
+   ${ring(pp,statusColor(pp),S('protein'),`${n0(T.day.p)} / ${n0(tgt.p)} ${S('g')}`,S('g'),true)}
+   ${ring(pf,statusColor(pf),S('fibre'),`${n0(T.day.f)} / ${n0(tgt.f)} ${S('g')}`,S('g'),true)}
   </div></div>`;
   // insights
   const tips=insights(T,tgt);
@@ -794,7 +936,7 @@ function vToday(){
 }
 function insights(T,tgt){
   const fa=L()==='fa', out=[], B=+state.budget||0, diff=B-T.month, c=T.counts;
-  if(diff<0){ out.push({c:'bad',i:'!',t: fa?`این پلان ماهانه ${money(-diff)} بیشتر از بودجه است.`:`This plan is ${money(-diff)} a month over budget.`, s: fa?'در «هفته» دکمهٔ «مطابق بودجه بساز» را بزنید، یا قیمت‌های بازار خود را در «خانواده» بنویسید.':'Tap “Fit to budget” in Week, or enter your own bazaar prices under Family › Prices.'}); }
+  if(diff<0){ out.push({c:'bad',i:'!',t: fa?`این پلان ماهانه ${money(-diff)} بیشتر از بودجه است.`:`This plan is ${money(-diff)} a month over budget.`, s: fa?'در «هفته» دکمهٔ «مطابق بودجه بساز» را بزنید، یا قیمت‌های بازار خود را در «تنظیمات» بنویسید.':'Tap “Fit to budget” in Week, or enter your own bazaar prices under Settings › Food items & prices.'}); }
   else out.push({c:'ok',i:'✓',t: fa?`در بودجه هستید؛ ماهانه ${money(diff)} پس‌انداز.`:`On budget – ${money(diff)} a month to spare.`, s: fa?'می‌توانید یک بار دیگر مرغ یا میوهٔ بیشتر اضافه کنید.':'Room for an extra chicken meal or more fruit for the kids.'});
   const pulses=['m_daal','m_daalchawal','m_chana','m_kichri','m_mashpalaw','b_nakhud'].reduce((a,k)=>a+(c[k]||0),0);
   const meat=['m_karahi','m_shorwa','m_palaw','m_qeema'].reduce((a,k)=>a+(c[k]||0),0);
@@ -831,7 +973,13 @@ function vWeek(){
 const EXU={kg:['kg','کیلو'],g:['g','گرام'],L:['L','لیتر'],pc:['pcs','دانه'],dz:['dozen','درجن'],pack:['pack','بسته']};
 const exUnit=u=>(EXU[u]||['',''])[L()==='fa'?1:0];
 function shopList(){
-  return shoppingList(state).map(x=>{ const e=state.shopEdits[x.id]; if(e&&e.q!=null&&!isNaN(+e.q)){ x.planned=x.q; x.q=+e.q; x.cost=x.q*priceOf(state,x.id); x.edited=true; } return x; });
+  const base=shoppingList(state), ids=new Set(base.map(x=>x.id));
+  for(const id in state.shopEdits){ if(!ids.has(id)&&ING[id]){ base.push({id,q:+state.shopEdits[id].q||0,cost:0,cat:ING[id].c,unplanned:true}); } }
+  return base.map(x=>{ const e=state.shopEdits[x.id];
+    if(e&&e.q!=null&&!isNaN(+e.q)){ x.planned=x.unplanned?0:x.q; x.q=+e.q; x.edited=true; }
+    x.cost = (e&&e.paid!=null&&!isNaN(+e.paid)) ? +e.paid : x.q*priceOf(state,x.id);
+    if(e&&e.paid!=null) x.paid=true;
+    return x; });
 }
 const exCost=x=>+x.p||0;
 function vShop(){
@@ -840,58 +988,57 @@ function vShop(){
   let html=`<div class="fade"><h1>${S('shopList')}</h1><div class="sub">${S('forWeek')}</div>
   <div class="card" style="margin-top:14px"><div class="row between"><div><div class="big num">${money(total)}</div><div class="tiny muted num" style="margin-top:6px">${n0(done)} / ${n0(all)} ${S('bought')}</div></div>${tile('bag','lg')}</div>
   <div class="bar"><i style="width:${all?done/all*100:0}%"></i></div>
-  <p class="tiny muted" style="margin:0 0 10px">✎ ${S('editTap')}</p><div class="btns"><button class="btn pri" data-act="copy">${svg('<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>',18)} ${S('copy')}</button><button class="btn ghost" data-act="untick">${S('resetTicks')}</button></div></div>`;
+  <p class="tiny muted" style="margin:0 0 10px">✎ ${S('editTap')}</p><div class="btns"><button class="btn pri" data-act="copy">${svg('<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>',18)} ${S('copy')}</button><button class="btn" data-act="rcpt">📄 ${S('pasteRc')}</button><button class="btn ghost" data-act="untick">${S('resetTicks')}</button></div><button class="btn ghost block" style="margin-top:6px" data-act="tab" data-v="report">📊 ${S('purchasesT')}</button></div>`;
   { const se=currentSeason(state), fa=L()==='fa';
     html+=`<h2>${S('basketT')}</h2><div class="card"><p class="tiny muted" style="margin:0 0 6px">${S('basketHint')}</p>`;
     for(const b of state.basket){ const g=ING[b.id]; if(!g) continue;
       html+=`<div class="field"><label><b>${esc(nm(g))}</b> ${g.s?`<span class="tiny">${g.s==='w'?'❄':'☀'}</span>`:''}<small class="num">${money((+b.q||0)*priceOf(state,b.id))} ${S('perWeekS')}</small></label><div class="row" style="gap:4px"><button class="icon-btn" data-act="bq" data-id="${b.id}" data-v="-1" aria-label="less">${svg('<path d="M6 12h12"/>',18)}</button><span class="num strong small" style="min-width:74px;text-align:center">${qty(b.id,+b.q||0)}</span><button class="icon-btn" data-act="bq" data-id="${b.id}" data-v="1" aria-label="more">${svg('<path d="M12 6v12M6 12h12"/>',18)}</button></div></div>`; }
     html+=`<div class="btns" style="margin-top:10px"><button class="btn pri" data-act="fruitpick">+ ${S('addFruit')}</button><button class="btn ghost" data-act="suggest">${{winter:'❄ ',summer:'☀ ',mild:'🌤 '}[se]}${S('suggest')}</button></div></div>`; }
-  for(const [c,en,fa] of CATS){
-    const items=list.filter(x=>x.cat===c); if(!items.length) continue;
+  for(const [c,en,fa] of SHOP_GROUPS()){
+    const items=list.filter(x=>x.cat===c), exs=state.extra.filter(x=>exCat(x)===c); if(!items.length&&!exs.length) continue;
     items.sort((a,b)=>(!!state.checked[a.id])-(!!state.checked[b.id]));
-    const sub=items.reduce((a,x)=>a+x.cost,0);
+    const sub=items.reduce((a,x)=>a+x.cost,0)+exs.reduce((a,x)=>a+exCost(x),0);
     html+=`<h2 class="cat-h"><span>${L()==='fa'?fa:en}</span><span class="num" style="text-transform:none;letter-spacing:0">${money(sub)}</span></h2><div class="card" style="padding:4px 14px">`;
     for(const x of items){
-      html+=`<div class="shop-item ${state.checked[x.id]?'done':''}"><button class="chk" data-act="tick" data-id="${x.id}" aria-label="tick">${svg(CHECK,14)}</button><button class="row grow" style="gap:10px;text-align:start;min-width:0" data-act="shopedit" data-id="${x.id}"><span class="nm grow">${esc(nm(ING[x.id]))}${x.edited?` <span class="pill acc" style="padding:1px 7px;font-size:11px">${S('edited')}</span>`:''}</span><span class="q num">${qty(x.id,x.q)}</span><span class="c num">${money(x.cost)}</span></button></div>`;
+      html+=`<div class="shop-item ${state.checked[x.id]?'done':''}"><button class="chk" data-act="tick" data-id="${x.id}" aria-label="tick">${svg(CHECK,14)}</button><button class="row grow" style="gap:10px;text-align:start;min-width:0" data-act="shopedit" data-id="${x.id}"><span class="nm grow">${esc(nm(ING[x.id]))}${x.paid?` <span class="pill ok" style="padding:1px 7px;font-size:11px">${S('paidL')}</span>`:x.edited?` <span class="pill acc" style="padding:1px 7px;font-size:11px">${S('edited')}</span>`:''}</span><span class="q num">${qty(x.id,x.q)}</span><span class="c num">${money(x.cost)}</span></button></div>`;
+    }
+    for(const x of exs){
+      html+=`<div class="shop-item ${x.done?'done':''}"><button class="chk" data-act="xtick" data-id="${x.id}" aria-label="tick">${svg(CHECK,14)}</button><button class="row grow" style="gap:10px;text-align:start;min-width:0" data-act="xedit" data-id="${x.id}"><span class="nm grow">${esc(x.t)} <span class="pill" style="padding:1px 7px;font-size:11px">+</span></span><span class="q num">${x.q?n1(+x.q)+' '+exUnit(x.u):''}</span><span class="c num">${x.p?money(+x.p):''}</span></button><button class="icon-btn" data-act="xdel" data-id="${x.id}" aria-label="${S('remove')}">${svg('<path d="M6 6l12 12M18 6L6 18"/>',18)}</button></div>`;
     }
     html+=`</div>`;
   }
-  const exTotal=state.extra.reduce((a,x)=>a+exCost(x),0);
-  html+=`<h2 class="cat-h"><span>${S('extra')}</span>${exTotal?`<span class="num" style="text-transform:none;letter-spacing:0">${money(exTotal)}</span>`:''}</h2><div class="card" style="padding:12px 14px">${extraForm()}`;
-  for(const x of state.extra){
-    html+=`<div class="shop-item ${x.done?'done':''}"><button class="chk" data-act="xtick" data-id="${x.id}" aria-label="tick">${svg(CHECK,14)}</button><button class="row grow" style="gap:10px;text-align:start;min-width:0" data-act="xedit" data-id="${x.id}"><span class="nm grow">${esc(x.t)}</span><span class="q num">${x.q?n1(+x.q)+' '+exUnit(x.u):''}</span><span class="c num">${x.p?money(+x.p):''}</span></button><button class="icon-btn" data-act="xdel" data-id="${x.id}" aria-label="${S('remove')}">${svg('<path d="M6 6l12 12M18 6L6 18"/>',18)}</button></div>`;
-  }
+  html+=`<h2>${S('addExtraT')}</h2><div class="card" style="padding:12px 14px">${extraForm()}`;
   html+=`</div><p class="tiny muted" style="margin:12px 4px">${S('spiceNote')}</p></div>`;
   return html;
 }
 function extraForm(x){
   x=x||{t:'',q:'',u:'kg',p:''}; const fa=L()==='fa';
-  return `<form data-form="extra" data-id="${x.id||''}"><input class="inp w" name="t" placeholder="${S('addItem')}" autocomplete="off" value="${esc(x.t)}">
-   <div class="row" style="gap:6px;margin-top:8px"><input class="inp num" style="width:72px" type="number" inputmode="decimal" min="0" step="any" name="q" placeholder="${L()==='fa'?'مقدار':'Qty'}" value="${x.q??''}">
+  return `<form data-form="extra" data-id="${x.id||''}"><div class="row" style="gap:6px"><input class="inp w grow" name="t" placeholder="${S('addItem')}" autocomplete="off" value="${esc(x.t)}"><select class="inp" name="c" style="width:130px;text-align:start" aria-label="${S('sectionL')}"><option value="">${S('sectionL')}: ${S('autoL')}</option>${SHOP_GROUPS().map(([k,en,f])=>`<option value="${k}" ${x.c===k?'selected':''}>${fa?f:en}</option>`).join('')}</select></div>
+   <div class="row" style="gap:6px;margin-top:8px"><input class="inp num" style="width:72px" type="text" inputmode="decimal" min="0" step="any" name="q" placeholder="${L()==='fa'?'مقدار':'Qty'}" value="${x.q??''}">
    <select class="inp" name="u" style="width:86px;text-align:start">${Object.keys(EXU).map(u=>`<option value="${u}" ${x.u===u?'selected':''}>${exUnit(u)}</option>`).join('')}</select>
-   <input class="inp num grow" style="width:auto;min-width:0" type="number" inputmode="decimal" min="0" step="any" name="p" placeholder="${fa?'قیمت (کلدار)':'Price Rs'}" value="${x.p??''}">
+   <input class="inp num grow" style="width:auto;min-width:0" type="text" inputmode="decimal" min="0" step="any" name="p" placeholder="${fa?'قیمت (کلدار)':'Price Rs'}" value="${x.p??''}">
    <button class="btn pri" type="submit">${x.id?S('save'):S('add')}</button></div></form>`;
 }
 function sheetShopEdit(id){
   const x=shopList().find(y=>y.id===id); if(!x) return; const g=ING[id], fa=L()==='fa';
   const un={kg:fa?'کیلو':'kg',L:fa?'لیتر':'L',pc:fa?'دانه':'pcs',dz:fa?'درجن':'dozen',meal:S('meals')}[g.u]||'';
   const html=`<h3>${esc(nm(g))}</h3><form data-form="shopedit" data-id="${id}" style="margin-top:12px">
-   <div class="field"><label>${S('amount')}<small>${S('planned')}: ${qty(id,x.edited?x.planned:x.q)}</small></label><div class="row" style="gap:6px"><input class="inp num" type="number" inputmode="decimal" min="0" step="any" name="q" value="${+x.q}"><span class="tiny muted" style="width:44px">${un}</span></div></div>
-   <div class="field"><label>${S('unitPrice')} ${un}<small>${S('priceAll')}</small></label><div class="row" style="gap:6px"><input class="inp num" type="number" inputmode="decimal" min="0" step="any" name="p" value="${priceOf(state,id)}"><span class="tiny muted" style="width:44px">${fa?'کلدار':'Rs'}</span></div></div>
+   <div class="field"><label>${S('amount')}<small>${S('planned')}: ${qty(id,x.edited?x.planned:x.q)}</small></label><div class="row" style="gap:6px"><input class="inp num" type="text" inputmode="decimal" min="0" step="any" name="q" value="${+x.q}"><span class="tiny muted" style="width:44px">${un}</span></div></div>
+   <div class="field"><label>${S('unitPrice')} ${un}<small>${S('priceAll')}</small></label><div class="row" style="gap:6px"><input class="inp num" type="text" inputmode="decimal" min="0" step="any" name="p" value="${priceOf(state,id)}"><span class="tiny muted" style="width:44px">${fa?'کلدار':'Rs'}</span></div></div>
    <div class="btns" style="margin-top:16px">${x.edited?`<button type="button" class="btn ghost" data-act="shopreset" data-id="${id}">${S('resetPlan')}</button>`:''}<span class="grow"></span><button type="button" class="btn ghost" data-act="close">${S('cancel')}</button><button class="btn pri" type="submit">${S('save')}</button></div></form>`;
   openSheet(html);
 }
 function vRecipes(){
   const sc=scaleFactor(state.members), q=rQuery.trim().toLowerCase(), N=state.members.length, hid=new Set(state.hiddenR||[]);
-  const F={all:()=>true,b:r=>r.m==='b',m:r=>r.m==='m',cheap:r=>recipeTotals(state,r,sc).cost/N<=90,protein:r=>r.t.includes('protein'),afghan:r=>r.t.includes('afghan'),pakistani:r=>r.t.includes('pakistani'),mine:r=>!!r.custom,season:r=>inSeason(r,currentSeason(state))&&!!r.s,hidden:r=>hid.has(r.id)};
+  const F={all:()=>true,b:r=>r.m==='b',m:r=>r.m==='m',cheap:r=>recipeTotals(state,r,sc).cost/N<=90,protein:r=>r.t.includes('protein'),afghan:r=>r.t.includes('afghan'),pakistani:r=>r.t.includes('pakistani'),mine:r=>!!r.custom,turkish:r=>r.t.includes('turkish'),centralasian:r=>r.t.includes('centralasian'),season:r=>inSeason(r,currentSeason(state))&&!!r.s,hidden:r=>hid.has(r.id)};
   const list=RECIPES.filter(F[rFilter]||F.all).filter(r=>rFilter==='hidden'||!hid.has(r.id)).filter(r=>!q||r.en.toLowerCase().includes(q)||r.fa.includes(q));
   let html=`<div class="fade"><h1>${S('recipes')}</h1><div class="search">${svg('<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>',18)}<input id="rq" placeholder="${S('search')}" value="${esc(rQuery)}"></div>
-  <button class="btn pri block" style="margin-top:10px" data-act="dish" data-id="">+ ${S('newDish')}</button>
+  <div class="btns" style="margin-top:10px"><button class="btn pri grow" data-act="dish" data-id="">+ ${S('newDish')}</button><button class="btn grow" data-act="paste">${svg('<path d="M9 4h6v3H9z"/><path d="M8 5H6a1 1 0 0 0-1 1v13a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1h-2"/>',18)} ${S('pasteT').split(' ').slice(0,3).join(' ')}</button></div>
   ${state.customRecipes.length?`<button class="card row" style="width:100%;margin-top:10px;text-align:start;padding:12px 14px" data-act="onlymine"><span class="grow"><b class="small">${S('onlyMine')}</b><span class="tiny muted" style="display:block">${S('onlyMineHint')}</span></span><span class="switch ${state.onlyMine?'on':''}"><i></i></span></button>`:''}
-  <div class="chips">${[['all','all'],['season','inSeasonC'],['mine','myDishes'],['b','breakfast'],['m','mains'],['cheap','cheap'],['protein','highP'],['afghan','afghan'],['pakistani','pakistani'],...(hid.size?[['hidden','hiddenC']]:[])].map(([k,l])=>`<button class="chip ${rFilter===k?'on':''}" data-act="rf" data-v="${k}">${S(l)}</button>`).join('')}</div><div class="rgrid">`;
+  <div class="chips">${[['all','all'],['season','inSeasonC'],['mine','myDishes'],['b','breakfast'],['m','mains'],['cheap','cheap'],['protein','highP'],['afghan','afghan'],['pakistani','pakistani'],['turkish','turkish'],['centralasian','centralasian'],...(hid.size?[['hidden','hiddenC']]:[])].map(([k,l])=>`<button class="chip ${rFilter===k?'on':''}" data-act="rf" data-v="${k}">${S(l)}</button>`).join('')}</div><div class="rgrid">`;
   for(const r of list){
     const t=recipeTotals(state,r,sc);
-    html+=`<button class="rcard" data-act="recipe" data-id="${r.id}"><div class="row">${tile(RICON[r.id])}<div class="grow"><div class="nm">${esc(nm(r))}</div><div class="tiny muted num">${r.ready?'🛍 '+S('buyReady'):n0(r.min)+' '+S('minutes')} · ${money(t.cost/N)} ${S('perPerson')}</div></div></div><div class="tags"><span class="pill num">${n0(t.k/N)} ${S('kcal')}</span><span class="pill brand num">${n0(t.p/N)}${S('g')} ${S('protein')}</span>${t.cost/N<=90?`<span class="pill ok">${S('cheap')}</span>`:''}${seasonPill(r)}${r.custom?`<span class="pill acc">${S('mineTag')}</span>`:''}</div></button>`;
+    html+=`<button class="rcard" data-act="recipe" data-id="${r.id}"><div class="row">${tile(RICON[r.id])}<div class="grow"><div class="nm">${esc(nm(r))}</div><div class="tiny muted num">${r.ready?'🛍 '+S('buyReady'):n0(r.min)+' '+S('minutes')} · ${money(t.cost/N)} ${S('perPerson')}</div></div></div><div class="tags"><span class="pill num">${n0(t.k/N)} ${S('kcal')}</span><span class="pill brand num">${n0(t.p/N)}${S('g')} ${S('protein')}</span>${t.cost/N<=90?`<span class="pill ok">${S('cheap')}</span>`:''}${seasonPill(r)}${r.custom?`<span class="pill acc">${S('mineTag')}</span>`:''}${((state.customRecipes.find(x=>x.id===r.id)||{}).src||'').match(/youtube\.com|youtu\.be/)?'<span class="pill" style="background:#FBE3E1;color:#C4302B">▶</span>':''}</div></button>`;
   }
   if(!list.length) html+=`<div class="empty-state">—</div>`;
   return html+'</div></div>';
@@ -903,9 +1050,16 @@ function vFamily(){
   <div class="card" style="margin-top:12px"><div class="tiny muted">${S('dailyNeed')}</div><div class="row" style="gap:18px;margin-top:6px;flex-wrap:wrap"><div><span class="big num">${n0(tgt.k)}</span> <span class="small muted">${S('kcal')}</span></div><div><span class="big num">${n0(tgt.p)}</span> <span class="small muted">${S('g')} ${S('protein')}</span></div></div>${energyBoost(state)?`<span class="pill brand" style="margin-top:10px">❄ ${S('winterMode')} · ${S('energy')} +${n0(energyBoost(state)*100)}%</span>`:''}</div>
   <h2>${S('members')}</h2><div class="card">`;
   state.members.forEach((m,i)=>{ const t=targetOf(m), [bg,fg]=col[i%col.length].split(':');
-    html+=`<button class="mem" data-act="mem" data-id="${m.id}"><span class="avatar" style="background:${bg};color:${fg}">${esc((nm(m)||'?').trim().charAt(0))}</span><span class="grow"><b>${esc(nm(m))}</b><span class="tiny muted" style="display:block">${n0(m.age)} ${S('years')} · ${S(m.sex==='m'?'male':'female')} · ${S(m.act)}</span></span><span class="small num" style="text-align:end"><b>${n0(t.k)}</b> ${S('kcal')}<span class="tiny muted" style="display:block">${n0(t.p)}${S('g')} ${S('protein')}</span></span></button>`; });
+    const hc=((state.health||{})[m.id]||{}).cond||[];
+    html+=`<div class="mem"><button class="row grow" style="gap:12px;text-align:start;min-width:0" data-act="mem" data-id="${m.id}"><span class="avatar" style="background:${bg};color:${fg}">${esc((nm(m)||'?').trim().charAt(0))}</span><span class="grow"><b>${esc(nm(m))}</b>${hc.length?`<span style="display:flex;gap:4px;flex-wrap:wrap;margin-top:3px">${hc.map(c=>`<span class="pill" style="padding:1px 7px;font-size:11px">${condName(c)}</span>`).join('')}</span>`:''}<span class="tiny muted" style="display:block">${n0(m.age)} ${S('years')} · ${S(m.sex==='m'?'male':'female')} · ${S(m.act)}</span></span><span class="small num" style="text-align:end"><b>${n0(t.k)}</b> ${S('kcal')}<span class="tiny muted" style="display:block">${n0(t.p)}${S('g')} ${S('protein')}</span></span></button><button class="icon-btn" style="color:${(state.health||{})[m.id]?'var(--bad)':'var(--muted)'};font-size:17px" data-act="health" data-id="${m.id}" aria-label="${S('addHealth')}">${(state.health||{})[m.id]?'❤':'♡'}</button></div>`; });
   html+=`<button class="btn ghost block" style="margin-top:6px" data-act="mem" data-id="">+ ${S('addMember')}</button></div><p class="tiny muted" style="margin:10px 4px 0">${S('targetsNote')}</p>`;
-  const f=(k,lab,v,step,unit,hint='')=>`<div class="field"><label>${lab}${hint?`<small>${hint}</small>`:''}</label><div class="row" style="gap:6px"><input class="inp num" type="number" inputmode="decimal" min="0" step="${step}" data-set="${k}" value="${v}"><span class="tiny muted" style="width:34px">${unit}</span></div></div>`;
+  html+=`<button class="card row" style="width:100%;margin-top:18px;text-align:start" data-act="tab" data-v="settings"><span class="tile sm" style="background:var(--line-2);color:var(--ink-2)">${svg(GEAR,20)}</span><span class="grow"><b>${S('settingsT')}</b><span class="tiny muted" style="display:block">${S('settingsLink')}</span></span><span class="muted">${fa?'‹':'›'}</span></button>`;
+  return html+'</div>';
+}
+function vSettings(){
+  const fa=L()==='fa';
+  let html=`<div class="fade"><h1>${S('settingsT')}</h1><p class="sub" style="margin:0 0 4px">${S('settingsLink')}</p>`;
+  const f=(k,lab,v,step,unit,hint='')=>`<div class="field"><label>${lab}${hint?`<small>${hint}</small>`:''}</label><div class="row" style="gap:6px"><input class="inp num" type="text" inputmode="decimal" min="0" step="${step}" data-set="${k}" value="${v}"><span class="tiny muted" style="width:34px">${unit}</span></div></div>`;
   html+=`<h2>${S('seasonL')}</h2><div class="card"><div class="seg" data-act="noop">${['auto','winter','summer','mild'].map(v=>`<button class="${(state.seasonMode||'auto')===v?'on':''}" data-act="season" data-v="${v}">${S(v)}</button>`).join('')}</div>
    <p class="tiny muted" style="margin:8px 2px 4px">${S('seasonHint')} ${fa?'اکنون':'Now'}: <b>${S(currentSeason(state))}</b></p>
    ${f('winterBoost',S('winterBoostL'),state.winterBoost??10,5,'%',S('winterBoostH'))}</div>`;
@@ -925,11 +1079,12 @@ function vFamily(){
   html+=`<button class="btn pri block" style="margin-top:8px" data-act="food" data-id="">+ ${S('addFood')}</button></div>`;
   html+=`<details class="card" style="margin-top:12px"><summary>${S('builtIn')} <span class="tiny muted">${n0(BASE_ING.size)} ${S('items')}</span></summary><p class="tiny muted" style="margin:0 0 6px">${S('pricesHint')}</p>`;
   for(const id of BASE_ING){ const g=ING[id];
-    html+=`<div class="field"><label>${esc(nm(g))}</label><div class="row" style="gap:6px"><input class="inp num" type="number" inputmode="decimal" min="0" step="5" data-price="${id}" value="${priceOf(state,id)}"><span class="tiny muted" style="width:34px">/${uName(g.u)}</span></div></div>`; }
+    html+=`<div class="field"><label>${esc(nm(g))}</label><div class="row" style="gap:6px"><input class="inp num" type="text" inputmode="decimal" min="0" step="5" data-price="${id}" value="${priceOf(state,id)}"><span class="tiny muted" style="width:34px">/${uName(g.u)}</span></div></div>`; }
   html+=`<button class="btn ghost block" data-act="resetPrices">${S('resetPrices')}</button></details>`;
   const standalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
   const ios=/iphone|ipad|ipod/i.test(navigator.userAgent);
-  html+=`<h2>${S('backup')}</h2><div class="card"><p class="small muted" style="margin:0 0 12px">${S('backupHint')}</p>
+  html+=syncCard();
+  html+=`<h2>${S('backup')}</h2><div class="card"><p class="small muted" style="margin:0 0 12px">${sync?S('backupHintSync'):S('backupHint')}</p>
    <div class="btns"><button class="btn pri" data-act="export">${svg('<path d="M12 4v11M7 10l5 5 5-5"/><path d="M5 19h14"/>',18)} ${S('exportB')}</button>
    <label class="btn">${svg('<path d="M12 20V9M7 14l5-5 5 5"/><path d="M5 5h14"/>',18)} ${S('importB')}<input type="file" accept=".json,application/json" id="importFile" hidden></label></div></div>`;
   html+=`<h2>${S('data')}</h2><div class="card">`;
@@ -964,6 +1119,9 @@ function sheetRecipe(id){
     html+=`<div class="ing"><span>${esc(nm(ING[ing]))}</span><span class="num"><b>${qty(ing,q*sc)}</b> <span class="muted">· ${money(q*sc*priceOf(state,ing))}</span></span></div>`; }
   if(r.s) html+=`<div style="margin:-4px 0 10px">${seasonPill(r)}</div>`;
   if(!r.custom){ const isH=(state.hiddenR||[]).includes(id); html+=`<button class="btn ghost block" style="margin-top:10px" data-act="hide" data-id="${id}">${isH?S('showDish'):S('hideDish')}</button>`; }
+  const cr=state.customRecipes.find(x=>x.id===id)||{}, src=cr.src, isYT=src&&/youtube\.com|youtu\.be/.test(src);
+  if(src&&/^https?:\/\//.test(src)) html+=`<a class="btn block" href="${esc(src)}" target="_blank" rel="noopener" style="margin-top:12px;text-decoration:none;${isYT?'background:#C4302B;color:#fff;border-color:transparent':''}">${isYT?'▶ '+S('watchVideo'):'↗ '+S('openRecipe')}</a>`;
+  if((cr.steps||[]).length) html+=`<div class="strong small" style="margin:18px 0 4px">${S('stepsL')}</div><ol class="small" dir="auto" style="padding-inline-start:22px;margin:0;line-height:1.55">${cr.steps.map(x=>`<li style="margin:6px 0">${esc(x)}</li>`).join('')}</ol>`;
   if(r.custom) html+=`<div class="btns" style="margin-top:14px"><button class="btn" data-act="dish" data-id="${id}">${S('editDish')}</button><button class="btn ghost" style="color:var(--bad)" data-act="dishdel" data-id="${id}">${S('del')}</button></div>`;
   html+=`<div class="strong small" style="margin:20px 0 8px">${S('addToPlan')}</div>
    <div class="chips" style="padding-top:0" id="pd">${DAYS.map(([k],i)=>`<button class="chip ${k===todayKey()?'on':''}" data-act="pd" data-v="${k}">${dayName(k,false)}</button>`).join('')}</div>
@@ -976,9 +1134,10 @@ function sheetMember(id){
   const html=`<h3>${id?S('edit'):S('addMember')}</h3><form data-form="mem" data-id="${id}" style="margin-top:14px">
    <div class="field"><label>${S('name')} (EN)</label><input class="inp" style="width:170px;text-align:start" name="en" value="${esc(m.en)}"></div>
    <div class="field"><label>${S('name')} (دری)</label><input class="inp" style="width:170px;text-align:start" dir="rtl" name="fa" value="${esc(m.fa)}"></div>
-   <div class="field"><label>${S('age')}</label><input class="inp num" type="number" min="1" max="100" name="age" value="${m.age}"></div>
+   <div class="field"><label>${S('age')}</label><input class="inp num" type="text" inputmode="decimal" min="1" max="100" name="age" value="${m.age}"></div>
    <div class="field"><label>${S('sex')}</label><div class="seg" data-seg="sex">${['m','f'].map(v=>`<button type="button" class="${m.sex===v?'on':''}" data-v="${v}">${S(v==='m'?'male':'female')}</button>`).join('')}</div></div>
    <div class="field"><label>${S('activity')}</label><div class="seg" data-seg="act">${['low','mid','high'].map(v=>`<button type="button" class="${m.act===v?'on':''}" data-v="${v}">${S(v)}</button>`).join('')}</div></div>
+   ${id?`<button type="button" class="btn block" style="margin-top:14px" data-act="health" data-id="${id}">❤ ${S('addHealth')}</button>`:''}
    <div class="btns" style="margin-top:16px">${id&&state.members.length>1?`<button type="button" class="btn ghost" style="color:var(--bad)" data-act="memdel" data-id="${id}">${S('remove')}</button>`:''}<span class="grow"></span><button type="button" class="btn ghost" data-act="close">${S('cancel')}</button><button class="btn pri" type="submit">${S('save')}</button></div></form>`;
   openSheet(html);
 }
@@ -991,11 +1150,11 @@ function sheetFood(id){
    <div class="field"><label>${S('name')} (دری)</label><input class="inp" style="width:180px;text-align:start" dir="rtl" name="fa" value="${esc(g.fa)}" placeholder="مثلاً لوبیا"></div>
    <div class="field"><label>${S('section')}</label><select class="inp" style="width:180px;text-align:start" name="c">${CATS.map(c=>`<option value="${c[0]}" ${g.c===c[0]?'selected':''}>${fa?c[2]:c[1]}</option>`).join('')}</select></div>
    <div class="field"><label>${S('unit')}</label><div class="seg" data-seg="u">${['kg','L','pc','dz'].map(u=>`<button type="button" class="${g.u===u?'on':''}" data-v="${u}">${({kg:fa?'کیلو':'kg',L:fa?'لیتر':'L',pc:fa?'دانه':'pcs',dz:fa?'درجن':'dozen'})[u]}</button>`).join('')}</div></div>
-   <div class="field"><label>${S('price')} <small>${fa?'برای یک واحد':'for one unit'}</small></label><input class="inp num" type="number" inputmode="decimal" min="0" step="any" name="p" value="${g.p}" required></div>
+   <div class="field"><label>${S('price')} <small>${fa?'برای یک واحد':'for one unit'}</small></label><input class="inp num" type="text" inputmode="decimal" min="0" step="any" name="p" value="${g.p}" required></div>
    <div class="strong small" style="margin:16px 0 2px">${S('nutriOpt')}</div><div class="tiny muted" id="perlbl">${g.u==='pc'||g.u==='dz'?S('perPc'):S('per100')}</div>
-   <div class="field"><label>${S('energy')} (${S('kcal')})</label><input class="inp num" type="number" min="0" step="any" name="k" value="${v(g.k)}"></div>
-   <div class="field"><label>${S('protein')} (${S('g')})</label><input class="inp num" type="number" min="0" step="any" name="pr" value="${v(g.pr)}"></div>
-   <div class="field"><label>${S('fibre')} (${S('g')})</label><input class="inp num" type="number" min="0" step="any" name="f" value="${v(g.f)}"></div>
+   <div class="field"><label>${S('energy')} (${S('kcal')})</label><input class="inp num" type="text" inputmode="decimal" min="0" step="any" name="k" value="${v(g.k)}"></div>
+   <div class="field"><label>${S('protein')} (${S('g')})</label><input class="inp num" type="text" inputmode="decimal" min="0" step="any" name="pr" value="${v(g.pr)}"></div>
+   <div class="field"><label>${S('fibre')} (${S('g')})</label><input class="inp num" type="text" inputmode="decimal" min="0" step="any" name="f" value="${v(g.f)}"></div>
    <div class="btns" style="margin-top:16px">${id?`<button type="button" class="btn ghost" style="color:var(--bad)" data-act="fooddel" data-id="${id}">${S('del')}</button>`:''}<span class="grow"></span><button type="button" class="btn ghost" data-act="close">${S('cancel')}</button><button class="btn pri" type="submit">${S('save')}</button></div></form>`;
   openSheet(html);
 }
@@ -1008,25 +1167,25 @@ function ingOptions(sel){
   return o;
 }
 function ingRow(id='onion',q=''){
-  const [ue,uf,mul]=UNIT_IN(ING[id].u), shown=q===''?'':+(q*mul).toFixed(2);
-  return `<div class="row ingrow" style="gap:6px;padding:6px 0;border-top:1px solid var(--line-2)"><select class="inp" style="flex:1;min-width:0;text-align:start" name="ing">${ingOptions(id)}</select><input class="inp num" style="width:84px" type="number" inputmode="decimal" min="0" step="any" name="q" value="${shown}"><span class="tiny muted ul" style="width:44px">${L()==='fa'?uf:ue}</span><button type="button" class="icon-btn" data-act="rowdel" aria-label="${S('remove')}">${svg('<path d="M6 6l12 12M18 6L6 18"/>',16)}</button></div>`;
+  const [ue,uf,mul]=UNIT_IN(ING[id].u), shown=(q===''||!q)?'':+(q*mul).toFixed(2);
+  return `<div class="row ingrow" style="gap:6px;padding:6px 0;border-top:1px solid var(--line-2)"><select class="inp" style="flex:1;min-width:0;text-align:start" name="ing">${ingOptions(id)}</select><input class="inp num" style="width:84px" type="text" inputmode="decimal" min="0" step="any" name="q" value="${shown}"><span class="tiny muted ul" style="width:44px">${L()==='fa'?uf:ue}</span><button type="button" class="icon-btn" data-act="rowdel" aria-label="${S('remove')}">${svg('<path d="M6 6l12 12M18 6L6 18"/>',16)}</button></div>`;
 }
-function sheetDish(id){
-  const r=state.customRecipes.find(x=>x.id===id)||{id:'',en:'',fa:'',m:'m',min:30,ic:'pot',tip:'',i:[['onion',0.2],['oil',0.05],['spice',1]]}, fa=L()==='fa', rd=!!r.ready;
-  const html=`<h3>${id?S('editDish'):S('newDish')}</h3><form data-form="dish" data-id="${id}" style="margin-top:14px">
+function sheetDish(id,draft,note){
+  const r=draft||state.customRecipes.find(x=>x.id===id)||{id:'',en:'',fa:'',m:'m',min:30,ic:'pot',tip:'',i:[['onion',0.2],['oil',0.05],['spice',1]]}, fa=L()==='fa', rd=!!r.ready;
+  const html=`<h3>${id?S('editDish'):S('newDish')}</h3>${note||''}<form data-form="dish" data-id="${id||''}" data-src="${esc(r.src||'')}" style="margin-top:14px">
    <div class="field"><label>${S('name')} (EN)</label><input class="inp" style="width:190px;text-align:start" name="en" value="${esc(r.en)}" placeholder="e.g. Lobia curry"></div>
    <div class="field"><label>${S('name')} (دری)</label><input class="inp" style="width:190px;text-align:start" dir="rtl" name="fa" value="${esc(r.fa)}" placeholder="مثلاً قورمهٔ لوبیا"></div>
    <div class="field"><label>${S('mealType')}</label><div class="seg" data-seg="m"><button type="button" class="${r.m==='b'?'on':''}" data-v="b">${S('breakfast')}</button><button type="button" class="${r.m!=='b'?'on':''}" data-v="m">${S('mains')}</button></div></div>
    <div class="field"><label>${S('seasonL')}</label><div class="seg" data-seg="s">${[['','allYear'],['w','winter'],['s','summer']].map(([v,l])=>`<button type="button" class="${(r.s||'')===v?'on':''}" data-v="${v}">${S(l)}</button>`).join('')}</div></div>
    <div class="field"><label>${S('howL')}</label><div class="seg" data-seg="how"><button type="button" class="${rd?'':'on'}" data-v="cook">${S('cookHome')}</button><button type="button" class="${rd?'on':''}" data-v="buy">${S('buyReady')}</button></div></div>
    <div id="buySec" style="display:${rd?'block':'none'}">
-    <div class="field"><label>${S('readyPrice')}</label><input class="inp num" type="number" inputmode="decimal" min="0" step="any" name="rp" value="${r.rp??''}"></div>
-    <div class="field"><label>${S('readyKcal')}</label><input class="inp num" type="number" min="0" step="any" name="rk" value="${r.rk??''}"></div>
-    <div class="field"><label>${S('readyProt')}</label><input class="inp num" type="number" min="0" step="any" name="rpr" value="${r.rpr??''}"></div>
+    <div class="field"><label>${S('readyPrice')}</label><input class="inp num" type="text" inputmode="decimal" min="0" step="any" name="rp" value="${r.rp??''}"></div>
+    <div class="field"><label>${S('readyKcal')}</label><input class="inp num" type="text" inputmode="decimal" min="0" step="any" name="rk" value="${r.rk??''}"></div>
+    <div class="field"><label>${S('readyProt')}</label><input class="inp num" type="text" inputmode="decimal" min="0" step="any" name="rpr" value="${r.rpr??''}"></div>
     <p class="tiny muted" style="margin:4px 0 0">${S('readyHint')}</p>
    </div>
    <div id="cookSec" style="display:${rd?'none':'block'}">
-   <div class="field"><label>${S('minutesL')}</label><input class="inp num" type="number" min="1" name="min" value="${r.min||30}"></div>
+   <div class="field"><label>${S('minutesL')}</label><input class="inp num" type="text" inputmode="decimal" min="1" name="min" value="${r.min||30}"></div>
    <div class="field"><label>${S('icon')}</label><div class="seg" data-seg="ic">${['pot','bowl','rice','leaf','bread','egg','cup','bag'].map(k=>`<button type="button" class="${r.ic===k?'on':''}" data-v="${k}" style="padding:4px;display:grid;place-items:center">${tile(k,'xs')}</button>`).join('')}</div></div>
    <div class="strong small" style="margin:16px 0 2px">${S('ingredients')}</div><div class="tiny muted" style="margin-bottom:4px">${S('qtyFor')}</div>
    <div id="rows">${r.i.map(([k,q])=>ING[k]?ingRow(k,q):'').join('')}</div>
@@ -1034,11 +1193,14 @@ function sheetDish(id){
    <details style="margin-top:8px;background:var(--line-2);border-radius:12px;padding:10px 12px"><summary class="small strong" style="cursor:pointer">${S('missingIng')} ${S('newIngQuick')}</summary>
     <div class="field" style="border:0"><label>${S('name')}</label><input class="inp" style="width:170px;text-align:start" id="qiName" placeholder="${fa?'مثلاً گندم پوست‌کنده':'e.g. Hulled wheat'}"></div>
     <div class="field"><label>${S('unit')}</label><select class="inp" id="qiUnit" style="width:110px"><option value="kg">${fa?'کیلو':'kg'}</option><option value="L">${fa?'لیتر':'L'}</option><option value="pc">${fa?'دانه':'pcs'}</option><option value="dz">${fa?'درجن':'dozen'}</option></select></div>
-    <div class="field"><label>${S('price')}</label><input class="inp num" type="number" inputmode="decimal" min="0" step="any" id="qiPrice"></div>
+    <div class="field"><label>${S('price')}</label><input class="inp num" type="text" inputmode="decimal" min="0" step="any" id="qiPrice"></div>
     <div class="field"><label>${S('section')}</label><select class="inp" id="qiCat" style="width:150px;text-align:start">${CATS.filter(c=>c[0]!=='ready').map(c=>`<option value="${c[0]}">${fa?c[2]:c[1]}</option>`).join('')}</select></div>
     <button type="button" class="btn pri block" data-act="quickIng">${S('addUse')}</button>
    </details>
    </div>
+   <div class="strong small" style="margin:16px 0 4px">${S('stepsL')} <span class="tiny muted" style="font-weight:400">· ${S('stepsHint')}</span></div>
+   <textarea class="copy" name="steps" dir="auto" style="height:150px">${esc((r.steps||[]).join('\n'))}</textarea>
+   <div class="field"><label>${S('linkOpt')}</label><input class="inp" style="width:190px;text-align:start" name="src" type="url" dir="ltr" placeholder="https://youtube.com/…" value="${esc(r.src||'')}"></div>
    <div class="field" style="margin-top:8px"><label>${S('noteOpt')}</label><input class="inp" style="width:190px;text-align:start" name="tip" value="${esc(r.tip||'')}"></div>
    <div class="btns" style="margin-top:16px"><span class="grow"></span><button type="button" class="btn ghost" data-act="close">${S('cancel')}</button><button class="btn pri" type="submit">${S('save')}</button></div></form>`;
   openSheet(html);
@@ -1056,6 +1218,428 @@ function sheetFruit(){
   }
   openSheet(html);
 }
+const ALIAS=[
+ [/eggplant|aubergine|patl[ıi]can|baingan|brinjal/,'eggplant'],[/bell pepper|capsicum|sweet pepper|green pepper|red pepper|biber(?! sal)/,'capsicum'],
+ [/chick ?peas?|garbanzo|nohut|chana|nakhud/,'chana'],[/tomato|domates|sal[çc]a/,'tomato'],[/peanut/,'peanut'],[/pine nut|chilgoza/,'chilgoza'],
+ [/lamb|mutton|kuzu|goat/,'mutton'],[/minced|mince|ground beef|ground meat|k[ıi]yma|qeema|keema|beef|veal|meat/,'beef'],[/chicken|tavuk/,'chicken'],
+ [/\beggs?\b|yumurta/,'egg'],[/bulgur|cracked wheat|daliya/,'daliya'],[/noodle|pasta|spaghetti|macaroni|erişte/,'pasta'],[/\brice\b|pirin[çc]/,'rice'],
+ [/flour|\bun\b|atta|maida/,'atta'],[/bread|naan|\bnan\b|lavash|pita|flatbread/,'naan'],[/red lentil|lentil|mercimek|masoor|daal|dal\b/,'masoor'],
+ [/mung|moong/,'moong'],[/kidney bean|white bean|haricot|cannellini|beans?\b|fasulye|lobia/,'lobia'],[/yogh?urt|yo[ğg]urt|qurut|kurut|curd/,'yogurt'],
+ [/milk|s[üu]t\b/,'milk'],[/butter|ghee|tereya[ğg]/,'ghee'],[/\boil\b|ya[ğg]\b|olive oil/,'oil'],[/onion|so[ğg]an|shallot|spring onion/,'onion'],
+ [/potato|patates|aloo/,'potato'],[/carrot|havu[çc]|zardak/,'carrot'],[/garlic|sar[ıi]msak/,'garlic'],[/ginger|zencefil/,'ginger'],
+ [/chil+i|jalape|green chil|ac[ıi] biber/,'chili'],[/spinach|[ıi]spanak|palak/,'spinach'],[/cauliflower|karnabahar|gobi/,'cauli'],[/okra|bamya|bhindi/,'okra'],
+ [/\bpeas\b|bezelye|matar/,'peas'],[/pumpkin|squash|kabak|kaddu|zucchini/,'pumpkin'],[/cabbage|lahana/,'cabbage'],[/raisin|kuru üzüm|kishmish/,'raisins'],
+ [/sugar|şeker/,'sugar'],[/\bdates?\b|hurma/,'khajoor'],[/almond|badem/,'badam'],[/walnut|ceviz/,'walnut'],[/apricot/,'zardalu'],
+ [/\btea\b|چائے|چای/,'tea'],[/banana|کیلے|کیله/,'banana'],[/apple|سیب/,'apple'],[/guava|امرود/,'guava'],[/orange|kinnow|malta|مالته|کینو/,'kinnow'],[/pomegranate|انار/,'anar'],
+ [/آٹا|آرد/,'atta'],[/چاول|برنج/,'rice'],[/چینی|بوره|شکر/,'sugar'],[/دودھ|شیر\b/,'milk'],[/انڈ|تخم/,'egg'],[/گھی|روغن زرد|مسکه/,'ghee'],[/تیل|روغن/,'oil'],[/پیاز/,'onion'],[/ٹماٹر|بادنجان رومی/,'tomato'],
+ [/آلو|کچالو/,'potato'],[/مرغ/,'chicken'],[/گوشت/,'beef'],[/دہی|ماست/,'yogurt'],[/دال/,'masoor'],[/چنے|نخود/,'chana'],[/لہسن|سیر\b/,'garlic'],[/ادرک|زنجبیل/,'ginger'],[/پالک/,'spinach'],[/گاجر|زردک/,'carrot'],
+ [/ہری مرچ|مرچ سبز/,'chili'],[/نمک|زیرہ|زیره|ہلدی|زردچوبه|مصالح|دارچینی|الائچی|هیل|لونگ|میخک|دھنیا|گشنیز|پودینہ|نعناع|سرخ مرچ|مرچ سرخ|مرچ پاؤڈر|کالی مرچ|مرچ سیاه/,'spice'],
+ [/salt|cumin|paprika|pepper|spice|turmeric|coriander|parsley|mint|bay lea|cinnamon|oregano|thyme|stock|bouillon|masala|saffron|cardamom|clove|nutmeg|sumac|dill|baking|yeast|vinegar|lemon juice|tuz|kimyon|nane|pul biber/,'spice'],
+];
+const IGNORE=/\bwater\b|\bsu\b|\bice\b|for serving|optional garnish|to taste$/;
+const PIECE={onion:.15,tomato:.12,potato:.17,carrot:.08,capsicum:.15,eggplant:.25,cabbage:1,garlic:.005,chili:.01,pumpkin:1};
+const CUP={atta:.125,rice:.2,masoor:.19,sugar:.2,yogurt:.245,daliya:.14,lobia:.18,chana:.2,moong:.2,pasta:.1,peas:.15,spinach:.03};
+const FRAC={'½':.5,'¼':.25,'¾':.75,'⅓':1/3,'⅔':2/3,'⅛':.125};
+const NUMW={one:1,two:2,three:3,four:4,five:5,six:6,seven:7,eight:8,nine:9,ten:10,eleven:11,twelve:12,half:.5,quarter:.25,a:1,an:1,
+ 'ایک':1,'یک':1,'دو':2,'تین':3,'سه':3,'چار':4,'پانچ':5,'پنج':5,'چھ':6,'شش':6,'سات':7,'هفت':7,'آٹھ':8,'هشت':8,'دس':10,'ده':10,
+ 'آدھا':.5,'آدھی':.5,'آدھے':.5,'نیم':.5,'نصف':.5,'ڈیڑھ':1.5,'دیڑھ':1.5};
+// unit words → internal unit (Urdu/Dari included); "pao" = quarter kilo
+const UNIT_SRC='kg|kilo(?:gram)?s?|grams?|gms?|gr|g|ml|millilit(?:re|er)s?|lit(?:re|er)s?|l|cups?|glass(?:es)?|tbsp|tablespoons?|tbs|tsp|teaspoons?|lbs?|pounds?|oz|ounces?|pcs?|pieces?|cloves?|heads?|medium|large|small|bunch(?:es)?|handfuls?|کلو|کیلو|گرام|کپ|پیالہ|پیاله|گلاس|چائے کا چمچ|قاشق چای|چمچ|چمچہ|قاشق|لیٹر|لیتر|عدد|دانه|دانے|پاؤ|پاو';
+function normUnit(u){ u=(u||'').toLowerCase();
+  if(/^(کلو|کیلو)$/.test(u)) return 'kg'; if(/^گرام$/.test(u)) return 'g'; if(/^(کپ|پیالہ|پیاله|گلاس|glass)/.test(u)) return 'cup';
+  if(/^(چائے کا چمچ|قاشق چای)$/.test(u)) return 'tsp'; if(/^(چمچ|چمچہ|قاشق)$/.test(u)) return 'tbsp'; if(/^(لیٹر|لیتر)$/.test(u)) return 'l';
+  if(/^(عدد|دانه|دانے)$/.test(u)) return 'pcs'; if(/^(پاؤ|پاو)$/.test(u)) return 'pao'; if(/^handful/.test(u)) return 'handful'; return u; }
+const QTY_SRC='(?:\\d+\\s+)?\\d+\\/\\d+|\\d+(?:[.,]\\d+)?|[½¼¾⅓⅔⅛]';
+const TIME_RE=/\b(min|mins|minutes?|hours?|hrs?|seconds?|secs?|degrees?|°)\b|منٹ|گھنٹ|دقیقه|ساعت|ثانیه/i;
+const JUNK_RE=/subscribe|like (the|this) video|my channel|the bell|comment below|share (this|with)|welcome (back|to)|hello (everyone|friends|guys)|hi (everyone|friends|guys)|thanks? (you )?for watching|instagram|facebook|tiktok|follow me|sponsor|سبسکرائب|لائک|چینل|کمنٹ|شیئر|سبسکرایب|کانال/i;
+const STEP_HDR=/^(method|instructions?|directions?|steps?|how to (make|cook)|preparation|recipe steps|طریقہ|طریقۂ کار|طرز تهیه|روش تهیه|روش پخت|ترکیب)\s*:?$/i;
+const ING_HDR=/^(ingredients?( list)?|you will need|اجزاء|اجزا|مواد لازم|مواد)\s*:?$/i;
+function readQty(t){ t=t.trim(); if(t.includes('/')){ const p=t.split(/\s+/); return p.length===2?(+p[0])+eval(p[1]):eval(p[0]); } if(FRAC[t]!=null) return FRAC[t]; if(NUMW[t.toLowerCase()]!=null) return NUMW[t.toLowerCase()]; return parseFloat(t.replace(',','.')); }
+function addFound(found,id,q,unit,scale){
+  if(!ING[id]) return false; if(id==='spice'){ found.spice=1; return true; }
+  let v=null;
+  if(q!=null){ if(unit==='pao') v=toIngUnit(id,q*0.25,'kg'); else if(unit==='handful') v=toIngUnit(id,q*0.03,'kg'); else v=toIngUnit(id,q,unit); }
+  if(v==null){ if(found[id]==null) found[id]=0; } else found[id]=(found[id]||0)+v*scale;
+  return true;
+}
+function parseRecipe(text,serves){
+  const scale=5/Math.max(1,serves||4), found={}, miss=[], steps=[];
+  const urls=(text.match(/https?:\/\/[^\s<>"')]+/g)||[]);
+  const src=urls.find(u=>/youtube\.com|youtu\.be/.test(u))||urls[0]||'';
+  text=text.replace(/https?:\/\/[^\s<>"')]+/g,' ').replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+  const lineRe=new RegExp('^('+QTY_SRC+')\\s*([½¼¾⅓⅔⅛])?(?:\\s*[-–]\\s*\\d+(?:[.,]\\d+)?)?\\s*('+UNIT_SRC+')?(?=[\\s,.;:!?()،۔]|$)\\.?\\s*(of\\s+)?','i');
+  const wordLineRe=new RegExp('^('+Object.keys(NUMW).join('|')+')(?=[\\s,.;:!?()،۔]|$)\\s*(?:(?:a|an)\\s+)?('+UNIT_SRC+')(?=[\\s,.;:!?()،۔]|$)\\.?\\s*(of\\s+)?','i');
+  const anyRe=new RegExp('(?:^|[\\s,(])('+QTY_SRC+'|'+Object.keys(NUMW).join('|')+')(?=[\\s,.;:!?()،۔]|$)\\s*(?:(?:a|an)\\s+(?=(?:'+UNIT_SRC+')))?('+UNIT_SRC+')?(?=[\\s,.;:!?()،۔]|$)\\.?\\s*(?:of\\s+)?((?:[^\\s,.;!?،۔]+\\s*){1,3})','gi');
+  let section='', title='', first=true;
+  for(let raw of text.split(/\n/)){
+    let line=raw.replace(/^[\s•\-–*·▢□☐✓▪●◦►▶✅🔸🔹👉]+/,'').replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/gu,'').trim();
+    if(!line) continue;
+    if(/^\(?\d{1,2}:\d{2}(:\d{2})?\)?/.test(line)) continue;              // video chapter timestamps
+    if(STEP_HDR.test(line)){ section='steps'; continue; }
+    if(ING_HDR.test(line)){ section='ing'; continue; }
+    if(/:$/.test(line)&&line.length<40){ continue; }
+    if(/^(serves|yield|servings|for \d+ people)/i.test(line)) continue;
+    if(line.length<=120 && JUNK_RE.test(line)) continue;
+    if(first){ first=false; if(line.length<=70 && !/^\d/.test(line) && !/[.!?؟۔]$/.test(line) && !ALIAS.some(([re,id])=>id!=='spice'&&re.test(line.toLowerCase())&&line.split(/\s+/).length<3)){ title=line; continue; } }
+    const segs = line.length>120 ? line.split(/(?<=[.!?؟۔])\s+|[;؛]\s*/) : [line];
+    for(let seg of segs){
+      seg=seg.trim(); if(!seg||JUNK_RE.test(seg)) continue;
+      const low=seg.toLowerCase();
+      // 1) ingredient-list line: starts with an amount (digits, or a number word followed by a unit)
+      const m1=seg.match(lineRe), m2=m1?null:seg.match(wordLineRe), m=m1||m2;
+      if(m && section!=='steps' && seg.length<=100){
+        const q=m[1]?readQty(m[1])+(m[2]&&FRAC[m[2]]?FRAC[m[2]]:0):null;
+        let unit=normUnit(m2?m2[2]:m1[3]);
+        let name=seg.slice(m[0].length).toLowerCase(); if(/^whole\s+head/.test(name)) unit='head';
+        if(IGNORE.test(low)) continue;
+        const hit=ALIAS.find(([re])=>re.test(name));
+        if(!hit||!addFound(found,hit[1],q,unit,scale)) miss.push(seg);
+        if(/[.!?؟۔]$/.test(seg) || seg.split(/\s+/).length>6) steps.push(seg.charAt(0).toUpperCase()+seg.slice(1));
+        continue;
+      }
+      // 2) short line in the ingredients section without an amount ("salt to taste", "fresh coriander")
+      if(section==='ing' && seg.length<=60){ const hit=ALIAS.find(([re])=>re.test(low)); if(hit) addFound(found,hit[1],null,'',scale); else miss.push(seg); continue; }
+      // 3) sentence (method / spoken transcript): pick up "2 cups rice", "آدھا کلو گوشت", and plain mentions
+      let got=false; anyRe.lastIndex=0; let mm;
+      while((mm=anyRe.exec(seg))){
+        const qWord=mm[1], unit=normUnit(mm[2]), win=(mm[3]||'').toLowerCase();
+        if(TIME_RE.test(win)||TIME_RE.test(unit)) continue;              // "5 minutes"
+        const hit=ALIAS.find(([re])=>re.test(win)); if(!hit||IGNORE.test(win)) continue;
+        const countable=PIECE[hit[1]]||['pc','dz'].includes(ING[hit[1]]&&ING[hit[1]].u);
+        if(!unit && NUMW[qWord.toLowerCase()]!=null && !countable) continue;   // number words need a unit unless the item is counted
+        if(hit[1]==='spice'){ found.spice=1; continue; }
+        if(!unit && !PIECE[hit[1]] && ING[hit[1]].u==='kg') { if(found[hit[1]]==null) found[hit[1]]=0; got=true; continue; }
+        addFound(found,hit[1],readQty(qWord),unit,scale); got=true;
+      }
+      for(const [re,id] of ALIAS){ if(id!=='spice'&&ING[id]&&found[id]==null&&re.test(low)&&!IGNORE.test(low)){ found[id]=0; } }
+      if(ALIAS.some(([re,id])=>id==='spice'&&re.test(low))) found.spice=1;
+      if(seg.length>=12 && section!=='ing') steps.push(seg.charAt(0).toUpperCase()+seg.slice(1));
+    }
+  }
+  return {i:Object.entries(found).map(([k,v])=>[k,k==='spice'?1:Math.round(v*1000)/1000]), miss, steps:steps.slice(0,30).map(x=>x.slice(0,300)), src, title};
+}
+function toIngUnit(id,q,unit){
+  if(q==null) return null; const u=ING[id].u; let kg=null,L=null,cnt=null;
+  if(/^(kg|kilo)/.test(unit)) kg=q; else if(/^(g|gr|gram)/.test(unit)) kg=q/1000; else if(/^(lb|pound)/.test(unit)) kg=q*.4536; else if(/^(oz|ounce)/.test(unit)) kg=q*.02835;
+  else if(/^(ml|millil)/.test(unit)) L=q/1000; else if(unit==='l'||/^lit/.test(unit)) L=q;
+  else if(/^cup/.test(unit)) { if(u==='L') L=q*.24; else kg=q*(CUP[id]||.2); }
+  else if(/^(tbsp|tables|tbs)/.test(unit)) { if(u==='L') L=q*.015; else kg=q*.015; }
+  else if(/^(tsp|teas)/.test(unit)) { if(u==='L') L=q*.005; else kg=q*.005; }
+  else if(/^clove/.test(unit)) kg=q*.005; else if(/^head/.test(unit)) kg=q*.04; else if(/^bunch/.test(unit)) kg=q*.25;
+  else cnt=q;
+  if(u==='kg') return kg??L??(cnt!=null?cnt*(PIECE[id]||.1):null);
+  if(u==='L') return L??kg??(cnt!=null?cnt*.25:null);
+  if(u==='pc') return cnt??(kg!=null?kg/(id==='egg'?.05:.12):null);
+  if(u==='dz') return cnt!=null?cnt/12:(kg!=null?kg/1.5:null);
+  return cnt??kg??L;
+}
+function sheetPaste(){
+  const fa=L()==='fa';
+  openSheet(`<h3>${S('pasteT')}</h3><p class="small muted" style="margin:8px 0 12px">${S('pasteHow')}</p><form data-form="paste">
+   <div class="field"><label>${S('dishName')}</label><input class="inp" style="width:190px;text-align:start" name="en" placeholder="${fa?'مثلاً پلوی ازبکی':'e.g. Uzbek plov'}"></div>
+   <div class="field"><label>${S('mealType')}</label><div class="seg" data-seg="m"><button type="button" data-v="b">${S('breakfast')}</button><button type="button" class="on" data-v="m">${S('mains')}</button></div></div>
+   <div class="field"><label>${S('serves')}</label><div class="row" style="gap:6px"><input class="inp num" style="width:70px" type="text" inputmode="decimal" name="serves" value="4"><span class="tiny muted">${S('people')}</span></div></div>
+   <div class="field"><label>${S('linkOpt')}</label><input class="inp" style="width:190px;text-align:start" name="src" type="url" placeholder="https://youtube.com/…" dir="ltr"></div>
+   <p class="tiny muted" style="margin:8px 0 0">▶ ${S('pasteVideo')}</p>
+   <textarea class="copy" name="txt" style="height:200px;margin-top:10px" placeholder="${S('pasteHere')}
+500 g lamb
+3 carrots
+2 cups rice
+1 onion
+1 tsp cumin"></textarea>
+   <button class="btn pri block" type="submit" style="margin-top:10px">${S('readIt')}</button></form>`);
+}
+/* ===================== REPORT & HEALTH ===================== */
+const COND=[['anaemia','Anaemia (low iron)','کم‌خونی'],['diabetes','Diabetes / high sugar','شکر (دیابت)'],['bp','High blood pressure','فشار خون بلند'],['chol','High cholesterol','کلسترول بلند'],['under','Underweight','وزن کم'],['over','Overweight','وزن زیاد'],['constip','Constipation','قبضیت']];
+const condName=k=>{const c=COND.find(x=>x[0]===k);return c?(L()==='fa'?c[2]:c[1]):k;};
+function isoDate(d){ d=d||new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
+function fmtDay(iso,opt){ const [y,m,d]=iso.split('-').map(Number); return new Date(y,m-1,d).toLocaleDateString(L()==='fa'?'fa-AF-u-ca-gregory':'en-GB',opt||{day:'numeric',month:'short'}); }
+function monthOf(rec){ const [y,m,d]=rec.key.split('-').map(Number); const dt=new Date(y,m-1,d-3); return `${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}`; }
+const MEAT=['chicken','beef','mutton'], PULSE=['masoor','moong','chana','lobia'], VEG=['spinach','cauli','okra','pumpkin','eggplant','cabbage','peas','capsicum'];
+const IRON=['spinach','masoor','moong','chana','lobia','beef','mutton','egg'];
+function mealGroup(r){
+  const has=k=>r.i.some(([id,q])=>id===k&&q>0), q=k=>(r.i.find(([id])=>id===k)||[0,0])[1];
+  if(r.ready) return 'ready';
+  if(MEAT.some(has)) return 'meat';
+  if(q('egg')>=4) return 'egg';
+  if(PULSE.some(k=>q(k)>=0.2)) return 'pulse';
+  if(VEG.reduce((a,k)=>a+q(k),0)>=0.5) return 'veg';
+  return 'other';
+}
+function weekRecord(live){
+  const T=weekTotals(state), list=shopList(), tgt=familyTarget(state.members,energyBoost(state)), N=state.members.length;
+  const exAll=state.extra.reduce((a,x)=>a+exCost(x),0);
+  const bought=list.filter(x=>state.checked[x.id]), exDone=state.extra.filter(x=>x.done);
+  const anyTick=bought.length+exDone.length>0;
+  const cats={}, catsSpent={};
+  for(const x of list){ cats[x.cat]=(cats[x.cat]||0)+x.cost; if(state.checked[x.id]) catsSpent[x.cat]=(catsSpent[x.cat]||0)+x.cost; }
+  if(exAll) cats.extra=exAll; const exS=exDone.reduce((a,x)=>a+exCost(x),0); if(exS) catsSpent.extra=exS;
+  const groups={meat:0,egg:0,pulse:0,veg:0,ready:0,other:0,left:0}; let iron=0, whiteRice=0;
+  for(const [d] of DAYS) for(const [s] of SLOTS){ const r=resolveSlot(state,d,s); if(!r) continue; if(r.left){groups.left++;continue;} groups[mealGroup(r)]++;
+    if(r.i.some(([id,q])=>IRON.includes(id)&&q>0.15||(id==='egg'&&q>=4))) iron++; if(r.i.some(([id,q])=>id==='rice'&&q>=0.4)) whiteRice++; }
+  const amt=(c)=>list.filter(x=>x.cat===c).reduce((a,x)=>a+(ING[x.id].u==='dz'?x.q*1.5:ING[x.id].u==='pc'?x.q*0.1:x.q),0);
+  const qOf=id=>(list.find(x=>x.id===id)||{q:0}).q;
+  return {key:isoDate(), live:!!live, N, planned:list.reduce((a,x)=>a+x.cost,0)+exAll, spent:anyTick?bought.reduce((a,x)=>a+x.cost,0)+exS:null,
+    cats, catsSpent, k:T.day.k, p:T.day.p, f:T.day.f, tk:tgt.k, tp:tgt.p, tf:tgt.f, groups, iron, whiteRice,
+    fruitKg:amt('fruit'), nutsKg:amt('nuts'), milkL:qOf('milk'), oilL:qOf('oil')+qOf('ghee'), sugarKg:qOf('sugar'),
+    top:list.slice().sort((a,b)=>b.cost-a.cost).slice(0,5).map(x=>[x.id,x.cost]), budgetWeek:((+state.budget||0)-(+state.other||0))*12/52};
+}
+let repMonth=null;
+function vReport(){
+  const fa=L()==='fa', cur=isoDate().slice(0,7);
+  const hist=(state.history||[]).slice();
+  const months=[...new Set([cur,...hist.map(monthOf)])].sort();
+  if(!repMonth||!months.includes(repMonth)) repMonth=cur;
+  const weeks=hist.filter(w=>monthOf(w)===repMonth).sort((a,b)=>a.key.localeCompare(b.key));
+  if(repMonth===cur) weeks.push(weekRecord(true));
+  const mi=months.indexOf(repMonth), [yy,mm]=repMonth.split('-').map(Number);
+  const mName=new Date(yy,mm-1,1).toLocaleDateString(fa?'fa-AF-u-ca-gregory':'en-GB',{month:'long',year:'numeric'});
+  let html=`<div class="fade"><h1>${S('report')}</h1>
+   <div class="row between" style="margin:6px 0 4px"><button class="icon-btn" data-act="mon" data-v="${months[mi-1]||''}" ${mi>0?'':'disabled style="opacity:.3"'}>${svg(fa?'<path d="M9 6l6 6-6 6"/>':'<path d="M15 6l-6 6 6 6"/>',20)}</button><b>${mName}</b><button class="icon-btn" data-act="mon" data-v="${months[mi+1]||''}" ${mi<months.length-1?'':'disabled style="opacity:.3"'}>${svg(fa?'<path d="M15 6l-6 6 6 6"/>':'<path d="M9 6l6 6-6 6"/>',20)}</button></div>`;
+  const N=state.members.length, B=+state.budget||0;
+  const spentW=w=>w.spent??w.planned, total=weeks.reduce((a,w)=>a+spentW(w),0), est=weeks.filter(w=>w.spent==null).length;
+  const proj=weeks.length? total/weeks.length*52/12 : 0;
+  const kAvg=weeks.reduce((a,w)=>a+w.k,0)/weeks.length, pAvg=weeks.reduce((a,w)=>a+w.p,0)/weeks.length, fAvg=weeks.reduce((a,w)=>a+w.f,0)/weeks.length;
+  const tk=weeks[weeks.length-1].tk, tp=weeks[weeks.length-1].tp, tf=weeks[weeks.length-1].tf;
+  const perPD=total/(weeks.length*7*N), per1k=total/(weeks.reduce((a,w)=>a+w.k*7,0)/1000);
+  html+=`<div class="kpis">
+   <div class="card kpi"><span>${S('spentMonth')}</span><b class="num">${money(total)}</b><small>${n0(weeks.length)} ${S('weeksL')}${est?` · ${n0(est)} ${S('estimated')}`:''}</small></div>
+   <div class="card kpi"><span>${S('projected')}</span><b class="num" style="color:${proj>B?'var(--bad)':'var(--ok)'}">${money(proj)}</b><small>${S('of')} ${money(B)} ${proj>B?'▲':'✓'}</small></div>
+   <div class="card kpi"><span>${S('perPersonDay')}</span><b class="num">${money(perPD)}</b><small>${n0(N)} ${S('people')}</small></div>
+   <div class="card kpi"><span>${S('per1000')}</span><b class="num">${money(per1k)}</b><small>${S('valueHint')}</small></div></div>`;
+  // weekly chart
+  html+=`<h2>${S('weeklySpend')}</h2><div class="card">${weekChart(weeks)}<details class="tbl"><summary class="tiny muted">${S('showTable')}</summary><table class="t"><tr><th>${S('weekL')}</th><th>${S('plannedL')}</th><th>${S('spentL')}</th></tr>${weeks.map(w=>`<tr><td>${w.live?S('thisWeek'):fmtDay(w.key)}</td><td class="num">${money(w.planned)}</td><td class="num">${w.spent==null?'—':money(w.spent)}</td></tr>`).join('')}</table></details></div>`;
+  // categories – from actual purchases when recorded, otherwise from the plan
+  const PS=monthPurchases(repMonth); const cat={};
+  if(PS.length){ for(const p of PS) cat[p.cat]=(cat[p.cat]||0)+p.cost; } else for(const w of weeks){ for(const k in w.cats) cat[k]=(cat[k]||0)+w.cats[k]; }
+  const catT=Object.values(cat).reduce((a,b)=>a+b,0)||1, catRows=Object.entries(cat).sort((a,b)=>b[1]-a[1]);
+  const catName=k=>k==='extra'?S('extra'):(c=>c?(fa?c[2]:c[1]):k)(SHOP_GROUPS().find(c=>c[0]===k));
+  html+=`<h2>${S('byCategory')}${PS.length?` <span style="text-transform:none;letter-spacing:0;font-weight:500">· ${S('actualL')}</span>`:''}</h2><div class="card"><table class="t">${catRows.map(([k,v])=>`<tr><td>${esc(catName(k))}</td><td style="width:38%"><div class="hbar" title="${esc(catName(k))}: ${money(v)}"><i style="width:${v/catRows[0][1]*100}%"></i></div></td><td class="num" style="text-align:end">${money(v)}</td><td class="num muted" style="text-align:end;width:44px">${n0(v/catT*100)}%</td></tr>`).join('')}</table></div>`;
+  // nutrition
+  const nut=[['energy',kAvg,tk,S('kcal')],['protein',pAvg,tp,S('g')],['fibre',fAvg,tf,S('g')]];
+  html+=purchaseSection(PS);
+  html+=`<h2>${S('nutriVsTarget')}</h2><div class="card">${nut.map(([k,v,t,u])=>{const p=v/t, st=k==='energy'?(p<.9?'low':p>1.12?'high':'ok'):(p<.9?'low':'ok');
+    return `<div class="nrow"><div class="row between"><b class="small">${S(k)}</b><span class="pill ${st==='ok'?'ok':st==='low'?'warn':'warn'}">${st==='ok'?'✓ '+S('onTarget'):st==='low'?'▼ '+S('lowL'):'▲ '+S('highL')}</span></div><div class="bullet"><i style="width:${Math.min(p,1.5)/1.5*100}%"></i><span class="tgt" style="inset-inline-start:${100/1.5}%"></span></div><div class="tiny muted num">${n0(v)} / ${n0(t)} ${u} ${S('perDayFamily')} · ${n0(p*100)}%</div></div>`;}).join('')}</div>`;
+  // food groups
+  const avg=f=>weeks.reduce((a,w)=>a+f(w),0)/weeks.length, kids=state.members.filter(m=>m.age<18).length;
+  const G=[
+   [S('gPulse'),avg(w=>w.groups.pulse),'≥ 3',v=>v>=3],[S('gMeat'),avg(w=>w.groups.meat),'≤ 4',v=>v<=4],[S('gEgg'),avg(w=>w.groups.egg),'≥ 2',v=>v>=2],
+   [S('gVeg'),avg(w=>w.groups.veg),'≥ 4',v=>v>=4],[S('gFruit'),avg(w=>w.fruitKg),`≥ ${n1(N*0.15*7)} kg`,v=>v>=N*0.15*7*0.6,'kg'],
+   [S('gMilk'),avg(w=>w.milkL),`≥ ${n1(kids*0.25*7)} L`,v=>v>=kids*0.25*7,'L'],[S('gOil'),avg(w=>w.oilL),`≤ ${n1(N*0.03*7)} L`,v=>v<=N*0.03*7,'L'],
+   [S('gSugar'),avg(w=>w.sugarKg),`≤ ${n1(N*0.025*7)} kg`,v=>v<=N*0.025*7,'kg'],[S('gNuts'),avg(w=>w.nutsKg),'—',()=>true,'kg']];
+  html+=`<h2>${S('foodGroups')}</h2><div class="card"><table class="t"><tr><th>${S('itemName')}</th><th style="text-align:end">${S('perWeekAvg')}</th><th style="text-align:end">${S('guide')}</th><th></th></tr>${G.map(([l,v,g,ok,u])=>`<tr><td>${l}</td><td class="num" style="text-align:end">${u?n1(v)+' '+u:n1(v)}</td><td class="num muted" style="text-align:end">${g}</td><td style="text-align:end">${ok(v)?'<span class="pill ok">✓</span>':'<span class="pill warn">!</span>'}</td></tr>`).join('')}</table><p class="tiny muted" style="margin:8px 0 0">${S('guideNote')}</p></div>`;
+  // top items
+  const top={}; if(PS.length){ for(const p of PS) if(p.id) top[p.id]=(top[p.id]||0)+p.cost; } else for(const w of weeks) for(const [id,c] of w.top) top[id]=(top[id]||0)+c;
+  html+=`<h2>${S('topItems')}</h2><div class="card"><table class="t">${Object.entries(top).sort((a,b)=>b[1]-a[1]).slice(0,5).map(([id,c],i)=>`<tr><td class="muted num" style="width:22px">${n0(i+1)}</td><td>${esc(ING[id]?nm(ING[id]):id)}</td><td class="num" style="text-align:end">${money(c)}</td></tr>`).join('')}</table></div>`;
+  // remarks
+  const rem=[];
+  rem.push(proj>B?['bad',fa?`پیش‌بینی ماه ${money(proj)}؛ ${money(proj-B)} بیشتر از بودجه.`:`Projected ${money(proj)} for the month – ${money(proj-B)} over budget.`]:['ok',fa?`پیش‌بینی ماه ${money(proj)}؛ در بودجه هستید.`:`Projected ${money(proj)} – within budget.`]);
+  if(catRows[0]) rem.push(['brand',fa?`بیشترین خرچ: ${catName(catRows[0][0])} (${n0(catRows[0][1]/catT*100)}٪).`:`Biggest spend: ${catName(catRows[0][0])} (${n0(catRows[0][1]/catT*100)}%).`]);
+  if(kAvg<tk*.9) rem.push(['warn',fa?'انرژی کمتر از نیاز خانواده است.':'Energy is below the family’s need.']);
+  if(pAvg<tp*.9) rem.push(['warn',fa?'پروتین کم است؛ دال، تخم یا لوبیا اضافه کنید.':'Protein is low – add daal, eggs or beans.']);
+  if(fAvg<tf*.9) rem.push(['warn',fa?'فایبر کم است؛ سبزی، دال و میوه بیشتر.':'Fibre is low – more vegetables, pulses and fruit.']);
+  if(est) rem.push(['warn',fa?`${n0(est)} هفته تخمینی است؛ در سودا اقلام خریده‌شده را نشانه بزنید تا خرچ واقعی ثبت شود.`:`${n0(est)} week(s) are estimates – tick bought items in Shopping to record real spending.`]);
+  html+=`<h2>${S('remarks')}</h2><div class="card">${rem.map(([c,t])=>`<div class="ins"><div class="ic" style="background:var(--${c}-soft);color:var(--${c})">${c==='ok'?'✓':c==='bad'?'!':'•'}</div><div><p>${t}</p></div></div>`).join('')}</div>`;
+  // health
+  html+=healthSection(weeks,{kAvg,tk,pAvg,tp,fAvg,tf,avg});
+  return html+`<p class="tiny muted" style="margin:14px 4px">${S('healthDisc')}</p></div>`;
+}
+function weekChart(weeks){
+  const W=600,H=230,pl=8,pr=8,pt=26,pb=36, max=Math.max(...weeks.map(w=>w.spent??w.planned),weeks[0].budgetWeek)*1.18||1;
+  const n=weeks.length, slot=(W-pl-pr)/Math.max(n,4), bw=Math.min(56,slot*0.5), y=v=>pt+(H-pt-pb)*(1-v/max), bud=weeks[weeks.length-1].budgetWeek;
+  let g=`<svg viewBox="0 0 ${W} ${H}" class="chart" role="img" aria-label="${esc(S('weeklySpend'))}">`;
+  for(const t of [0.25,0.5,0.75,1]) g+=`<line x1="${pl}" x2="${W-pr}" y1="${y(max*t/1.18)}" y2="${y(max*t/1.18)}" stroke="var(--line-2)" stroke-width="1"/>`;
+  g+=`<line x1="${pl}" x2="${W-pr}" y1="${y(0)}" y2="${y(0)}" stroke="var(--line)" stroke-width="1"/>`;
+  weeks.forEach((w,i)=>{ const v=w.spent??w.planned, x=pl+slot*i+(slot-bw)/2, top=y(v), h=y(0)-top, r=Math.min(4,h);
+    const path=`M${x},${y(0)} V${top+r} Q${x},${top} ${x+r},${top} H${x+bw-r} Q${x+bw},${top} ${x+bw},${top+r} V${y(0)} Z`;
+    const est=w.spent==null, over=v>bud;
+    const tip=`${w.live?S('thisWeek'):fmtDay(w.key)} · ${S('spentL')}: ${w.spent==null?'—':money(w.spent)} · ${S('plannedL')}: ${money(w.planned)}`;
+    g+=`<g class="bar-g" data-tip="${esc(tip)}"><rect x="${pl+slot*i}" y="${pt}" width="${slot}" height="${H-pt-pb}" fill="transparent"/><path d="${path}" fill="${over?'var(--accent)':'var(--brand)'}" opacity="${est?0.45:1}"/>
+     <text x="${x+bw/2}" y="${top-7}" text-anchor="middle" class="cv">${n0(v/1000*10)/10}k${est?'*':''}</text>
+     <text x="${x+bw/2}" y="${H-14}" text-anchor="middle" class="cl">${w.live?S('thisWeek'):fmtDay(w.key)}</text></g>`; });
+  g+=`<line x1="${pl}" x2="${W-pr}" y1="${y(bud)}" y2="${y(bud)}" stroke="var(--ink-2)" stroke-width="1.5" stroke-dasharray="5 5"/><text x="${W-pr}" y="${y(bud)-6}" text-anchor="end" class="cl">${S('budgetLine')} ${money(bud)}</text>`;
+  g+=`</svg><div class="legend" style="margin-top:6px"><span><i class="sw" style="background:var(--brand)"></i>${S('withinBudget')}</span><span><i class="sw" style="background:var(--accent)"></i>${S('overBudget')}</span><span>* ${S('estimated')}</span></div><div id="ctip" class="ctip"></div>`;
+  return g;
+}
+function bmi(w,h){ return w&&h? w/((h/100)**2) : null; }
+function healthSection(weeks,a){
+  const fa=L()==='fa', N=state.members.length, famT=familyTarget(state.members,energyBoost(state)).k;
+  let html=`<h2>${S('healthNut')}</h2>`;
+  for(const m of state.members){
+    const h=(state.health||{})[m.id]||{cond:[],log:[]}, log=(h.log||[]).slice().sort((x,y)=>x.d.localeCompare(y.d)), last=log[log.length-1], first=log[0];
+    const t=targetOf(m), share=t.k*(1+energyBoost(state))/famT, eK=a.kAvg*share, eP=a.pAvg*(t.p/familyTarget(state.members).p), eF=a.fAvg*share;
+    const lines=[];
+    if(last&&last.w&&last.h&&m.age>=18){ const b=bmi(last.w,last.h); lines.push(['brand',`BMI ${n1(Math.round(b*10)/10)} – ${b<18.5?S('bUnder'):b<25?S('bHealthy'):b<30?S('bOver'):S('bObese')}`]); }
+    if(log.length>1&&first.w&&last.w){ const dw=last.w-first.w; lines.push([m.age<18?'ok':(Math.abs(dw)<1?'ok':'warn'),`${S('weightChange')}: ${dw>=0?'+':''}${n1(Math.round(dw*10)/10)} kg (${fmtDay(first.d)} → ${fmtDay(last.d)})${m.age<18?' · '+S('growingNote'):''}`]); }
+    for(const c of h.cond||[]){
+      if(c==='anaemia') lines.push([avgG(weeks,'iron')>=5?'ok':'warn',`${condName(c)}: ${n0(avgG(weeks,'iron'))} ${S('ironMeals')} – ${S('ironTip')}`]);
+      if(c==='diabetes') lines.push([a.avg(w=>w.sugarKg)<=N*0.025*7?'ok':'warn',`${condName(c)}: ${S('sugarWk')} ${n1(a.avg(w=>w.sugarKg))} kg · ${n0(avgG(weeks,'whiteRice'))} ${S('riceMeals')} – ${S('diabTip')}`]);
+      if(c==='bp') lines.push([avgGroup(weeks,'ready')<=2?'ok':'warn',`${condName(c)}: ${n0(avgGroup(weeks,'ready'))} ${S('readyMeals')} – ${S('bpTip')}`]);
+      if(c==='chol') lines.push([a.avg(w=>w.oilL)<=N*0.03*7&&avgGroup(weeks,'meat')<=3?'ok':'warn',`${condName(c)}: ${S('oilWk')} ${n1(a.avg(w=>w.oilL))} L · ${n0(avgGroup(weeks,'meat'))} ${S('meatMeals')} – ${S('cholTip')}`]);
+      if(c==='under') lines.push([eK>=t.k*1.05?'ok':'warn',`${condName(c)}: ~${n0(eK)} / ${n0(t.k)} ${S('kcal')} – ${S('underTip')}`]);
+      if(c==='over') lines.push([eK<=t.k?'ok':'warn',`${condName(c)}: ~${n0(eK)} / ${n0(t.k)} ${S('kcal')} – ${S('overTip')}`]);
+      if(c==='constip') lines.push([eF>=t.f?'ok':'warn',`${condName(c)}: ~${n0(eF)} / ${n0(t.f)} g ${S('fibre')} – ${S('constipTip')}`]);
+    }
+    if(h.allergy){ const words=h.allergy.toLowerCase().split(/[,،;\s]+/).filter(x=>x.length>2); const hit=new Set();
+      for(const [d] of DAYS) for(const [s] of SLOTS){ const r=resolveSlot(state,d,s); if(!r) continue; for(const [id] of r.i){ const g=ING[id]; if(g&&words.some(w=>(g.en+' '+g.fa).toLowerCase().includes(w))) hit.add(nm(g)); } }
+      for(const b of state.basket||[]){ const g=ING[b.id]; if(g&&+b.q>0&&words.some(w=>(g.en+' '+g.fa).toLowerCase().includes(w))) hit.add(nm(g)); }
+      lines.push([hit.size?'bad':'ok',`${S('allergyL')}: ${esc(h.allergy)} – ${hit.size?S('allergyHit')+' '+[...hit].map(esc).join(', '):S('allergyNone')}`]); }
+    html+=`<div class="card" style="margin-top:10px"><div class="row between"><div><b>${esc(nm(m))}</b> <span class="tiny muted">${n0(m.age)} ${S('years')}</span><div class="tiny muted num">~${n0(eK)} ${S('kcal')} · ${n0(eP)} ${S('g')} ${S('protein')} ${S('perDayEst')}</div></div><button class="btn ghost" data-act="health" data-id="${m.id}">${last?S('update'):'+ '+S('addHealth')}</button></div>
+     ${(h.cond||[]).length?`<div class="tags" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px">${h.cond.map(c=>`<span class="pill">${condName(c)}</span>`).join('')}</div>`:''}
+     ${last?`<div class="tiny muted num" style="margin-top:6px">${S('lastCheck')} ${fmtDay(last.d)}: ${last.w?n1(last.w)+' kg':''}${last.h?' · '+n0(last.h)+' cm':''}</div>`:''}
+     ${lines.map(([c,t])=>`<div class="ins"><div class="ic" style="background:var(--${c}-soft);color:var(--${c})">${c==='ok'?'✓':c==='bad'?'!':c==='brand'?'i':'•'}</div><div><p class="small">${t}</p></div></div>`).join('')}</div>`;
+  }
+  return html;
+}
+const avgG=(weeks,k)=>weeks.reduce((a,w)=>a+(w[k]||0),0)/weeks.length;
+const avgGroup=(weeks,k)=>weeks.reduce((a,w)=>a+(w.groups[k]||0),0)/weeks.length;
+function sheetHealth(id){
+  const m=state.members.find(x=>x.id===id); if(!m) return; const h=(state.health||{})[id]||{cond:[],log:[],allergy:'',notes:''}, fa=L()==='fa';
+  const log=(h.log||[]).slice().sort((x,y)=>y.d.localeCompare(x.d));
+  openSheet(`<h3>❤ ${esc(nm(m))}</h3><p class="tiny muted" style="margin:6px 0 10px">${S('healthPrivacy')}</p><form data-form="health" data-id="${id}">
+   <div class="strong small" style="margin:6px 0">${S('newCheck')}</div>
+   <div class="row" style="gap:8px;flex-wrap:wrap"><input class="inp" type="date" name="d" value="${isoDate()}" style="width:150px;text-align:start"><input class="inp num" type="text" inputmode="decimal" name="w" placeholder="${fa?'وزن کیلو':'Weight kg'}" style="width:110px"><input class="inp num" type="text" inputmode="decimal" name="h" placeholder="${fa?'قد سانتی':'Height cm'}" value="${(log[0]&&log[0].h)||''}" style="width:110px"></div>
+   <div class="strong small" style="margin:16px 0 6px">${S('conditions')}</div>
+   <div class="chips" style="flex-wrap:wrap;padding:0">${COND.map(([k])=>`<button type="button" class="chip ${(h.cond||[]).includes(k)?'on':''}" data-cond="${k}">${condName(k)}</button>`).join('')}</div>
+   <div class="field" style="margin-top:10px"><label>${S('allergyL')}<small>${S('allergyHint')}</small></label><input class="inp" name="allergy" style="width:170px;text-align:start" value="${esc(h.allergy||'')}"></div>
+   <div class="field"><label>${S('notesL')}</label><input class="inp" name="notes" style="width:170px;text-align:start" value="${esc(h.notes||'')}"></div>
+   <button class="btn pri block" type="submit" style="margin-top:12px">${S('save')}</button></form>
+   ${log.length?`<div class="strong small" style="margin:18px 0 4px">${S('history')}</div><table class="t">${log.map((e,i)=>`<tr><td>${fmtDay(e.d,{day:'numeric',month:'short',year:'numeric'})}</td><td class="num">${e.w?n1(e.w)+' kg':''}</td><td class="num">${e.h?n0(e.h)+' cm':''}</td><td style="text-align:end"><button class="icon-btn" data-act="hdel" data-id="${id}" data-v="${esc(e.d)}">${svg('<path d="M6 6l12 12M18 6L6 18"/>',16)}</button></td></tr>`).join('')}</table>`:''}`);
+}
+function sheetFinishWeek(){
+  const r=weekRecord(false);
+  openSheet(`<h3>${S('finishWeek')}</h3><p class="small muted" style="margin:8px 0 12px">${S('finishHow')}</p>
+   <div class="stats" style="grid-template-columns:repeat(2,1fr)"><div><b class="num">${money(r.planned)}</b><span>${S('plannedL')}</span></div><div><b class="num">${r.spent==null?'—':money(r.spent)}</b><span>${S('spentL')}</span></div></div>
+   ${r.spent==null?`<p class="tiny" style="color:var(--warn);margin:0 0 10px">${S('noTicks')}</p>`:''}
+   <button class="btn pri block" data-act="doFinish">${S('saveStart')}</button><button class="btn ghost block" style="margin-top:8px" data-act="untickOnly">${S('justClear')}</button>`);
+}
+
+/* ===================== RECEIPT IMPORT ===================== */
+const SHOP_GROUPS=()=>[...CATS,['other','Other','دیگر']];
+function guessCat(name){ const low=(name||'').toLowerCase(); const hit=ALIAS.find(([re])=>re.test(low)); if(!hit) return 'other'; const c=ING[hit[1]]&&ING[hit[1]].c; return c==='spice'?'pantry':(c||'other'); }
+const exCat=x=>x.c||guessCat(x.t);
+const RC_SKIP=/sub ?total|grand total|\btotal\b|cash|change|balance|\btax\b|gst|vat|discount|invoice|receipt|bill ?no|\bdate\b|\btime\b|tel\b|phone|thank|cashier|counter|ntn|strn|pos\b|qty|amount|item ?name|description|جمع|کل رقم|ٹوٹل|نقد|تاریخ|شکریه|شکریہ/i;
+function normKey(t){ return (t||'').toLowerCase().replace(/[0-9۰-۹.,:;x×@\-\/\\()]+/g,' ').replace(/\b(kg|g|gm|gram|ltr|l|ml|pcs|pc|dz|dozen|rs|pkr)\b/g,' ').replace(/\s+/g,' ').trim(); }
+function matchItem(text){
+  const key=normKey(text); if(!key) return null;
+  if(state.rcptMap&&state.rcptMap[key]) return state.rcptMap[key];
+  const hit=ALIAS.find(([re])=>re.test(key)); if(hit&&hit[1]!=='spice'&&ING[hit[1]]) return hit[1];
+  for(const [id,g] of Object.entries(ING)){ if(g.c==='spice'||g.c==='ready') continue; const words=(g.en+' '+g.fa).toLowerCase().replace(/[()\/]/g,' ').split(/\s+/).filter(w=>w.length>2); if(words.some(w=>key.includes(w))) return id; }
+  return null;
+}
+function parseReceipt(text){
+  const nums=t=>(t.replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).match(/\d[\d,]*(?:\.\d+)?/g)||[]).map(x=>parseFloat(x.replace(/,/g,'')));
+  const rows=[], names=[], prices=[]; let total=null, shop='';
+  const firstLine=(text.split(/\n/).map(x=>x.trim()).find(Boolean)||''); if(/[a-zA-Z\u0600-\u06FF]{3,}/.test(firstLine)&&!/\d/.test(firstLine)) shop=firstLine.slice(0,40);
+  for(let raw of text.split(/\n/)){
+    const line=raw.trim(); if(!line) continue;
+    const hasLetters=/[a-zA-Z؀-ۿ]{2,}/.test(line), n=nums(line);
+    if(/grand total|\btotal\b|net amount|جمع کل|ٹوٹل|کل رقم/i.test(line)&&n.length){ total=n[n.length-1]; continue; }
+    if(RC_SKIP.test(line)) continue;
+    if(hasLetters&&n.length){
+      const price=n[n.length-1]; let q=null, unit='';
+      const qm=line.replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).match(/(\d+(?:\.\d+)?)\s*(kg|kilo|g|gm|gram|ltr|litre|l|ml|pcs|pc|dz|dozen|x)\b/i) || (n.length>=2&&n[0]<100&&n[0]!==price?[null,String(n[0]),'']:null);
+      if(qm){ q=parseFloat(qm[1]); unit=(qm[2]||'').toLowerCase(); }
+      rows.push({text:line,price,q,unit});
+    } else if(hasLetters) names.push(line); else if(n.length) prices.push(n[n.length-1]);
+  }
+  // Google Lens often reads columns separately: pair names with prices in order
+  for(let i=0;i<names.length;i++) rows.push({text:names[i],price:prices[i]??null,q:null,unit:''});
+  return {rows,total,shop};
+}
+function toQtyFor(id,q,unit){
+  if(q==null) return null; const u=ING[id].u;
+  if(unit==='x'||unit==='') return u==='kg'||u==='L'? null : q;
+  const map={kg:'kg',kilo:'kg',g:'g',gm:'g',gram:'g',ltr:'l',litre:'l',l:'l',ml:'ml',pcs:'pcs',pc:'pcs',dz:'',dozen:''};
+  if(unit==='dz'||unit==='dozen') return u==='dz'?q:u==='pc'?q*12:null;
+  return toIngUnit(id,q,map[unit]||'');
+}
+function sheetReceipt(prefill){
+  openSheet(`<h3>📄 ${S('pasteRc')}</h3><p class="small muted" style="margin:8px 0 12px">${S('rcHow')}</p>
+   <form data-form="rcpt"><textarea class="copy" name="txt" style="height:220px" placeholder="${S('rcPlaceholder')}">${esc(prefill||'')}</textarea>
+   <button class="btn pri block" type="submit" style="margin-top:10px">${S('readRc')}</button></form>`);
+}
+let rcRows=[];
+function sheetReceiptReview(text){
+  const {rows,total,shop}=parseReceipt(text); if(!rows.length){ toast(S('rcNone')); sheetReceipt(text); return; }
+  const planned=new Set(shopList().map(x=>x.id));
+  rcRows=rows.filter(r=>!(shop&&r.text===shop)).map(r=>{ const id=matchItem(r.text); return {...r, id: r.price==null?'__ignore':(id||'__extra'), q2: id? toQtyFor(id,r.q,r.unit) : r.q}; });
+  const fa=L()==='fa', unitL=id=>({kg:fa?'کیلو':'kg',L:fa?'لیتر':'L',pc:fa?'دانه':'pcs',dz:fa?'درجن':'dz'})[ING[id]?.u]||'';
+  const opts=sel=>`<option value="__ignore" ${sel==='__ignore'?'selected':''}>✕ ${S('ignoreL')}</option><option value="__extra" ${sel==='__extra'?'selected':''}>➕ ${S('asExtra')}</option>`+
+    `<optgroup label="${S('onList')}">${[...planned].map(k=>`<option value="${k}" ${k===sel?'selected':''}>${esc(nm(ING[k]))}</option>`).join('')}</optgroup>`+ingOptions(planned.has(sel)?'':sel);
+  const sum=rcRows.reduce((a,r)=>a+(r.price||0),0);
+  let html=`<h3>${S('rcReview')}</h3><div class="tip" style="display:block"><b>${n0(rcRows.filter(r=>!r.id.startsWith('__')).length)} / ${n0(rcRows.filter(r=>r.id!=='__ignore').length)}</b> ${S('rcMatched')}${total?`<br>${S('rcTotal')}: <b class="num">${money(total)}</b> · ${S('rcSum')}: <b class="num">${money(sum)}</b>${Math.abs(total-sum)>1?' ⚠':' ✓'}`:''}</div><form data-form="rcsave"><div class="field"><label>${S('shopL')}</label><input class="inp" name="shop" style="width:190px;text-align:start" value="${esc(shop||'')}"></div>`;
+  rcRows.forEach((r,i)=>{ html+=`<div style="padding:10px 0;border-top:1px solid var(--line-2)"><div class="tiny muted" dir="auto">${esc(r.text)}</div>
+    <div class="row" style="gap:6px;margin-top:6px;flex-wrap:wrap"><select class="inp" style="flex:1 1 100%;min-width:0;text-align:start" name="id${i}" data-rc="${i}">${opts(r.id)}</select>
+    <input class="inp num" style="width:70px" type="text" inputmode="decimal" name="q${i}" placeholder="${fa?'مقدار':'Qty'}" value="${r.q2!=null?+(+r.q2).toFixed(3):''}"><span class="tiny muted rcu" style="width:30px">${unitL(r.id)}</span>
+    <span class="grow"></span><span class="tiny muted">${fa?'کلدار':'Rs'}</span><input class="inp num" style="width:100px" type="text" inputmode="decimal" name="p${i}" placeholder="0" value="${r.price??''}"></div></div>`; });
+  html+=`<label class="row" style="gap:8px;margin:14px 0 4px;font-size:14px"><input type="checkbox" name="upd" checked style="width:18px;height:18px"> ${S('rcUpdPrices')}</label>
+   <p class="tiny muted" style="margin:0 0 10px">${S('rcLearn')}</p><button class="btn pri block" type="submit">${S('save')}</button></form>`;
+  openSheet(html);
+}
+function saveReceipt(f){
+  let n=0, sum=0; state.rcptMap=state.rcptMap||{}; state.checkedAt=state.checkedAt||{}; state.shopOf=state.shopOf||{}; const shopN=(f.shop&&f.shop.value.trim())||'', today=isoDate();
+  rcRows.forEach((r,i)=>{
+    const id=f['id'+i].value, q=parseFloat(f['q'+i].value), p=parseFloat(f['p'+i].value); if(id==='__ignore') return;
+    const key=normKey(r.text);
+    if(id==='__extra'){ const eu={kg:'kg',kilo:'kg',g:'g',gm:'g',gram:'g',l:'L',ltr:'L',litre:'L',ml:'L',pcs:'pc',pc:'pc',dz:'dz',dozen:'dz'}[r.unit]||'pc'; const eq=isNaN(q)?'':(r.unit==='ml'?q/1000:q);
+    state.extra.push({id:'x'+Date.now()+i,t:r.text.replace(/[\d.,]+\s*(kg|g|gm|l|ltr|ml|pcs?)?\s*[\d.,]*\s*$/i,'').trim()||r.text,q:eq,u:eu,p:isNaN(p)?'':p,c:guessCat(r.text),done:true,doneAt:today,shop:shopN}); n++; sum+=p||0; return; }
+    if(key) state.rcptMap[key]=id;
+    const e=state.shopEdits[id]||{}; if(q>0) e.q=q; if(p>=0&&!isNaN(p)) e.paid=(e.paid&&e.rc?e.paid:0)+p; e.rc=true; state.shopEdits[id]=e; state.checked[id]=true; state.checkedAt[id]=today; if(shopN) state.shopOf[id]=shopN;
+    if(f.upd.checked&&q>0&&p>0) state.prices[id]=Math.round(p/q*100)/100;
+    n++; sum+=p||0;
+  });
+  closeSheet(); tab='shop'; commit(); toast(`${S('rcSaved')}: ${n0(n)} · ${money(sum)}`);
+}
+
+/* ===================== PURCHASE RECORD ===================== */
+function livePurchases(){
+  const out=[], today=isoDate();
+  for(const x of shopList()) if(state.checked[x.id]){ const g=ING[x.id]; out.push({d:(state.checkedAt||{})[x.id]||today, id:x.id, name:g.en, nameFa:g.fa, cat:x.cat, q:x.q, u:g.u, cost:x.cost, shop:(state.shopOf||{})[x.id]||'', live:true}); }
+  for(const x of state.extra) if(x.done){ out.push({d:x.doneAt||today, id:'', name:x.t, nameFa:x.t, cat:exCat(x), q:+x.q||0, u:x.u==='g'?'g':x.u, cost:exCost(x), shop:x.shop||'', extra:true, live:true}); }
+  return out;
+}
+function monthPurchases(month){
+  const all=(state.purchases||[]).filter(p=>p.d.slice(0,7)===month);
+  if(month===isoDate().slice(0,7)) all.push(...livePurchases());
+  return all.sort((a,b)=>a.d.localeCompare(b.d));
+}
+const pName=p=>L()==='fa'?(p.nameFa||p.name):p.name;
+const uLab=u=>({kg:L()==='fa'?'کیلو':'kg',g:L()==='fa'?'گرام':'g',L:L()==='fa'?'لیتر':'L',pc:L()==='fa'?'دانه':'pcs',dz:L()==='fa'?'درجن':'dz',pack:L()==='fa'?'بسته':'pack',meal:S('meals')})[u]||'';
+function purchaseSection(ps){
+  if(!ps.length) return `<h2>${S('purchasesT')}</h2><div class="card"><p class="small muted" style="margin:0">${S('noPurch')}</p></div>`;
+  const total=ps.reduce((a,p)=>a+p.cost,0), by={};
+  for(const p of ps){ const k=(p.id||'x:'+p.name.toLowerCase())+'|'+p.u; const o=by[k]=by[k]||{p,q:0,cost:0,n:0}; o.q+=+p.q||0; o.cost+=p.cost; o.n++; }
+  const rows=Object.values(by).sort((a,b)=>b.cost-a.cost);
+  let html=`<h2>${S('purchasesT')}</h2><div class="card"><div class="row between"><div><b class="num" style="font-size:18px">${money(total)}</b><div class="tiny muted">${n0(ps.length)} ${S('purchCount')}${ps.some(p=>p.live)?' · '+S('inclThisWeek'):''}</div></div><button class="btn" data-act="copyTSV">${svg('<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/>',18)} ${S('copySheets')}</button></div>
+   <table class="t" style="margin-top:10px"><tr><th>${S('itemName')}</th><th style="text-align:end">${S('amount')}</th><th style="text-align:end">Rs</th><th style="text-align:end">${S('avgPrice')}</th></tr>
+   ${rows.map(o=>`<tr><td>${esc(pName(o.p))}${o.n>1?` <span class="tiny muted">×${n0(o.n)}</span>`:''}</td><td class="num" style="text-align:end">${o.q?n1(Math.round(o.q*100)/100)+' '+uLab(o.p.u):''}</td><td class="num" style="text-align:end">${money(o.cost)}</td><td class="num muted" style="text-align:end">${o.q?(o.p.u==='g'?money(o.cost/o.q*1000)+'/'+uLab('kg'):money(o.cost/o.q)+'/'+uLab(o.p.u)):'—'}</td></tr>`).join('')}</table>
+   <details class="tbl"><summary class="tiny muted">${S('fullLog')}</summary><table class="t">${ps.slice().reverse().map(p=>`<tr><td class="num" style="white-space:nowrap">${fmtDay(p.d)}</td><td>${esc(pName(p))}${p.shop?`<span class="tiny muted" style="display:block">${esc(p.shop)}</span>`:''}</td><td class="num" style="text-align:end">${p.q?n1(Math.round(p.q*100)/100)+' '+uLab(p.u):''}</td><td class="num" style="text-align:end">${money(p.cost)}</td></tr>`).join('')}</table></details></div>`;
+  return html;
+}
+function copyTSV(){
+  const ps=monthPurchases(repMonth||isoDate().slice(0,7)), catName=k=>(SHOP_GROUPS().find(c=>c[0]===k)||['',k,k])[1];
+  const txt=['Date\tItem\tSection\tAmount\tUnit\tPrice (Rs)\tShop',...ps.map(p=>[p.d,p.name,catName(p.cat),p.q?Math.round(p.q*1000)/1000:'',p.u||'',Math.round(p.cost),p.shop||''].join('\t'))].join('\n');
+  const fallback=()=>openSheet(`<h3>${S('copySheets')}</h3><p class="small muted">${S('copyManual')}</p><textarea class="copy" readonly>${esc(txt)}</textarea>`);
+  try{ navigator.clipboard.writeText(txt).then(()=>toast(S('copiedSheets')),fallback); }catch(e){ fallback(); }
+}
+
+function sheetFit(){
+  openSheet(`<h3>${S('fit')}</h3><p class="small muted" style="margin:10px 0">${S('fitWorking')}</p>`);
+  setTimeout(()=>{
+    const base={...state,leftovers:0.8}, seed=Date.now()%2147483647;
+    const plans={budget:autoPlan(base,seed,'budget'), variety:autoPlan(base,seed+7,'variety')}; window._fitPlans=plans;
+    const B=+state.budget||0, tgt=familyTarget(state.members,energyBoost(state));
+    const card=(k,title,desc)=>{ const T=weekTotals({...state,plan:plans[k]}), dishes=Object.keys(T.counts).length, rep=Math.max(...Object.values(T.counts)), over=T.month-B;
+      return `<button class="opt" style="display:block;padding:14px;border:1px solid var(--line);border-radius:14px;margin-top:10px" data-act="fitapply" data-v="${k}">
+        <div class="row between"><b>${title}</b><b class="num" style="color:${over>0?'var(--bad)':'var(--ok)'}">${money(T.month)}</b></div>
+        <div class="small muted" style="margin-top:4px">${desc}</div>
+        <div class="tags" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px"><span class="pill ${over>0?'warn':'ok'} num">${over>0?money(over)+' '+S('over'):money(-over)+' '+S('left')}</span><span class="pill num">${n0(dishes)} ${S('dishesL')}</span><span class="pill num">${S('maxRepeat')} ×${n0(rep)}</span><span class="pill num">${S('energy')} ${n0(T.day.k/tgt.k*100)}%</span></div></button>`; };
+    openSheet(`<h3>${S('fit')}</h3><p class="small muted" style="margin:8px 0 2px">${S('fitIntro')}</p>
+      ${card('budget',S('fitCheap'),S('fitCheapD'))}${card('variety',S('fitVar'),S('fitVarD'))}
+      <p class="tiny muted" style="margin:12px 2px 0">${S('fitNote')}</p>`);
+  },30);
+}
 function toast(t){const el=document.getElementById('toast');el.textContent=t;el.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove('on'),2200);}
 
 /* ---------- render ---------- */
@@ -1065,8 +1649,9 @@ function render(){
   document.documentElement.lang=fa?'fa-AF':'en'; document.documentElement.dir=fa?'rtl':'ltr';
   document.getElementById('appName').textContent=fa?'دسترخوان':'Dastarkhan';
   document.querySelectorAll('.lang button').forEach(b=>b.classList.toggle('on',b.dataset.v===L()));
-  document.getElementById('nav').innerHTML=['today','week','shop','recipes','family'].map(k=>`<button class="${tab===k?'on':''}" data-act="tab" data-v="${k}">${svg(NAVI[k])}<span>${S(k)}</span></button>`).join('');
-  const v={today:vToday,week:vWeek,shop:vShop,recipes:vRecipes,family:vFamily}[tab];
+  document.getElementById('nav').innerHTML=['today','week','shop','recipes','report','family'].map(k=>`<button class="${tab===k?'on':''}" data-act="tab" data-v="${k}">${svg(NAVI[k])}<span>${S(k)}</span></button>`).join('');
+  const v={today:vToday,week:vWeek,shop:vShop,recipes:vRecipes,report:vReport,family:vFamily,settings:vSettings}[tab];
+  document.getElementById('gearBtn').classList.toggle('on',tab==='settings');
   const scrollY=window.scrollY; document.getElementById('view').innerHTML=v();
   setSync(syncMode);
   return scrollY;
@@ -1084,14 +1669,21 @@ document.addEventListener('click',e=>{
     case 'pick': sheetPick(d,s); break;
     case 'set': state.plan[d][s]=id; closeSheet(); { const y=window.scrollY; commit(); window.scrollTo({top:y}); } break;
     case 'recipe': if(id) sheetRecipe(id); else sheetPick(d,s); break;
-    case 'fit': { const y=window.scrollY; state.plan=autoPlan(Object.assign({},state,{leftovers:0.8})); commit(); window.scrollTo({top:y}); toast(L()==='fa'?'پلان تازه ساخته شد':'New plan made'); } break;
+    case 'fit': sheetFit(); break;
+    case 'fitapply': if(window._fitPlans&&window._fitPlans[v]){ state.plan=window._fitPlans[v]; closeSheet(); commit(); toast(S('planMade')); } break;
     case 'clear': for(const [k] of DAYS) state.plan[k]={b:'',l:'',d:''}; commit(); break;
-    case 'tick': state.checked[id]=!state.checked[id]; { const y=window.scrollY; commit(); window.scrollTo({top:y}); } break;
-    case 'untick': state.checked={}; state.shopEdits={}; state.extra=state.extra.filter(x=>!x.done); commit(); break;
+    case 'tick': state.checked[id]=!state.checked[id]; state.checkedAt=state.checkedAt||{}; if(state.checked[id]) state.checkedAt[id]=isoDate(); else delete state.checkedAt[id]; { const y=window.scrollY; commit(); window.scrollTo({top:y}); } break;
+    case 'untick': sheetFinishWeek(); break;
+    case 'untickOnly': state.checked={}; state.checkedAt={}; state.shopOf={}; state.shopEdits={}; state.extra=state.extra.filter(x=>!x.done); closeSheet(); commit(); break;
+    case 'doFinish': { const r=weekRecord(false); state.history=(state.history||[]).filter(h=>h.key!==r.key); state.history.push(r); state.purchases=(state.purchases||[]).concat(livePurchases().map(p=>{ const q={...p,wk:r.key}; delete q.live; return q; })); state.checked={}; state.checkedAt={}; state.shopOf={}; state.shopEdits={}; state.extra=state.extra.filter(x=>!x.done); closeSheet(); commit(); toast(S('weekSaved')); } break;
+    case 'copyTSV': copyTSV(); break;
+    case 'mon': if(v){ repMonth=v; render(); } break;
+    case 'health': sheetHealth(id); break;
+    case 'hdel': { const h=state.health[id]; if(h){ h.log=h.log.filter(e=>e.d!==v); commit(false); sheetHealth(id); render(); } } break;
     case 'shopedit': sheetShopEdit(id); break;
     case 'shopreset': delete state.shopEdits[id]; closeSheet(); { const y=window.scrollY; commit(); window.scrollTo({top:y}); } break;
     case 'xedit': { const x=state.extra.find(x=>x.id===id); if(x) openSheet(`<h3>${S('edit')}</h3><div style="margin-top:12px">${extraForm(x)}</div>`); } break;
-    case 'xtick': { const x=state.extra.find(x=>x.id===id); if(x) x.done=!x.done; const y=window.scrollY; commit(); window.scrollTo({top:y}); } break;
+    case 'xtick': { const x=state.extra.find(x=>x.id===id); if(x){ x.done=!x.done; x.doneAt=x.done?isoDate():''; } const y=window.scrollY; commit(); window.scrollTo({top:y}); } break;
     case 'xdel': state.extra=state.extra.filter(x=>x.id!==id); commit(); break;
     case 'copy': copyList(); break;
     case 'rf': rFilter=v; render(); break;
@@ -1117,30 +1709,62 @@ document.addEventListener('click',e=>{
       document.querySelectorAll('.ingrow select').forEach(sel=>{ const v=sel.value; sel.innerHTML=ingOptions(v); });
       document.getElementById('rows').insertAdjacentHTML('beforeend',ingRow(g.id,'')); document.getElementById('qiName').value=''; document.getElementById('qiPrice').value='';
       el.closest('details').open=false; toast(S('savedOk')); } break;
+    case 'paste': sheetPaste(); break;
+    case 'rcpt': sheetReceipt(); break;
     case 'rowadd': document.getElementById('rows').insertAdjacentHTML('beforeend',ingRow('onion','')); break;
     case 'rowdel': el.closest('.ingrow').remove(); break;
     case 'memdel': state.members=state.members.filter(m=>m.id!==id); closeSheet(); commit(); break;
     case 'export': exportBackup(); break;
+    case 'syncnow': syncPending?push():(sync.rev=-1,pull()); break;
+    case 'syncoff': sync=null; saveSyncCfg(); setSyncMsg(); render(); toast(S('syncOffDone')); break;
+    case 'synchelp': syncHelp(); break;
+    case 'syncuse': { const {cfg,r}=window._pendingSync||{}; if(cfg){ sync=cfg; applyRemote(r.state,r.rev); saveSyncCfg(); closeSheet(); setSyncMsg('on'); initSync(); render(); } } break;
+    case 'syncreplace': { const {cfg,r}=window._pendingSync||{}; if(cfg){ sync={...cfg,rev:r.rev}; saveSyncCfg(); closeSheet(); syncPending=true; push().then(()=>{render();}); initSync(); } } break;
     case 'install': if(deferredInstall){ deferredInstall.prompt(); deferredInstall.userChoice.finally(()=>{deferredInstall=null;render();}); } break;
     case 'resetPrices': state.prices={}; commit(); break;
     case 'resetAll': openSheet(`<h3>${S('resetAll')}</h3><p class="muted">${S('sure')}</p><div class="btns"><button class="btn ghost" data-act="close">${S('cancel')}</button><button class="btn pri" style="background:var(--bad)" data-act="doReset">${S('yesReset')}</button></div>`); break;
-    case 'doReset': { const lang=state.lang; state=fresh(); state.lang=lang; closeSheet(); commit(); } break;
+    case 'doReset': { const lang=state.lang; state=normalize(null); state.lang=lang; closeSheet(); commit(); } break;
   }
 });
 document.addEventListener('click',e=>{ const b=e.target.closest('[data-seg] button'); if(b){ b.parentElement.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b)); }});
 document.addEventListener('change',e=>{
-  const sel=e.target; if(sel.tagName==='SELECT'&&sel.name==='ing'){ const [ue,uf]=UNIT_IN(ING[sel.value].u); sel.closest('.ingrow').querySelector('.ul').textContent=L()==='fa'?uf:ue; }
+  const sel=e.target; if(sel.tagName==='SELECT'&&sel.dataset.rc!=null){ const u=ING[sel.value]?.u, fa=L()==='fa'; sel.parentElement.querySelector('.rcu').textContent=({kg:fa?'کیلو':'kg',L:fa?'لیتر':'L',pc:fa?'دانه':'pcs',dz:fa?'درجن':'dz'})[u]||''; }
+  if(sel.tagName==='SELECT'&&sel.name==='ing'){ const [ue,uf]=UNIT_IN(ING[sel.value].u); sel.closest('.ingrow').querySelector('.ul').textContent=L()==='fa'?uf:ue; }
 });
 document.addEventListener('click',e=>{ const b=e.target.closest('[data-seg=how] button'); if(b){ const buy=b.dataset.v==='buy'; document.getElementById('buySec').style.display=buy?'block':'none'; document.getElementById('cookSec').style.display=buy?'none':'block'; }});
 document.addEventListener('click',e=>{ const b=e.target.closest('[data-seg=u] button'); if(b){ const l=document.getElementById('perlbl'); if(l) l.textContent=(b.dataset.v==='pc'||b.dataset.v==='dz')?S('perPc'):S('per100'); }});
+document.addEventListener('click',e=>{ const b=e.target.closest('[data-cond]'); if(b) b.classList.toggle('on'); });
+// chart tooltip (hover on desktop, tap on phone)
+function showTip(e){ const g=e.target.closest&&e.target.closest('.bar-g'), tip=document.getElementById('ctip'); if(!tip) return; if(!g){ tip.style.opacity=0; return; }
+  tip.textContent=g.dataset.tip; const x=(e.touches?e.touches[0].clientX:e.clientX), y=(e.touches?e.touches[0].clientY:e.clientY); tip.style.left=Math.min(window.innerWidth-270,Math.max(8,x-120))+'px'; tip.style.top=(y-52)+'px'; tip.style.opacity=1; }
+document.addEventListener('mousemove',showTip); document.addEventListener('click',showTip);
 document.addEventListener('submit',e=>{
+  if(e.target.dataset.form==='sync'){ e.preventDefault(); connectSync(e.target); return; }
   const f=e.target; e.preventDefault();
   if(f.dataset.form==='extra'){
     const t=f.t.value.trim(); if(!t){ toast(S('needName')); return; }
-    const item={t, q:f.q.value===''?'':+f.q.value, u:f.u.value, p:f.p.value===''?'':+f.p.value};
+    const item={t, q:f.q.value===''?'':+f.q.value, u:f.u.value, p:f.p.value===''?'':+f.p.value, c:f.c.value||guessCat(t)};
     const id=f.dataset.id;
     if(id){ const x=state.extra.find(x=>x.id===id); if(x) Object.assign(x,item); closeSheet(); const y=window.scrollY; commit(); window.scrollTo({top:y}); }
     else { state.extra.push({id:'x'+Date.now(),...item,done:false}); const y=window.scrollY; commit(); window.scrollTo({top:y}); setTimeout(()=>{const i=document.querySelector('[data-form=extra] input'); i&&i.focus();},0); }
+  }
+  if(f.dataset.form==='rcpt'){ sheetReceiptReview(f.txt.value); return; }
+  if(f.dataset.form==='rcsave'){ saveReceipt(f); return; }
+  if(f.dataset.form==='paste'){
+    const txt=f.txt.value; const serves=parseFloat(f.serves.value)||4; const res=parseRecipe(txt,serves);
+    if(!res.i.length){ toast(S('nothingFound')); return; }
+    const m=(f.querySelector('[data-seg=m] .on')||{}).dataset?.v||'m'; const name=f.en.value.trim()||res.title||(L()==='fa'?'غذای نو':'New dish');
+    const src=f.src.value.trim()||res.src;
+    const draft={id:'',en:name,fa:/[\u0600-\u06FF]/.test(name)?name:'',m,min:45,ic:'pot',s:'',tip:'',src,steps:res.steps,i:res.i};
+    const note=`<div class="tip" style="display:block"><b>✓ ${S('recog')}: ${n0(res.i.length)}</b>${res.steps.length?` · ${n0(res.steps.length)} ${S('stepsFound')}`:''}${src?` · ▶ ${S('videoSaved')}`:''}<br>${S('checkAmts')}${res.miss.length?`<div class="small" style="margin-top:6px">${S('notRecog')}<br>${res.miss.map(x=>'• '+esc(x)).join('<br>')}</div>`:''}</div>`;
+    sheetDish('',draft,note); return;
+  }
+  if(f.dataset.form==='health'){
+    const id=f.dataset.id; state.health=state.health||{}; const h=state.health[id]=state.health[id]||{cond:[],log:[]};
+    h.cond=[...f.querySelectorAll('[data-cond].on')].map(b=>b.dataset.cond); h.allergy=f.allergy.value.trim(); h.notes=f.notes.value.trim();
+    const w=parseFloat(f.w.value), ht=parseFloat(f.h.value), d=f.d.value||isoDate();
+    if(w>0||ht>0){ h.log=(h.log||[]).filter(e=>e.d!==d); h.log.push({d,w:w>0?w:null,h:ht>0?ht:null}); }
+    closeSheet(); commit(); toast(S('savedOk')); return;
   }
   if(f.dataset.form==='shopedit'){
     const id=f.dataset.id, q=parseFloat(f.q.value), p=parseFloat(f.p.value);
@@ -1166,7 +1790,7 @@ document.addEventListener('submit',e=>{
     }
     const i=[...f.querySelectorAll('.ingrow')].map(row=>{ const k=row.querySelector('select').value, q=parseFloat(row.querySelector('input').value); return [k, (q>0? q/UNIT_IN(ING[k].u)[2] : 0)]; }).filter(([k,q])=>q>0);
     if(!i.length){ toast(S('needIng')); return; }
-    const r={id:id||('c_'+Date.now().toString(36)), en:en||fan, fa:fan||en, m:seg('m')||'m', min:Math.max(1,+f.min.value||30), ic:seg('ic')||'pot', s:seg('s')||'', tip:f.tip.value.trim(), i};
+    const r={id:id||('c_'+Date.now().toString(36)), en:en||fan, fa:fan||en, m:seg('m')||'m', min:Math.max(1,+f.min.value||30), ic:seg('ic')||'pot', s:seg('s')||'', tip:f.tip.value.trim(), src:(f.src&&f.src.value.trim())||f.dataset.src||'', steps:(f.steps?f.steps.value.split(/\n/).map(x=>x.trim()).filter(Boolean):[]), i};
     if(id) state.customRecipes=state.customRecipes.map(x=>x.id===id?r:x); else state.customRecipes.push(r);
     closeSheet(); commit(); toast(S('savedOk')); return;
   }
@@ -1177,6 +1801,12 @@ document.addEventListener('submit',e=>{
     closeSheet(); commit();
   }
 });
+// Accept Dari/Persian and Arabic digits in number boxes (۱۲۳ / ١٢٣ → 123)
+document.addEventListener('input',e=>{
+  const el=e.target; if(!(el.tagName==='INPUT'&&el.getAttribute('inputmode')==='decimal')) return;
+  const v=el.value, w=v.replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[٫,،]/g,'.').replace(/[^0-9.]/g,'').replace(/(\..*)\./g,'$1');
+  if(w!==v){ const pos=el.selectionStart; el.value=w; try{el.setSelectionRange(pos,pos);}catch(_){} }
+},true);
 let inT=null;
 document.addEventListener('input',e=>{
   const el=e.target;
@@ -1206,21 +1836,109 @@ document.addEventListener('change',e=>{
 });
 function copyList(){
   const fa=L()==='fa', list=shopList(); let txt=(fa?'🛒 لست سودای هفته':'🛒 Shopping list – this week')+'\n';
-  for(const [c,en,f] of CATS){ const it=list.filter(x=>x.cat===c&&!state.checked[x.id]); if(!it.length) continue; txt+=`\n*${fa?f:en}*\n`+it.map(x=>`• ${nm(ING[x.id])} – ${qty(x.id,x.q)} (${money(x.cost)})`).join('\n')+'\n'; }
-  const ex=state.extra.filter(x=>!x.done); if(ex.length) txt+=`\n*${S('extra')}*\n`+ex.map(x=>'• '+x.t+(x.q?` – ${n1(+x.q)} ${exUnit(x.u)}`:'')+(x.p?` (${money(+x.p)})`:'')).join('\n')+'\n';
+  const ex=state.extra.filter(x=>!x.done);
+  for(const [c,en,f] of SHOP_GROUPS()){ const it=list.filter(x=>x.cat===c&&!state.checked[x.id]), ee=ex.filter(x=>exCat(x)===c); if(!it.length&&!ee.length) continue;
+    txt+=`\n*${fa?f:en}*\n`+[...it.map(x=>`• ${nm(ING[x.id])} – ${qty(x.id,x.q)} (${money(x.cost)})`),...ee.map(x=>'• '+x.t+(x.q?` – ${n1(+x.q)} ${exUnit(x.u)}`:'')+(x.p?` (${money(+x.p)})`:''))].join('\n')+'\n'; }
   txt+=`\n${fa?'تخمین':'Est.'}: ${money(list.filter(x=>!state.checked[x.id]).reduce((a,x)=>a+x.cost,0)+ex.reduce((a,x)=>a+exCost(x),0))}`;
   const fallback=()=>openSheet(`<h3>${S('copy')}</h3><p class="small muted">${S('copyManual')}</p><textarea class="copy" readonly>${esc(txt)}</textarea>`);
   try{ navigator.clipboard.writeText(txt).then(()=>toast(S('copied')),fallback); }catch(e){ fallback(); }
 }
 
+/* ===================== FAMILY SYNC (Google Sheets) ===================== */
+const SYNC_KEY='dastarkhan.sync';
+let sync=(()=>{ try{ return JSON.parse(localStorage.getItem(SYNC_KEY))||null; }catch(e){ return null; } })();
+let lastSyncMsg='wait', syncBusy=false, syncPending=false, syncTimer=null, applyingRemote=false, syncLast='';
+function saveSyncCfg(){ try{ sync?localStorage.setItem(SYNC_KEY,JSON.stringify(sync)):localStorage.removeItem(SYNC_KEY); }catch(e){} }
+async function api(body,cfg){ cfg=cfg||sync; const r=await fetch(cfg.url,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({...body,key:cfg.key})}); return r.json(); }
+function stateForCloud(){ const c=JSON.parse(JSON.stringify(state)); delete c.lang; return JSON.stringify(c); }
+function applyRemote(str,rev){
+  if(str){ applyingRemote=true; try{ const lang=state.lang; state=normalize(JSON.parse(str)); state.lang=lang; saveLocal(); render(); }catch(e){} applyingRemote=false; }
+  sync.rev=rev; saveSyncCfg();
+}
+function setSyncMsg(m,err){
+  const dot=document.querySelector('#sync .dot'), t=document.getElementById('syncT'); if(!dot||!t) return;
+  if(!sync){ dot.className='dot on'; t.textContent=S('phone'); return; }
+  if(m) lastSyncMsg=m;
+  if(m==='on') syncLast=new Date().toLocaleTimeString(L()==='fa'?'fa-AF':'en-GB',{hour:'2-digit',minute:'2-digit'});
+  dot.className='dot '+(m==='on'?'on':m==='wait'?'wait':'');
+  t.textContent = m==='on'?S('syncOn'):m==='wait'?S('syncWait'):m==='off'?S('syncOff'):S('syncErr')+(err?` (${err})`:'');
+}
+async function pull(){
+  if(!sync||syncBusy||syncPending) return; syncBusy=true;
+  try{ const r=await api({action:'get'}); if(r.ok){ if(r.rev!==sync.rev) applyRemote(r.state,r.rev); setSyncMsg('on'); } else setSyncMsg('err',r.error); }
+  catch(e){ setSyncMsg('off'); }
+  syncBusy=false;
+}
+function schedulePush(){ if(!sync||applyingRemote) return; syncPending=true; setSyncMsg('wait'); clearTimeout(syncTimer); syncTimer=setTimeout(push,2000); }
+async function push(){
+  if(!sync) return; if(syncBusy){ clearTimeout(syncTimer); syncTimer=setTimeout(push,1000); return; }
+  syncBusy=true;
+  try{
+    const r=await api({action:'put',baseRev:sync.rev,by:sync.by,state:stateForCloud()});
+    if(r.ok){ sync.rev=r.rev; saveSyncCfg(); syncPending=false; setSyncMsg('on'); }
+    else if(r.error==='conflict'){ syncPending=false; applyRemote(r.state,r.rev); toast(S('syncConflict').replace('{n}',r.by||'')); setSyncMsg('on'); }
+    else setSyncMsg('err',r.error);
+  }catch(e){ setSyncMsg('off'); }
+  syncBusy=false;
+}
+const _saveLocal0=saveLocal;
+saveLocal=function(){ _saveLocal0(); if(sync&&!applyingRemote) schedulePush(); };
+function initSync(){
+  if(!sync) return; setSyncMsg('wait'); pull();
+  setInterval(()=>{ if(!sync) return; syncPending?push():pull(); },45000);
+  document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='visible'&&sync) syncPending?push():pull(); });
+  window.addEventListener('online',()=>{ if(sync) syncPending?push():pull(); });
+}
+function syncCard(){
+  const fa=L()==='fa';
+  if(sync) return `<h2>👪 ${S('syncT')}</h2><div class="card"><div class="field"><label>${S('syncStatus')}<small>${esc(sync.by||'')}${syncLast?' · '+S('syncLastT')+' '+syncLast:''}</small></label><span class="pill ${syncPending?'warn':'ok'}">${syncPending?S('syncWait'):'✓ '+S('syncOn')}</span></div>
+    <div class="btns" style="margin-top:8px"><button class="btn pri" data-act="syncnow">${S('syncNow')}</button><button class="btn ghost" style="color:var(--bad)" data-act="syncoff">${S('syncDisconnect')}</button></div></div>`;
+  return `<h2>👪 ${S('syncT')}</h2><div class="card"><p class="small muted" style="margin:0 0 10px">${S('syncIntro')}</p>
+    <form data-form="sync"><input class="inp w" name="url" type="url" dir="ltr" placeholder="https://script.google.com/macros/s/…/exec" autocomplete="off">
+    <input class="inp w" style="margin-top:8px" name="key" type="password" dir="ltr" placeholder="${S('syncKeyPh')}" autocomplete="off">
+    <input class="inp w" style="margin-top:8px" name="by" placeholder="${S('syncNamePh')}">
+    <div class="btns" style="margin-top:10px"><button class="btn pri" type="submit">${S('syncConnect')}</button><button class="btn ghost" type="button" data-act="synchelp">${S('syncHow')}</button></div></form></div>`;
+}
+async function connectSync(f){
+  const cfg={url:f.url.value.trim(), key:f.key.value.trim(), by:f.by.value.trim()||'?', rev:0};
+  if(!/^https:\/\/script\.google(usercontent)?\.com\//.test(cfg.url)){ toast(S('syncBadUrl')); return; }
+  if(!cfg.key){ toast(S('syncNeedKey')); return; }
+  toast(S('syncWait'));
+  let r; try{ r=await api({action:'get'},cfg); }catch(e){ toast(S('syncNoReach')); return; }
+  if(!r.ok){ toast(r.error==='bad_key'?S('syncWrongKey'):r.error==='key_not_set'?S('syncKeyNotSet'):S('syncErr')+' ('+r.error+')'); return; }
+  if(!r.state){ sync=cfg; saveSyncCfg(); syncPending=true; await push(); render(); toast(S('syncFirst')); initSync(); return; }
+  window._pendingSync={cfg,r};
+  openSheet(`<h3>👪 ${S('syncT')}</h3><p class="small" style="margin:10px 0">${S('syncFound').replace('{n}',esc(r.by||''))}</p>
+   <button class="btn pri block" data-act="syncuse">${S('syncUseShared')}</button>
+   <button class="btn ghost block" style="margin-top:8px;color:var(--bad)" data-act="syncreplace">${S('syncReplace')}</button>`);
+}
+function syncHelp(){
+  const steps=L()==='fa'?[
+   'در حساب شخصی گوگل خود یک Google Sheet نو بسازید (مثلاً «Dastarkhan Data»).',
+   'Extensions ← Apps Script را بزنید. کود موجود را پاک کنید و محتوای فایل Code.gs را بچسبانید.',
+   'در سطر SECRET_KEY یک کلید طولانی و مخفی بنویسید (۲۰+ حرف و عدد). ذخیره کنید.',
+   'Deploy ← New deployment ← Web app. Execute as: Me و Who has access: Anyone. بعد Deploy و اجازه بدهید (Advanced ← Go to …).',
+   'لینک Web app را کاپی کنید و با کلید و نام خود اینجا وارد کنید و «وصل شو» را بزنید.',
+   'در تلفون همسرتان همین لینک و کلید را با نام خودش وارد کنید و «استفاده از معلومات مشترک» را بزنید.']:[
+   'In your personal Google account, create a new Google Sheet (e.g. “Dastarkhan Data”).',
+   'Click Extensions → Apps Script. Delete the code there and paste in the whole Code.gs file.',
+   'On the SECRET_KEY line, type your own long secret key (20+ letters and numbers). Save.',
+   'Click Deploy → New deployment → Web app. Execute as: Me. Who has access: Anyone. Deploy, then allow access (Advanced → Go to …).',
+   'Copy the Web app link. Paste it here with your key and your name, and tap Connect.',
+   'On your wife’s phone, enter the same link and key with her name, and choose “Use the shared data”.'];
+  openSheet(`<h3>${S('syncHow')}</h3><ol class="small" style="padding-inline-start:20px;line-height:1.6">${steps.map(s=>`<li style="margin:6px 0">${esc(s)}</li>`).join('')}</ol><p class="tiny muted">${S('syncSafety')}</p>`);
+}
+
 /* ---------- boot ---------- */
+function handleShare(){ try{ const sp=new URLSearchParams(location.search), t=[sp.get('title'),sp.get('text'),sp.get('url')].filter(Boolean).join('\n'); if(t){ tab='shop'; render(); sheetReceiptReview(t); history.replaceState(null,'',location.pathname); } }catch(e){} }
 state=normalize(loadLocal());
 try{ state.lang=localStorage.getItem(LS_LANG)||'en'; }catch(e){ state.lang='en'; }
 render(); setSync('local');
 let deferredInstall=null;
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredInstall=e;if(tab==='family')render();});
 window.addEventListener('appinstalled',()=>{deferredInstall=null;toast(S('installed'));});
-if('serviceWorker' in navigator){ window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{})); }
+initSync();
+if('serviceWorker' in navigator){ window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{})); } handleShare();
 </script>
 </body>
 </html>

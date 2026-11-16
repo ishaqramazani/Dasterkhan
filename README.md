@@ -16,7 +16,7 @@ Family food planner – weekly meals, shopping list, nutrition and food budget, 
 Upload the new files to the same repository with **Add file → Upload files** and **Commit changes**. The link stays the same, and phones get the update next time they open the app with internet.
 
 ## Good to know
-- Each phone keeps its own data. To share a plan or move to a new phone, use **Family → Save / send backup**, then **Load a backup file** on the other phone.
+- Each phone keeps its own data. To share a plan or move to a new phone, use **Settings (⚙ top right) → Save / send backup**, then **Load a backup file** on the other phone.
 - The repository is public, so anyone can see the app's code, but not your family's data.
 
 ---
@@ -36,5 +36,5 @@ Upload the new files to the same repository with **Add file → Upload files** a
 فایل‌های نو را با **Add file ← Upload files** در همان repository بار کنید و **Commit changes** را بزنید. لینک تغییر نمی‌کند.
 
 ## یادداشت
-- معلومات هر تلفون در همان تلفون ذخیره است. برای فرستادن پلان به خانواده یا انتقال به تلفون نو: **خانواده ← ذخیره یا فرستادن پشتیبان**، و در تلفون دیگر **باز کردن فایل پشتیبان**.
+- معلومات هر تلفون در همان تلفون ذخیره است. برای فرستادن پلان به خانواده یا انتقال به تلفون نو: **تنظیمات (⚙ بالا) ← ذخیره یا فرستادن پشتیبان**، و در تلفون دیگر **باز کردن فایل پشتیبان**.
 - repository عمومی است؛ کود اپ دیده می‌شود، اما معلومات خانوادهٔ شما نه.
