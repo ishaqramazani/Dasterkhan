@@ -125,6 +125,7 @@ html[dir=rtl] .day{padding:6px 14px 6px 6px}
 .slot .sn{flex:1;min-width:0;font-weight:500;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .slot .sc{font-size:12.5px;color:var(--muted)}
 .slot.add .sn{color:var(--brand);font-weight:600}
+.side-tag{font-size:11.5px;color:var(--brand);font-weight:600;display:block;margin-top:2px}
 .left-tag{font-size:11px;color:var(--accent);font-weight:600;display:block}
 /* summary strip */
 .strip{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-2);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--line-2)}
@@ -427,6 +428,35 @@ const RECIPES = [
    i:[['beef',0.3],['rice',0.3],['potato',0.4],['carrot',0.2],['onion',0.15],['tomato',0.2],['oil',0.04],['yogurt',0.3],['spice',1]],
    tip:['A little meat goes a long way in this soup.','با کمی گوشت برای همه کافی می‌شود.']},
 ];
+// ---- Sides: chosen separately for each meal (portions for the 5-person base family) ----
+const SIDES={
+  roti:   {en:'Roti / home naan', fa:'نان خانگی',   i:{b:[['atta',0.5]], m:[['atta',0.6]]}},
+  naan:   {en:'Tandoor naan',     fa:'نان تندوری',  i:{b:[['naan',5]],   m:[['naan',5]]}},
+  paratha:{en:'Paratha',          fa:'پراته',       i:{b:[['atta',0.5],['oil',0.06]], m:[['atta',0.6],['oil',0.07]]}},
+  rice:   {en:'Plain rice',       fa:'برنج',        i:{b:[['rice',0.3]], m:[['rice',0.5],['oil',0.01]]}},
+  yogurt: {en:'Yogurt',           fa:'ماست',        i:{b:[['yogurt',0.4]], m:[['yogurt',0.4]]}},
+  raita:  {en:'Raita',            fa:'رایته',       i:{b:[['yogurt',0.35],['onion',0.05],['tomato',0.05]], m:[['yogurt',0.4],['onion',0.05],['tomato',0.05]]}},
+  salad:  {en:'Salad',            fa:'سلاته',       i:{b:[['tomato',0.15],['onion',0.08]], m:[['onion',0.1],['tomato',0.2],['carrot',0.15]]}},
+};
+const SIDE_KEYS=Object.keys(SIDES);
+// Built-in dishes: bread / rice / yogurt moved out into default sides, names shortened
+const SIDE_SPLIT={
+  b_egg:[['roti'],['atta'],'Eggs with tomato','تخم بادنجان رومی'], b_chai:[['roti'],['atta'],'Sheer chai & boiled eggs','شیرچای و تخم جوش'],
+  b_paratha:[['yogurt'],['yogurt'],'Paratha','پراته'], b_nakhud:[['roti'],['atta'],'Shor nakhud','شورنخود'],
+  m_daal:[['roti'],['atta'],'Masoor daal','دال نسک'], m_karahi:[['roti'],['atta'],'Chicken karahi','کرایی مرغ'],
+  m_shorwa:[['roti'],['atta'],'Chicken shorwa','شوربای مرغ'], m_palak:[['roti'],['atta'],'Sabzi palak with potato','سبزی پالک با کچالو'],
+  m_aloogobi:[['roti'],['atta'],'Aloo gobi','گلپی و کچالو'], m_bamia:[['roti'],['atta'],'Bamia (okra)','بامیه'],
+  m_chana:[['rice'],['rice'],'Chana masala','نخود مصالحه‌دار'], m_kichri:[['yogurt'],['yogurt'],'Kichri','کچری'],
+  m_qeema:[['roti'],['atta'],'Qeema matar','قیمه با متر'], m_bolani:[['yogurt'],['yogurt'],'Bolani (potato)','بولانی کچالو'],
+  m_eggcurry:[['rice'],['rice'],'Egg curry','قورمهٔ تخم'], m_borani:[['roti'],['atta'],'Borani kadu','بورانی کدو'],
+  t_menemen:[['naan'],['naan'],'Menemen (Turkish eggs)','منمن (تخم ترکی)'], t_gozleme:[['yogurt'],['yogurt']],
+  t_mercimek:[['naan'],['naan'],'Mercimek çorbası (lentil soup)','شوربای دال ترکی'], t_fasulye:[['rice'],['rice'],'Kuru fasulye (bean stew)','لوبیای ترکی'],
+  t_imam:[['naan'],['naan'],'İmam bayıldı (stuffed eggplant)','امام بایلدی (بادنجان ترکی)'], t_tavuk:[['rice'],['rice'],'Tavuk sote (chicken & peppers)','مرغ ساته ترکی'],
+  c_shurpa:[['naan'],['naan'],'Shurpa (mutton & vegetable soup)','شوربای ازبکی'], c_samsa:[['yogurt'],['yogurt']], c_dimlama:[['naan'],['naan']],
+};
+RECIPES.forEach(r=>{ const sp=SIDE_SPLIT[r.id]; r.sides=[];
+  if(sp){ r.sides=sp[0]; r.i=r.i.filter(([k])=>!sp[1].includes(k)); if(sp[2]){ r.en=sp[2]; r.fa=sp[3]; } } });
+function sideIng(key,slot){ const sd=SIDES[key]; return sd? sd.i[slot==='b'?'b':'m'] : []; }
 // Seasons: 'w' = winter dish, 's' = summer dish, '' = all year
 const SEASON_OF={t_fasulye:'w',t_mercimek:'w',t_imam:'s',c_plov:'w',c_lagman:'w',c_manti:'w',c_shurpa:'w',c_samsa:'w',c_dimlama:'w',b_nakhud:'w',b_daliya:'w',b_paratha:'w',m_shorwa:'w',m_palaw:'w',m_bolani:'w',m_qeema:'w',m_aloogobi:'w',m_palak:'w',m_mashpalaw:'w',m_karahi:'w',m_bamia:'s',m_kichri:'s'};
 RECIPES.forEach(r=>{ r.s=SEASON_OF[r.id]||''; });
@@ -448,16 +478,34 @@ function pool(state,m){
 // 'left' = leftovers of the previous evening's dinner + fresh roti (cook extra at dinner)
 const LEFT_ID='left';
 function prevDay(d){ const i=DAYS.findIndex(x=>x[0]===d); return DAYS[(i+6)%7][0]; }
+// Where leftovers come from: lunch ← last night's dinner; dinner ← today's lunch (follows a chain if that was leftovers too)
+function leftLoc(state,d,s,depth){
+  depth=depth||0; if(depth>3) return null;
+  const [sd,ss] = s==='l' ? [prevDay(d),'d'] : [d,'l'];
+  const id=state.plan[sd]&&state.plan[sd][ss];
+  if(id===LEFT_ID) return leftLoc(state,sd,ss,depth+1);
+  return id?[sd,ss]:null;
+}
+function leftSource(state,d,s){ const l=leftLoc(state,d,s); return l? state.plan[l[0]][l[1]] : null; }
+// The sides chosen for a meal: the family's choice, else the dish's usual sides (leftovers: the original meal's sides)
+function sidesOf(state,d,s){
+  const ch=state.planSides&&state.planSides[d]&&state.planSides[d][s]; if(Array.isArray(ch)) return ch;
+  const id=state.plan[d]&&state.plan[d][s]; if(!id) return [];
+  if(id===LEFT_ID){ const l=leftLoc(state,d,s); return l? sidesOf(state,l[0],l[1]) : ['roti']; }
+  return (RMAP[id]&&RMAP[id].sides)||[];
+}
 function resolveSlot(state,d,s){
   const id=state.plan[d]&&state.plan[d][s];
   if(!id) return null;
+  const sides=sidesOf(state,d,s), extra=sides.flatMap(k=>sideIng(k,s));
   if(id===LEFT_ID){
-    const src=state.plan[prevDay(d)]&&state.plan[prevDay(d)].d;
-    const r=src&&RMAP[src]; if(!r) return {left:true, i:[['atta',0.6]], src:null};
-    const i=r.i.filter(([k])=>k!=='atta'&&k!=='spice').map(([k,q])=>[k,q*0.6]); i.push(['atta',0.6]);
-    return {left:true, i, src:r.id};
+    const src=leftSource(state,d,s);
+    const r=src&&RMAP[src]; if(!r) return {left:true, i:extra, src:null, sides};
+    const i=r.i.filter(([k])=>k!=='spice').map(([k,q])=>[k,q*0.6]).concat(extra);
+    return {left:true, i, src:r.id, sides};
   }
-  return RMAP[id]||null;
+  const r=RMAP[id]; if(!r) return null;
+  return extra.length ? {...r, i:r.i.concat(extra), sides} : {...r, sides};
 }
 
 const DAYS = [
@@ -575,8 +623,15 @@ function autoPlan(state, seed, mode){
     const distinct=Object.keys(c).length; q += Math.max(0,10-distinct)*2;   // variety across the week
     return q;
   }
+  const maxLeft=Math.round(7*leftP);
+  function habitViol(plan){   // leftovers no more often than the family's habit; one pot never feeds three meals
+    let n=0, chain=0; DAYS.forEach(([d],i)=>{ const p=plan[d]; if(p.l===LEFT_ID) n++; if(p.d===LEFT_ID) n++;
+      const nx=DAYS[(i+1)%7][0]; if(p.d===LEFT_ID && plan[nx].l===LEFT_ID) chain++; });
+    return Math.max(0,n-maxLeft)+chain;
+  }
   function score(plan){
-    const T=weekTotals({...state,plan}); const q=quality(plan,T);
+    const hv=habitViol(plan); if(hv) return 1e7*hv;
+    const T=weekTotals({...state,plan,planSides:{}}); const q=quality(plan,T);
     const feeds = T.day.k >= base.k*0.95 && T.day.p >= tgt.p;
     if (mode==='variety'){
       // every dish at most twice a week, at least 9 different dishes; then the cheapest such week
@@ -586,14 +641,18 @@ function autoPlan(state, seed, mode){
     const over=Math.max(0,T.week-budgetWeek);
     return over>0 ? 1e6 + over*5 + q + (feeds?0:5e5) : q + (feeds?0:5e5);
   }
-  const randomPlan=()=>{ const plan={}; for (const [d] of DAYS){ const l= rnd()<leftP ? LEFT_ID : pick(M); let dn=pick(M), g=0; while(dn===l && g++<10) dn=pick(M); plan[d]={b:pick(B),l,d:dn}; } return plan; };
+  // each day: cook twice, or cook once and eat it twice (dinner→next lunch, or lunch→same dinner)
+  const randomPlan=()=>{ const plan={}; for (const [d] of DAYS){ const r=rnd(); let l,dn;
+      if (r<leftP*0.55){ l=LEFT_ID; dn=pick(M); } else if (r<leftP){ l=pick(M); dn=LEFT_ID; }
+      else { l=pick(M); dn=pick(M); let g=0; while(dn===l && g++<10) dn=pick(M); }
+      plan[d]={b:pick(B),l,d:dn}; } return plan; };
   let best=null, bestScore=Infinity;
   for (let it=0; it<1500; it++){ const p=randomPlan(), sc=score(p); if(sc<bestScore){bestScore=sc;best=p;} }
   // hill-climb: change one meal at a time and keep improvements
   for (let it=0; it<2500; it++){
     const p=JSON.parse(JSON.stringify(best)), d=DAYS[Math.floor(rnd()*7)][0], k=['b','l','d'][Math.floor(rnd()*3)];
-    p[d][k] = k==='b' ? pick(B) : (k==='l' && rnd()<0.5 ? LEFT_ID : pick(M));
-    if (p[d].l===p[d].d) continue;
+    p[d][k] = k==='b' ? pick(B) : (rnd()<leftP*0.6 ? LEFT_ID : pick(M));
+    if (p[d].l===p[d].d) continue;            // also stops both meals of a day being leftovers
     const sc=score(p); if(sc<=bestScore){ bestScore=sc; best=p; }
   }
   return best;
@@ -631,7 +690,7 @@ const STR = {
   kcal:['kcal','کالوری'], g:['g','گرام'], target:['target','هدف'],
   insights:['Smart tips','پیشنهادها'], prep:['Prep tonight','آمادگی برای فردا'],
   weekPlan:['Weekly plan','پلان هفته'], perWeek:['per week','در هفته'], perMonth:['per month','در ماه'], ofTarget:['of energy target','از هدف انرژی'],
-  fit:['Fit to budget','مطابق بودجه بساز'], clear:['Clear week','پاک کردن هفته'], leftovers:['Leftovers + fresh roti','باقی‌ماندهٔ شب + نان تازه'],
+  fit:['Fit to budget','مطابق بودجه بساز'], clear:['Clear week','پاک کردن هفته'], leftovers:['Leftovers','باقی‌ماندهٔ غذا'], _oldLeft:['Leftovers + fresh roti','باقی‌ماندهٔ شب + نان تازه'],
   leftoversOf:['from last night','از شب گذشته'], remove:['Remove','حذف'], choose:['Choose','انتخاب'],
   shopList:['Shopping list','لست سودا'], forWeek:['For the whole week','برای تمام هفته'], bought:['bought','خریده شد'],
   copy:['Copy for WhatsApp','کاپی برای واتس‌اپ'], resetTicks:['Finish this week','ختم این هفته'], extra:['Extra items','چیزهای اضافه'],
@@ -672,6 +731,11 @@ const STR = {
   syncUseShared:['Use the shared data (recommended)','استفاده از معلومات مشترک (پیشنهادی)'], syncReplace:['Replace shared data with this phone’s','جایگزینی معلومات مشترک با معلومات این تلفون'],
   syncSafety:['Keep the link and key private – anyone with both can open your family data. To change the key: edit it in the script, then Deploy → Manage deployments → Edit → New version.','لینک و کلید را مخفی نگه دارید – هر کس هر دو را داشته باشد معلومات شما را می‌بیند. برای تغییر کلید: در کود عوض کنید، بعد Deploy ← Manage deployments ← Edit ← New version.'],
   syncOffDone:['Disconnected – data stays on this phone','قطع شد – معلومات در همین تلفون می‌ماند'],
+  serveWith:['Serve with','همراه با'], usualSides:['Usually served with','معمولاً همراه با'], doneL:['Done','تمام'], sidesHint:['Tap to add or remove – changes this meal only.','بزنید تا اضافه یا کم شود – فقط برای همین وعده.'],
+  chooseDish:['Choose the dish','غذا را انتخاب کنید'], customSides:['Usually served with (you can change it for each meal)','معمولاً همراه با (برای هر وعده قابل تغییر است)'],
+  leftoversLunch:['from today’s lunch','از نان چاشت امروز'], leftNeedLunch:['plan a lunch first','اول نان چاشت را پلان کنید'], leftNeedDinner:['plan last night’s dinner first','اول نان شب دیشب را پلان کنید'],
+  leftHabitT:['Leftovers habit','عادت باقی‌مانده'], lh_often:['Most days','اکثر روزها'], lh_some:['Sometimes','گاهی'], lh_rarely:['Rarely','کم'],
+  leftHabitH:['How often you cook once and eat it twice (lunch → dinner, or dinner → next day’s lunch). “Fit to budget” plans the week this way.','چند بار یک بار می‌پزید و دو وعده می‌خورید (چاشت ← شب، یا شب ← چاشت فردا). «مطابق بودجه» هفته را همین‌طور پلان می‌کند.'],
   stepsL:['Cooking steps','طرز پخت'], stepsHint:['One step per line','هر مرحله در یک سطر'], watchVideo:['Watch video','دیدن ویدیو'], videoSaved:['video link saved','لینک ویدیو ذخیره شد'],
   stepsFound:['steps','مرحله'], pasteVideo:['From a YouTube video: copy the description (… more) or the transcript (… more → Show transcript) and paste it here. Paste the video link too – anywhere in the text is fine.','از ویدیوی یوتیوب: توضیحات (… more) یا متن گفتار (… more ← Show transcript) را کاپی و اینجا بچسبانید. لینک ویدیو را هم در هر جای متن بچسبانید.'],
   settingsT:['Settings','تنظیمات'], settingsLink:['Budget, prices, season, sync and backup','بودجه، قیمت‌ها، فصل، همگام‌سازی و پشتیبان'],
@@ -807,13 +871,14 @@ function applyCustom(){
       const rr={id:r.id,en:r.en,fa:r.fa,m:r.m,min:0,t:['mine','ready'],s:r.s||'',tip:[r.tip||'',r.tip||''],i:[[iid,1]],custom:true,ready:true};
       RECIPES.push(rr); RMAP[r.id]=rr; RICON[r.id]=r.ic||'bag'; continue;
     }
-    const rr={id:r.id,en:r.en,fa:r.fa,m:r.m,min:+r.min||30,t:['mine'],s:r.s||'',tip:[r.tip||'',r.tip||''],i:(r.i||[]).filter(([id,q])=>ING[id]&&q>0),custom:true};
+    const rr={id:r.id,en:r.en,fa:r.fa,m:r.m,sides:(r.sides||[]).filter(k=>SIDES[k]),min:+r.min||30,t:['mine'],s:r.s||'',tip:[r.tip||'',r.tip||''],i:(r.i||[]).filter(([id,q])=>ING[id]&&q>0),custom:true};
     RECIPES.push(rr); RMAP[r.id]=rr; RICON[r.id]=r.ic||'pot';
   }
 }
 const UNIT_IN = u => ({dz:['dozen','درجن',1],kg:['g','گرام',1000],L:['ml','ملی‌لیتر',1000],pc:['pcs','دانه',1],meal:['×','×',1]})[u]||['','',1];
 /* ---------- state & persistence ---------- */
 const LS_KEY='dastarkhan.v1', LS_LANG='dastarkhan.lang';
+const LEFT_HABIT={often:0.85,some:0.5,rarely:0.15};
 function fresh(){const s=DEFAULT_STATE(); s.plan=null; return s;}
 function normalize(s){
   const d=fresh(); s=Object.assign(d,s||{});
@@ -825,7 +890,9 @@ function normalize(s){
   s.history=Array.isArray(s.history)?s.history:[]; s.purchases=Array.isArray(s.purchases)?s.purchases:[]; s.checkedAt=s.checkedAt||{}; s.shopOf=s.shopOf||{}; s.health=s.health&&typeof s.health==='object'?s.health:{};
   s.hiddenR=Array.isArray(s.hiddenR)?s.hiddenR:[]; s.seasonMode=s.seasonMode||'auto'; if(s.winterBoost==null) s.winterBoost=10;
   s.customIng=Array.isArray(s.customIng)?s.customIng:[]; s.customRecipes=Array.isArray(s.customRecipes)?s.customRecipes:[];
-  if(!s.plan) s.plan=autoPlan({...s,leftovers:0.8},12345,'variety');
+  if(!s.leftHabit) s.leftHabit='often';
+  s.planSides=s.planSides&&typeof s.planSides==='object'?s.planSides:{};
+  if(!s.plan) s.plan=autoPlan({...s,leftovers:LEFT_HABIT[s.leftHabit]},12345,'variety');
   for(const [k] of DAYS) s.plan[k]=Object.assign({b:'',l:'',d:''},s.plan[k]||{});
   return s;
 }
@@ -875,9 +942,12 @@ function todayKey(){ return ['sun','mon','tue','wed','thu','fri','sat'][new Date
 function tomorrowKey(){ return ['sun','mon','tue','wed','thu','fri','sat'][(new Date().getDay()+1)%7]; }
 function dayName(k,long=true){ const d=DAYS.find(x=>x[0]===k); return L()==='fa'?d[3]:(long?d[2]:d[1]); }
 function slotName(s){ const x=SLOTS.find(y=>y[0]===s); return L()==='fa'?x[2]:x[1]; }
+const sideNames=arr=>(arr||[]).map(k=>SIDES[k]?(L()==='fa'?SIDES[k].fa:SIDES[k].en):k).join(' · ');
+function dishT(r,slotType){ return recipeTotals(state,{...r,i:r.i.concat((r.sides||[]).flatMap(k=>sideIng(k,slotType)))}); }
+function sideLine(d,s){ const sd=sidesOf(state,d,s); return sd.length?`<span class="side-tag">+ ${esc(sideNames(sd))}</span>`:''; }
 function slotLabel(d,s){
   const id=state.plan[d][s]; if(!id) return null;
-  if(id===LEFT_ID){ const src=state.plan[prevDay(d)].d; return {name:S('leftovers'), sub: src&&RMAP[src]? nm(RMAP[src]) : '', icon:'left', left:true}; }
+  if(id===LEFT_ID){ const src=leftSource(state,d,s); return {name:S('leftovers'), sub: src&&RMAP[src]? nm(RMAP[src])+' · '+S(s==='d'?'leftoversLunch':'leftoversOf') : '', icon:'left', left:true}; }
   const r=RMAP[id]; return r?{name:nm(r),icon:RICON[id]||'bowl',r}:null;
 }
 function ring(pct,color,label,val,sub,isMin){
@@ -904,7 +974,7 @@ function vToday(){
     const lab=slotLabel(d,s);
     if(!lab){ html+=`<button class="meal empty" data-act="pick" data-d="${d}" data-s="${s}"><span class="lbl">${slotName(s)}</span><span>+ ${S('add')}</span></button>`; continue; }
     const r=resolveSlot(state,d,s), t=recipeTotals(state,r);
-    html+=`<button class="meal" data-act="${lab.r?'recipe':'pick'}" data-id="${lab.r?lab.r.id:''}" data-d="${d}" data-s="${s}">${tile(lab.icon,'sm')}<span class="lbl">${slotName(s)}</span><span class="nm">${esc(lab.name)}${lab.left&&lab.sub?`<span class="left-tag">${esc(lab.sub)}</span>`:''}</span><span class="meta num">${n0(t.k/state.members.length)} ${S('kcal')}<br>${money(t.cost)}</span></button>`;
+    html+=`<button class="meal" data-act="pick" data-d="${d}" data-s="${s}">${tile(lab.icon,'sm')}<span class="lbl">${slotName(s)}</span><span class="nm">${esc(lab.name)}${lab.left&&lab.sub?`<span class="left-tag">${esc(lab.sub)}</span>`:''}${sideLine(d,s)}</span><span class="meta num">${n0(t.k/state.members.length)} ${S('kcal')}<br>${money(t.cost)}</span></button>`;
   }
   html+=`</div>`;
   // budget
@@ -929,6 +999,8 @@ function vToday(){
     if(ids.includes('chana')||ids.includes('moong')) preps.push(L()==='fa'?'نخود یا ماش را امشب در آب تر کنید.':'Soak chickpeas / mung beans tonight.');
     if(ids.includes('chicken')||ids.includes('beef')) preps.push(L()==='fa'?'گوشت را از فریزر به یخچال بگذارید.':'Move the meat from freezer to fridge.');
   }
+  if(state.plan[todayKey()].d===LEFT_ID) preps.push(L()==='fa'?'امروز نان چاشت را بیشتر بپزید؛ نان شب از همان است.':'Cook extra at lunch today – dinner is the leftovers.');
+  if(state.plan[tk].d===LEFT_ID) preps.push(L()==='fa'?'فردا نان چاشت را بیشتر بپزید؛ نان شب از همان است.':'Tomorrow: cook extra at lunch – dinner is the leftovers.');
   if(state.plan[tk].l===LEFT_ID) preps.push(L()==='fa'?'امشب نان شب را کمی بیشتر بپزید (برای چاشت فردا).':'Cook a little extra tonight – it becomes tomorrow\'s lunch.');
   const up=[...new Set(preps)];
   if(up.length) html+=`<h2>${S('prep')} · ${dayName(tk)}</h2><div class="card">${up.map(p=>`<div class="ins"><div class="ic" style="background:var(--brand-soft);color:var(--brand)">✓</div><div><p>${p}</p></div></div>`).join('')}</div>`;
@@ -964,7 +1036,7 @@ function vWeek(){
       const lab=slotLabel(d,s);
       if(!lab){ html+=`<button class="slot add" data-act="pick" data-d="${d}" data-s="${s}"><span class="sl">${slotName(s)}</span><span class="sn">+ ${S('addMeal')}</span></button>`; continue; }
       const t=recipeTotals(state,resolveSlot(state,d,s));
-      html+=`<button class="slot" data-act="pick" data-d="${d}" data-s="${s}"><span class="sl">${slotName(s)}</span>${tile(lab.icon,'sm')}<span class="sn">${esc(lab.name)}${lab.left&&lab.sub?`<span class="left-tag">${esc(lab.sub)}</span>`:''}</span><span class="sc num">${money(t.cost)}</span></button>`;
+      html+=`<button class="slot" data-act="pick" data-d="${d}" data-s="${s}"><span class="sl">${slotName(s)}</span>${tile(lab.icon,'sm')}<span class="sn">${esc(lab.name)}${lab.left&&lab.sub?`<span class="left-tag">${esc(lab.sub)}</span>`:''}${sideLine(d,s)}</span><span class="sc num">${money(t.cost)}</span></button>`;
     }
     html+=`</div>`;
   }
@@ -1037,7 +1109,7 @@ function vRecipes(){
   ${state.customRecipes.length?`<button class="card row" style="width:100%;margin-top:10px;text-align:start;padding:12px 14px" data-act="onlymine"><span class="grow"><b class="small">${S('onlyMine')}</b><span class="tiny muted" style="display:block">${S('onlyMineHint')}</span></span><span class="switch ${state.onlyMine?'on':''}"><i></i></span></button>`:''}
   <div class="chips">${[['all','all'],['season','inSeasonC'],['mine','myDishes'],['b','breakfast'],['m','mains'],['cheap','cheap'],['protein','highP'],['afghan','afghan'],['pakistani','pakistani'],['turkish','turkish'],['centralasian','centralasian'],...(hid.size?[['hidden','hiddenC']]:[])].map(([k,l])=>`<button class="chip ${rFilter===k?'on':''}" data-act="rf" data-v="${k}">${S(l)}</button>`).join('')}</div><div class="rgrid">`;
   for(const r of list){
-    const t=recipeTotals(state,r,sc);
+    const t=dishT(r,r.m==='b'?'b':'m');
     html+=`<button class="rcard" data-act="recipe" data-id="${r.id}"><div class="row">${tile(RICON[r.id])}<div class="grow"><div class="nm">${esc(nm(r))}</div><div class="tiny muted num">${r.ready?'🛍 '+S('buyReady'):n0(r.min)+' '+S('minutes')} · ${money(t.cost/N)} ${S('perPerson')}</div></div></div><div class="tags"><span class="pill num">${n0(t.k/N)} ${S('kcal')}</span><span class="pill brand num">${n0(t.p/N)}${S('g')} ${S('protein')}</span>${t.cost/N<=90?`<span class="pill ok">${S('cheap')}</span>`:''}${seasonPill(r)}${r.custom?`<span class="pill acc">${S('mineTag')}</span>`:''}${((state.customRecipes.find(x=>x.id===r.id)||{}).src||'').match(/youtube\.com|youtu\.be/)?'<span class="pill" style="background:#FBE3E1;color:#C4302B">▶</span>':''}</div></button>`;
   }
   if(!list.length) html+=`<div class="empty-state">—</div>`;
@@ -1060,6 +1132,7 @@ function vSettings(){
   const fa=L()==='fa';
   let html=`<div class="fade"><h1>${S('settingsT')}</h1><p class="sub" style="margin:0 0 4px">${S('settingsLink')}</p>`;
   const f=(k,lab,v,step,unit,hint='')=>`<div class="field"><label>${lab}${hint?`<small>${hint}</small>`:''}</label><div class="row" style="gap:6px"><input class="inp num" type="text" inputmode="decimal" min="0" step="${step}" data-set="${k}" value="${v}"><span class="tiny muted" style="width:34px">${unit}</span></div></div>`;
+  html+=`<h2>${S('leftHabitT')}</h2><div class="card"><div class="seg">${['often','some','rarely'].map(v=>`<button class="${(state.leftHabit||'often')===v?'on':''}" data-act="lefthabit" data-v="${v}">${S('lh_'+v)}</button>`).join('')}</div><p class="tiny muted" style="margin:8px 2px 0">${S('leftHabitH')}</p></div>`;
   html+=`<h2>${S('seasonL')}</h2><div class="card"><div class="seg" data-act="noop">${['auto','winter','summer','mild'].map(v=>`<button class="${(state.seasonMode||'auto')===v?'on':''}" data-act="season" data-v="${v}">${S(v)}</button>`).join('')}</div>
    <p class="tiny muted" style="margin:8px 2px 4px">${S('seasonHint')} ${fa?'اکنون':'Now'}: <b>${S(currentSeason(state))}</b></p>
    ${f('winterBoost',S('winterBoostL'),state.winterBoost??10,5,'%',S('winterBoostH'))}</div>`;
@@ -1101,18 +1174,24 @@ function sheetPick(d,s){
   const cur=state.plan[d][s], N=state.members.length, sc=scaleFactor(state.members);
   const se=currentSeason(state);
   const opts=pool(state, s==='b'?'b':'m').slice().sort((a,b)=>(inSeason(b,se)-inSeason(a,se)) || (se==='winter'? recipeTotals(state,b,sc).k-recipeTotals(state,a,sc).k : 0));
-  let html=`<div class="row between"><div><div class="tiny muted">${dayName(d)}</div><h3>${slotName(s)}</h3></div>${cur?`<button class="btn ghost" data-act="set" data-d="${d}" data-s="${s}" data-id="" style="color:var(--bad)">${S('remove')}</button>`:''}</div><div style="margin-top:10px">`;
-  if(s!=='b'){ const src=state.plan[prevDay(d)].d; const r=resolveSlot({...state,plan:{...state.plan,[d]:{...state.plan[d],[s]:LEFT_ID}}},d,s); const t=recipeTotals(state,r,sc);
-    html+=`<button class="opt ${cur===LEFT_ID?'cur':''}" data-act="set" data-d="${d}" data-s="${s}" data-id="${LEFT_ID}">${tile('left','sm')}<span class="grow"><b class="small">${S('leftovers')}</b><span class="tiny muted" style="display:block">${src&&RMAP[src]?esc(nm(RMAP[src]))+' · '+S('leftoversOf'):''}</span></span><span class="small num muted">${money(t.cost)}</span></button>`; }
-  for(const r of opts){ const t=recipeTotals(state,r,sc);
+  let html=`<div class="row between"><div><div class="tiny muted">${dayName(d)}</div><h3>${slotName(s)}</h3></div>${cur?`<div class="btns">${RMAP[cur]?`<button class="btn ghost" data-act="recipe" data-id="${cur}">📖 ${L()==='fa'?'دستور':'Recipe'}</button>`:''}<button class="btn ghost" data-act="set" data-d="${d}" data-s="${s}" data-id="" style="color:var(--bad)">${S('remove')}</button></div>`:''}</div><div style="margin-top:10px">`;
+  if(cur){ const sd=sidesOf(state,d,s);
+    html+=`<div class="card" style="padding:12px;margin-bottom:12px;background:var(--brand-soft);border:0;box-shadow:none"><div class="row between"><b class="small">${S('serveWith')}</b><span class="tiny muted">${S('sidesHint')}</span></div>
+      <div class="chips" style="flex-wrap:wrap;padding:8px 0 0">${SIDE_KEYS.map(k=>`<button class="chip ${sd.includes(k)?'on':''}" data-act="side" data-d="${d}" data-s="${s}" data-v="${k}">${sd.includes(k)?'✓ ':''}${esc(L()==='fa'?SIDES[k].fa:SIDES[k].en)}</button>`).join('')}</div>
+      <button class="btn pri block" style="margin-top:10px" data-act="close">${S('doneL')} · ${money(recipeTotals(state,resolveSlot(state,d,s)).cost)}</button></div>
+      <div class="strong small" style="margin:4px 0 2px">${S('chooseDish')}</div>`; }
+  if(s!=='b'){ const src=leftSource({...state,plan:{...state.plan,[d]:{...state.plan[d],[s]:LEFT_ID}}},d,s); const r=resolveSlot({...state,plan:{...state.plan,[d]:{...state.plan[d],[s]:LEFT_ID}}},d,s); const t=recipeTotals(state,r,sc);
+    html+=`<button class="opt ${cur===LEFT_ID?'cur':''}" data-act="set" data-d="${d}" data-s="${s}" data-id="${LEFT_ID}">${tile('left','sm')}<span class="grow"><b class="small">${S('leftovers')}</b><span class="tiny muted" style="display:block">${src&&RMAP[src]?esc(nm(RMAP[src]))+' · '+S(s==='d'?'leftoversLunch':'leftoversOf'):S(s==='d'?'leftNeedLunch':'leftNeedDinner')}</span></span><span class="small num muted">${money(t.cost)}</span></button>`; }
+  for(const r of opts){ const t=dishT(r,s==='b'?'b':'m');
     html+=`<button class="opt ${cur===r.id?'cur':''}" data-act="set" data-d="${d}" data-s="${s}" data-id="${r.id}">${tile(RICON[r.id],'sm')}<span class="grow"><b class="small">${esc(nm(r))} ${r.s?`<span class="tiny">${SEAS_ICON[r.s]}</span>`:''}</b><span class="tiny muted num" style="display:block">${n0(t.k/N)} ${S('kcal')} · ${n0(t.p/N)}${S('g')} ${S('protein')} ${S('perPerson')}</span></span><span class="small num muted">${money(t.cost)}</span></button>`; }
   openSheet(html+'</div>');
 }
 function sheetRecipe(id){
-  const r=RMAP[id], sc=scaleFactor(state.members), t=recipeTotals(state,r,sc), N=state.members.length, fa=L()==='fa';
+  const r=RMAP[id], sc=scaleFactor(state.members), t=dishT(r,r.m==='b'?'b':'m'), N=state.members.length, fa=L()==='fa';
   let html=`<div class="row">${tile(RICON[id],'lg')}<div class="grow"><h3>${esc(nm(r))}</h3><div class="small muted">${esc(fa?r.en:r.fa)}</div></div></div>
   <div class="stats"><div><b class="num">${money(t.cost)}</b><span>${S('family5')}</span></div><div><b class="num">${money(t.cost/N)}</b><span>${S('perPerson')}</span></div><div><b class="num">${n0(t.k/N)}</b><span>${S('kcal')}</span></div><div><b class="num">${n0(t.p/N)}${S('g')}</b><span>${S('protein')}</span></div></div>
   ${r.tip[fa?1:0]?`<div class="tip"><span>💡</span><span>${esc(r.tip[fa?1:0])}</span></div>`:''}
+  ${(r.sides||[]).length?`<div class="small" style="margin:0 0 10px">${S('usualSides')}: <b style="color:var(--brand)">${esc(sideNames(r.sides))}</b> <span class="tiny muted">(${fa?'شامل قیمت':'included in the price'})</span></div>`:''}
   ${r.ready?'':`<div class="strong small" style="margin:6px 0 2px">${S('ingredients')}</div>`}`;
   if(r.ready) html+=`<div class="ing"><span>🛍 ${S('boughtFrom')}</span><span class="num"><b>${money(t.cost)}</b></span></div>`;
   else for(const [ing,q] of r.i){ if(ing==='spice'){ html+=`<div class="ing"><span>${esc(nm(ING.spice))}</span><span class="muted num">${money(q*sc*priceOf(state,'spice'))}</span></div>`; continue; }
@@ -1185,6 +1264,8 @@ function sheetDish(id,draft,note){
     <p class="tiny muted" style="margin:4px 0 0">${S('readyHint')}</p>
    </div>
    <div id="cookSec" style="display:${rd?'none':'block'}">
+   <div class="strong small" style="margin:14px 0 4px">${S('customSides')}</div>
+   <div class="chips" data-sides style="flex-wrap:wrap;padding:0 0 6px">${SIDE_KEYS.map(k=>`<button type="button" class="chip ${(r.sides||[]).includes(k)?'on':''}" data-sidepick="${k}">${esc(fa?SIDES[k].fa:SIDES[k].en)}</button>`).join('')}</div>
    <div class="field"><label>${S('minutesL')}</label><input class="inp num" type="text" inputmode="decimal" min="1" name="min" value="${r.min||30}"></div>
    <div class="field"><label>${S('icon')}</label><div class="seg" data-seg="ic">${['pot','bowl','rice','leaf','bread','egg','cup','bag'].map(k=>`<button type="button" class="${r.ic===k?'on':''}" data-v="${k}" style="padding:4px;display:grid;place-items:center">${tile(k,'xs')}</button>`).join('')}</div></div>
    <div class="strong small" style="margin:16px 0 2px">${S('ingredients')}</div><div class="tiny muted" style="margin-bottom:4px">${S('qtyFor')}</div>
@@ -1627,7 +1708,7 @@ function copyTSV(){
 function sheetFit(){
   openSheet(`<h3>${S('fit')}</h3><p class="small muted" style="margin:10px 0">${S('fitWorking')}</p>`);
   setTimeout(()=>{
-    const base={...state,leftovers:0.8}, seed=Date.now()%2147483647;
+    const base={...state,leftovers:LEFT_HABIT[state.leftHabit||'often']}, seed=Date.now()%2147483647;
     const plans={budget:autoPlan(base,seed,'budget'), variety:autoPlan(base,seed+7,'variety')}; window._fitPlans=plans;
     const B=+state.budget||0, tgt=familyTarget(state.members,energyBoost(state));
     const card=(k,title,desc)=>{ const T=weekTotals({...state,plan:plans[k]}), dishes=Object.keys(T.counts).length, rep=Math.max(...Object.values(T.counts)), over=T.month-B;
@@ -1667,11 +1748,12 @@ document.addEventListener('click',e=>{
     case 'lang': state.lang=v; saveLocal(); render(); if(sheet.classList.contains('on')) closeSheet(); break;
     case 'close': closeSheet(); break;
     case 'pick': sheetPick(d,s); break;
-    case 'set': state.plan[d][s]=id; closeSheet(); { const y=window.scrollY; commit(); window.scrollTo({top:y}); } break;
+    case 'set': { state.plan[d][s]=id; state.planSides=state.planSides||{}; if(state.planSides[d]) delete state.planSides[d][s]; const y=window.scrollY; commit(); window.scrollTo({top:y}); if(id) sheetPick(d,s); else closeSheet(); } break;
+    case 'side': { state.planSides=state.planSides||{}; const cur=sidesOf(state,d,s); const nx=cur.includes(v)?cur.filter(x=>x!==v):cur.concat(v); (state.planSides[d]=state.planSides[d]||{})[s]=nx; const y=window.scrollY; commit(); window.scrollTo({top:y}); const sy=sheet.scrollTop; sheetPick(d,s); sheet.scrollTop=sy; } break;
     case 'recipe': if(id) sheetRecipe(id); else sheetPick(d,s); break;
     case 'fit': sheetFit(); break;
-    case 'fitapply': if(window._fitPlans&&window._fitPlans[v]){ state.plan=window._fitPlans[v]; closeSheet(); commit(); toast(S('planMade')); } break;
-    case 'clear': for(const [k] of DAYS) state.plan[k]={b:'',l:'',d:''}; commit(); break;
+    case 'fitapply': if(window._fitPlans&&window._fitPlans[v]){ state.plan=window._fitPlans[v]; state.planSides={}; closeSheet(); commit(); toast(S('planMade')); } break;
+    case 'clear': for(const [k] of DAYS) state.plan[k]={b:'',l:'',d:''}; state.planSides={}; commit(); break;
     case 'tick': state.checked[id]=!state.checked[id]; state.checkedAt=state.checkedAt||{}; if(state.checked[id]) state.checkedAt[id]=isoDate(); else delete state.checkedAt[id]; { const y=window.scrollY; commit(); window.scrollTo({top:y}); } break;
     case 'untick': sheetFinishWeek(); break;
     case 'untickOnly': state.checked={}; state.checkedAt={}; state.shopOf={}; state.shopEdits={}; state.extra=state.extra.filter(x=>!x.done); closeSheet(); commit(); break;
@@ -1689,13 +1771,14 @@ document.addEventListener('click',e=>{
     case 'rf': rFilter=v; render(); break;
     case 'pd': pickDay=v; document.querySelectorAll('#pd .chip').forEach(b=>b.classList.toggle('on',b.dataset.v===v)); break;
     case 'ps': pickSlot=v; document.querySelectorAll('#ps button').forEach(b=>b.classList.toggle('on',b.dataset.v===v)); break;
-    case 'addplan': { const r=RMAP[id]; const slot = r.m==='b'?'b':(pickSlot&&pickSlot!=='b'?pickSlot:'d'); const day=(document.querySelector('#pd .chip.on')||{}).dataset?.v||todayKey(); state.plan[day][slot]=id; closeSheet(); commit(); toast(S('added')+' · '+dayName(day)+' · '+slotName(slot)); pickSlot=null; } break;
+    case 'addplan': { const r=RMAP[id]; const slot = r.m==='b'?'b':(pickSlot&&pickSlot!=='b'?pickSlot:'d'); const day=(document.querySelector('#pd .chip.on')||{}).dataset?.v||todayKey(); state.plan[day][slot]=id; if(state.planSides&&state.planSides[day]) delete state.planSides[day][slot]; closeSheet(); commit(); toast(S('added')+' · '+dayName(day)+' · '+slotName(slot)); pickSlot=null; } break;
     case 'mem': sheetMember(id); break;
     case 'fruitpick': sheetFruit(); break;
     case 'fruitadd': { const b=state.basket.find(x=>x.id===id); if(b) b.q=(+b.q||0)+stepOf(id); else state.basket.push({id,q:ING[id].c==='nuts'?0.25:1}); closeSheet(); { const y=window.scrollY; commit(); window.scrollTo({top:y}); } toast('+ '+nm(ING[id])); } break;
     case 'bq': { const b=state.basket.find(x=>x.id===id); if(b){ b.q=Math.max(0,Math.round(((+b.q||0)+(+v)*stepOf(id))*1000)/1000); if(b.q===0) state.basket=state.basket.filter(x=>x!==b); } const y=window.scrollY; commit(); window.scrollTo({top:y}); } break;
     case 'suggest': { const pre=BASKET_PRESET[currentSeason(state)]||BASKET_PRESET.mild; state.basket=pre.map(([id,q])=>({id,q})); commit(); toast(S('suggested')); } break;
     case 'season': state.seasonMode=v; commit(); break;
+    case 'lefthabit': state.leftHabit=v; commit(); break;
     case 'onlymine': state.onlyMine=!state.onlyMine; commit(); break;
     case 'hide': { const h=new Set(state.hiddenR||[]); const was=h.has(id); was?h.delete(id):h.add(id); state.hiddenR=[...h]; closeSheet(); commit(); toast(S(was?'shownToast':'hiddenToast')); } break;
     case 'food': sheetFood(id); break;
@@ -1733,7 +1816,7 @@ document.addEventListener('change',e=>{
 });
 document.addEventListener('click',e=>{ const b=e.target.closest('[data-seg=how] button'); if(b){ const buy=b.dataset.v==='buy'; document.getElementById('buySec').style.display=buy?'block':'none'; document.getElementById('cookSec').style.display=buy?'none':'block'; }});
 document.addEventListener('click',e=>{ const b=e.target.closest('[data-seg=u] button'); if(b){ const l=document.getElementById('perlbl'); if(l) l.textContent=(b.dataset.v==='pc'||b.dataset.v==='dz')?S('perPc'):S('per100'); }});
-document.addEventListener('click',e=>{ const b=e.target.closest('[data-cond]'); if(b) b.classList.toggle('on'); });
+document.addEventListener('click',e=>{ const b=e.target.closest('[data-cond]'); if(b) b.classList.toggle('on'); const sp=e.target.closest('[data-sidepick]'); if(sp) sp.classList.toggle('on'); });
 // chart tooltip (hover on desktop, tap on phone)
 function showTip(e){ const g=e.target.closest&&e.target.closest('.bar-g'), tip=document.getElementById('ctip'); if(!tip) return; if(!g){ tip.style.opacity=0; return; }
   tip.textContent=g.dataset.tip; const x=(e.touches?e.touches[0].clientX:e.clientX), y=(e.touches?e.touches[0].clientY:e.clientY); tip.style.left=Math.min(window.innerWidth-270,Math.max(8,x-120))+'px'; tip.style.top=(y-52)+'px'; tip.style.opacity=1; }
@@ -1790,7 +1873,7 @@ document.addEventListener('submit',e=>{
     }
     const i=[...f.querySelectorAll('.ingrow')].map(row=>{ const k=row.querySelector('select').value, q=parseFloat(row.querySelector('input').value); return [k, (q>0? q/UNIT_IN(ING[k].u)[2] : 0)]; }).filter(([k,q])=>q>0);
     if(!i.length){ toast(S('needIng')); return; }
-    const r={id:id||('c_'+Date.now().toString(36)), en:en||fan, fa:fan||en, m:seg('m')||'m', min:Math.max(1,+f.min.value||30), ic:seg('ic')||'pot', s:seg('s')||'', tip:f.tip.value.trim(), src:(f.src&&f.src.value.trim())||f.dataset.src||'', steps:(f.steps?f.steps.value.split(/\n/).map(x=>x.trim()).filter(Boolean):[]), i};
+    const r={id:id||('c_'+Date.now().toString(36)), en:en||fan, fa:fan||en, m:seg('m')||'m', min:Math.max(1,+f.min.value||30), ic:seg('ic')||'pot', sides:[...f.querySelectorAll('[data-sidepick].on')].map(b=>b.dataset.sidepick), s:seg('s')||'', tip:f.tip.value.trim(), src:(f.src&&f.src.value.trim())||f.dataset.src||'', steps:(f.steps?f.steps.value.split(/\n/).map(x=>x.trim()).filter(Boolean):[]), i};
     if(id) state.customRecipes=state.customRecipes.map(x=>x.id===id?r:x); else state.customRecipes.push(r);
     closeSheet(); commit(); toast(S('savedOk')); return;
   }
